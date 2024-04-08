@@ -12,21 +12,21 @@
 - [Documentação](#documentação)
   - [Introdução](#introdução)
   - [Pré-requisitos](#pré-requisitos)
-    - [Git ou GitBash]()
+    - [Git ou GitBash](#git-ou-gitbash)
     - [XAMPP](#xampp)
-  - [Como rodar no Windows]()
-    - [Como instalar o XAMPP]()
-    - [Configurações iniciais para este projeto]()
-      - [Configuração do XAMPP]()
-      - [Configuração do Sistema]()
-    - [Checar IPV4]()
-    - [Como acessar o projeto]()
+  - [Como rodar no Windows](#como-rodar-no-windows)
+    - [Como instalar o XAMPP](#como-instalar-o-xampp)
+    - [Configurações iniciais para este projeto](#configurações-iniciais-para-este-projeto)
+      - [Configuração do XAMPP](#configuração-do-xampp)
+      - [Configuração do Sistema](#configuração-do-sistema)
+    - [Checar IPV4](#checar-ipv4)
+    - [Como acessar o projeto](#como-acessar-o-projeto)
   - [Referências](#referências-1)
     - [Desabilitar UAC](#desabilitar-uac)
     - [Acessar LocalHost pela rede Local (Windows)](#acessar-localhost-pela-rede-local-windows)
   - [Recomendações de Estudo](#recomendações-de-estudo-1)
-    - [HTML*](#html)
-    - [CSS*](#css)
+    - [HTML](#html)
+    - [CSS](#css)
     - [JavaScript](#javascript)
 - [Créditos](#créditos)
     
@@ -55,6 +55,7 @@ Este é o repositório que armazena o front-end do app Cronos.
 ## Recomendações de Estudo:
 
 # Documentação:
+Nesta seção você verá a documentação de como ajustar o ambiente de desenvolvimento para rodar o front-end do aplicativo na sua máquina local, e também no seu celular.
 
 ## Introdução:
 Esta seção contém as informações para você rodar este projeto tanto no seu computador quanto no seu telefone, siga passo a passo de forma metódica para que você não tenha problemas ao fazer algo errado.<br>
@@ -276,9 +277,13 @@ gpupdate /force  [Enter]
 ## Recomendações de Estudo:
 
 ### HTML:
-
+- Este é o curso de HTML da CFB cursos que recomendamos, ele é bem rápido, mas o foco é profissional.
+- [Playlist HTML](https://www.youtube.com/watch?v=BUpk68lggtY&list=PLx4x_zx8csUiVHRDO_7qhOaeNrrQ5uU8c)
+  
 ### CSS:
-
+- Este é o curso de CSS3 da CFB cursos que recomendamos.
+- [Playlist CSS](https://www.youtube.com/watch?v=GPK8A-A156o&list=PLx4x_zx8csUi47Bnugpk78nqJN6rYvEnV)
+  
 ### Javascript:
 - Este é o curso de JavaScript da CFB cursos que recomendamos, ele é muito legal e muito didático para o aprendizado.
 - [Playlist JavaScript](https://www.youtube.com/watch?v=E4DBTqgxHGM&list=PLx4x_zx8csUg_AxxbVWHEyAJ6cBdsYc0T&index=1)
