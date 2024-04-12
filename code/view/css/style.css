@@ -1,0 +1,16 @@
+.form-control{
+    border-top: 0;
+    border-radius: 10px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    box-shadow: 0 2px 2px #d3d3d3;
+}
+
+.buttons-cascade{
+    display: grid;
+    /* espaço entre um elemento interno e outro */
+    grid-gap: 10px;
+    /* margem interna que afasta os elementos da borda do grid */
+    padding: 20px 10px;
+    margin: 10px;
+}
