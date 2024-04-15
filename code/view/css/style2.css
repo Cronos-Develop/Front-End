@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1A1818;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.progress {
+    position: absolute; /* Adicionado */
+    top: 0; /* Adicionado para posicionamento */
+    left: 0; /* Adicionado para posicionamento */
+    width: 100%; /* Adicionado para ocupar a largura total */
+    z-index: 1; /* Garante que a barra de progresso esteja acima do conteúdo */
+}
+
+.cadastro-container {
+    background: linear-gradient(to bottom, #2A4F83, #07194F);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    position: relative; /* Adicionado */
+    z-index: 2;
+}
+
+.cadastro-container h2 {
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    text-align: left;
+}
+
+.cadastro-container input[type="email"],
+.cadastro-container input[type="tel"],
+.cadastro-container input[type="password"] {
+    background-color: #1A1818;
+    color: #FFFFFF;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #252323;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.cadastro-container button[type="submit"],
+.cadastro-container button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+}
+
+.cadastro-container button[type="submit"] {
+    background-color: #4F4F4F;
+    color: #fff;
+}
+
+.cadastro-container button[type="submit"]:hover {
+    background-color: #4F4F4F;
+}
+
+.cadastro-container button[type="button"] {
+    background-color: #FFFFFF;
+    color: #333;
+}
+
+.cadastro-container button[type="button"]:hover {
+    background-color: #b3b3b3;
+}
+
+.cadastro-container button[type="submit"]:hover {
+    background-color: #b3b3b3;
+}
+
+.textq {
+    color: #FFFFFF; 
+    text-align: left;
+}
+
+.custom-btn1 {
+    background-color: #2A4F83; 
+    color: #FFFFFF; 
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.custom-btn2 {
+    background-color: #0a1d57; 
+    color: #FFFFFF; 
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    text-decoration: underline;
+}
+
+.custom-btn:hover {
+    background-color: #0056b3;
+}
+
+.cadastro-form {
+    text-align: left;
+}
+
+.espaco {
+    margin-bottom: 40px; 
+}
+
+.espaco1 {
+    margin-bottom: 20px; 
+}

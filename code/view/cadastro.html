@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Cronos</title>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    <div class="cadastro-container">
+
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+          </div>
+
+        <button id="cancel-btn" class="custom-btn1" onclick="window.location.href='login.html'">&#8592;   Cancelar cadastro</button>
+        <h2>Conta</h2>
+        <form id="cadastro-form" class="cadastro-form">
+            <label class="textq">E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="Exemplo123@mail.com" required>
+            <label class="textq">Telefone:</label>
+            <input type="tel" id="phone" name="phone" placeholder="+55 |66 12345-67891" required>
+            <label class="textq">Senha:</label>
+            <input type="password" id="password" name="password" placeholder="Digite a sua senha" required>
+            <label class="textq">Confirmar senha:</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Digite sua senha novamente" required>
+            <div class="espaco"></div>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <div class="espaco1"></div>
+        <button id="login-btn" class="custom-btn2" onclick="window.location.href='login.html'">Possui uma conta?</button>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
