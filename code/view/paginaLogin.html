@@ -22,12 +22,12 @@
                 <input class="form-control" id="password" type="password" placeholder="Digite sua Senha" maxlength="20" minlength="8" required/>
             </div>
             <div class="container" id="forgot">
-                <button class="btn btn-link">Esqueci a senha</button>
+                <button class="btn btn-link" onclick="direct(1)">Esqueci a senha</button>
             </div>
             <div class="container">
                 <div class="buttons-cascade">
-                    <button type="submit" class="btn btn-primary">Entrar</button>
-                    <button  class="btn btn-link" id="signup">Quero me Cadastrar</button>
+                    <button type="submit" class="btn btn-primary" onclick="login()">Entrar</button>
+                    <button  class="btn btn-link" id="signup" onclick="direct(0)">Quero me Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -35,3 +35,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+<script src="../controller/Controller.js"></script>
+<script>
+    const signup = "./paginaCadastro.html"
+    const forgot = ""
+
+    function direct(page){
+        switch(page){
+            case 0:
+                window.location.href = signup;
+                break;
+            case 1:
+                window.location.href = forgot;
+                break;
+        }
+    }
+
+    function login(){
+        console.log("Login Disparado");
+        verifyCPF();
+    }
+</script>
