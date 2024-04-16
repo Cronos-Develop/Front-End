@@ -71,5 +71,29 @@ function verifyCNPJ(cnpj) {
 }
 
 function verifyPass(password){
-    
+    var flag ="";
+    var n = 0;
+
+    if(password.length < 8){ 
+        flag += "[Senha deve ter pelo menos 8 caracteres.]";
+        n++;
+    }
+    if(!(/\d/.test(password))){
+        flag += "[Senha deve ter pelo menos um número.]";
+        n++;
+    }
+    if(!(/[a-z]/.test(password))){
+        flag += "[Senha deve ter pelo menos um caractere minúsculo.]";
+        n++;
+    }
+    if(!(/[A-Z]/.test(password))){
+        flag += "[Senha deve ter pelo menos um caractere maiúsculo.]";
+        n++;
+    }
+    if(!(/\W/.test(password))){
+        flag += "[Senha deve ter pelo menos um caractere especial (.,*,@,#,?,/,&,|).]";
+        n++;
+    }
+
+    return n+flag;
 }

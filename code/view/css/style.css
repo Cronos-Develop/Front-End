@@ -5,6 +5,10 @@
     justify-content: center;
 }
 
+.fix{
+    font-size: 1.7vh;
+}
+
 .logo{
     width: 70%;
 }
