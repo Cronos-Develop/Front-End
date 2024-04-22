@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transição - Cronos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <section class="sbody1">
+        <div class="container" id="login">
+            <div class="container" id="container-logo">
+                <img src="./img/logots1.png" alt="Logo do App" class="logo">
+                <h2 id="titulo">Cronos</h2>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        setTimeout(function() {
+            document.querySelector('.container').classList.add('fade-out');
+            setTimeout(function() {
+                window.location.href = "paginaLogin.html";
+            }, 1000);
+        }, 2000);
+    </script>
+</body>
+</html>
