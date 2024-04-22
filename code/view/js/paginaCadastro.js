@@ -1,4 +1,4 @@
-/* Função tela de Cadastro 
+//Validar dados
 const pass = document.querySelector('#password');
     pass.addEventListener("mouseout", function(){
         const label = document.querySelector('#fix-data-pass');
@@ -20,21 +20,76 @@ const pass = document.querySelector('#password');
             label.style.color = 'black';
         }
     });
+
+const nameU = document.querySelector('#nome');
+nameU.addEventListener("mouseout", function(){
+    const label = document.querySelector('#fix-data-name');
+    if(verifyName(nameU.value) == 0){
+        nameU.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Nome inválido";
+    }else{
+        nameU.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+});
+
  const ident = document.querySelector('#identifier');
     ident.addEventListener("mouseout", function(){
         const label = document.querySelector('#fix-data-ident');
         if(!verifyCPF(ident.value) && !verifyCNPJ(ident)){
             ident.style.borderColor = 'red';
             label.style.color = 'red';
-            label.innerHTML = "CPF inválido";
+            label.innerHTML = "CPF ou CNPJ inválido";
         }else{
             ident.style.borderColor = "#C6C6C6";
             label.innerHTML = "";
             label.style.color = 'black';
         }
     });   
-    
-    */
+
+ const cep = document.querySelector('#cep');
+ cep.addEventListener("mouseout", function(){
+    const label = document.querySelector('#fix-data-cep');
+    if(!verifyCEP(cep.value)){
+        cep.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "CEP inválido";
+    }else{
+        cep.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+ })
+
+ const city = document.querySelector('#cidade');
+ city.addEventListener("mouseout", function(){
+    const label = document.querySelector('#fix-data-city');
+    if(!verifyCity(city.value)){
+        city.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Cidade não possui nome válido";
+    }else{
+        city.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+ })
+
+ const number = document.querySelector('#number');
+ number.addEventListener("mouseout", function(){
+    const label = document.querySelector('#fix-data-number');
+    if(!verifyNumber(number.value)){
+        number.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Número inválido";
+    }else{
+        number.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+ })
 
     // Função para avançar para o próximo container
 function avancarParaProximoContainer(containerAtual, proximoContainer) {
@@ -94,7 +149,7 @@ document.getElementById('btn-link1-cadastro2').addEventListener('click', functio
 });
 
 
-document.getElementById('data-nascimento').addEventListener('input', function() {
+document.getElementById('data-nascimento').addEventListener('onmouseout', function() {
     var input = this.value;
     if (input.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)) {
         var day = parseInt(input.split('/')[0]);
@@ -102,9 +157,9 @@ document.getElementById('data-nascimento').addEventListener('input', function() 
         var year = parseInt(input.split('/')[2]);
 
         if (month < 1 || month > 12 || day < 1 || day > 31 || year < 1900 || year > (new Date().getFullYear())) {
-            document.getElementById('fix-data-date').textContent = "Data inválida";
+            document.getElementById('#fix-data-date') = "Data de nascimento inválida";
         } else {
-            document.getElementById('fix-data-date').textContent = "";
+            document.getElementById('fix-data-date') = "";
         }
     } else {
         document.getElementById('fix-data-date').textContent = "Formato inválido";

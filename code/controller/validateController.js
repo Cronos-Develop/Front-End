@@ -97,3 +97,37 @@ function verifyPass(password){
 
     return n+flag;
 }
+
+function verifyCEP(cep){
+    return (/^\d{8}$/.test(cep.replace(/[^\d]+/g, "")));
+}
+
+function verifyName(nameU){
+    if(nameU.length < 3){
+        return 0;
+    }else{
+        for(i=0; i<nameU.length; i++){
+            if(parseInt(nameU.charAt(i))>0){
+                return 0;
+            } 
+        }
+        return 1;
+    }
+}
+
+function verifyCity(city){
+    if(city.length <3) return false;
+    for(i=0; i<city.length; i++){
+        if(parseInt(city.charAt(i))>0){
+            return false;
+        }
+    }
+    return true;
+}
+
+function verifyNumber(number){
+    for(i=0; i<number.length; i++){
+        if(/[a-zA-Z]/.test(number.charAt(i))) return false;
+    }
+    return true;
+}
