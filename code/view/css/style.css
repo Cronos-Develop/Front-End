@@ -1,3 +1,26 @@
+/* Cores principais do Cronos:*/
+:root {
+    /*Para o modo claro*/
+
+    --cor-primaria: #32C6F4; /* Azul */
+    --cor-secundaria: #92E5FF; /* Azul claro */
+    --cor-terciaria: #0056b3; /* Azul escuro */
+    --cor-fundo: #fff; /* Branco para o fundo no modo claro */
+    --cor-text: #000000;
+    --cor-link: #1c2aec;
+    --cor-container: #55D1F8;
+
+    /*Para o modo escuro*/
+
+    --cor-fundoE: #1A1818; /* Preto de fundo para o modo escuro*/
+    --cor-primariaE: #2A4F83; /* Azul escuro*/
+    --cor-secundariaE: #07194F;
+    --cor-textE: #fff;
+    --cor-linkE: #fff;
+
+}
+/*------------------------------------------------------ pagina Login --------------------------------------------------------------------------*/
+
 .sbody{
     height: 100vh;
     display: flex;
@@ -22,7 +45,7 @@
 }
 
 .btn-primary{
-    background-color: #32C6F4;
+    background-color: var(--cor-primaria);
     margin: 0;
     border: 0;
 }
@@ -51,7 +74,7 @@
 }
 
 .btn-link{
-    color: #32C6F4;
+    color: var(--cor-primaria);
     text-decoration: none;
 }
 
@@ -63,20 +86,47 @@
         width: 75%;
     }
     #cadastro-container{
-        width: 75%;
+        width: 85%;
     }
     #cadastro1-container{
-        width: 75%;
+        width: 85%;
     }
     #cadastro2-container{
-        width: 75%;
+        width: 85%;
+    }
+    #cadastro-cancelar{
+        width: 85%;
+    }
+    #main{
+        width: 100%;
+    }
+    #main1{
+        width: 100%;
+    }
+    #main2{
+        width: 100%;
+    }
+    #tarefas-container{
+        width: 90%;
+    }
+    #usuario-container{
+        width: 100%;
+    }
+    #inicio-container{
+        width: 90%;
+    }
+    #modal{
+        width: 90%;
+    }
+    .estilo-customizado {
+        width: 90%;
     }
 }
 
-/* --------------------------------------- Parte referente a pagina de cadastro -------------------------------------------------------*/
+/* --------------------------------------- Parte referente a pagina de cadastro ----------------------------------------------------------------*/
 
 .sbody1{
-    background-color: #32C6F4;
+    background-color: var(--cor-primaria);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -84,31 +134,27 @@
 }
 
 #cadastro-container{
-    width: 25%;
     align-self: center;
 }
 
 #cadastro1-container{
-    width: 25%;
     align-self: center;
 }
 
 #cadastro2-container{
-    width: 25%;
     align-self: center;
 }
 
 #cadastro-cancelar{
-    width: 25%;
     align-self: center;
 }
 
 .cadastro-container {
-    background: linear-gradient(to bottom right, #32C6F4, #92E5FF);
+    background: linear-gradient(to bottom right, var(--cor-primaria), var(--cor-secundaria));
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    
     text-align: center;
     position: relative; /* Adicionado */
     z-index: 2;
@@ -124,7 +170,7 @@
 }
 
 .progressbar{
-    width: 300px;
+    
     position: relative;
     text-align: center;
     z-index: 2;
@@ -148,7 +194,7 @@
 }
 
 .progress{
-    background-color: #0056b3;
+    background-color: var(--cor-terciaria);
     width: 0%;
     transition: 0.3s;
 }
@@ -177,8 +223,8 @@
 }
 
 .progress-step-active{
-    background-color: #0056b3;
-    color: #FFFFFF;
+    background-color: var(--cor-terciaria);
+    color: var(--cor-textE);
     
 }
 
@@ -194,11 +240,11 @@
 }
 
 .cadastro1-container {
-    background: linear-gradient(to top right, #32C6F4, #92E5FF);
+    background: linear-gradient(to top right, var(--cor-primaria), var(--cor-secundaria));
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    
     text-align: center;
     position: relative; /* Adicionado */
     z-index: 2;
@@ -207,11 +253,11 @@
 }
 
 .cadastro2-container {
-    background: linear-gradient(to top right, #32C6F4, #92E5FF);
+    background: linear-gradient(to top right, var(--cor-primaria), var(--cor-secundaria));
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    
     text-align: center;
     position: relative; /* Adicionado */
     z-index: 2;
@@ -229,12 +275,12 @@
 
 .cadastro-container h2 {
     margin-bottom: 20px;
-    color: #000000;
+    color: var(--cor-text);
     text-align: left;
 }
 
 .custom-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--cor-terciaria);
 }
 
 .cadastro-form {
@@ -246,7 +292,7 @@
 .cadastro-container input[type="password"],
 .cadastro-container input[type="text"] {
     
-    color: #000000;
+    color: var(--cor-text);
     width: 100%;
     padding: 10px;
     border-top: 0;
@@ -263,7 +309,7 @@
 
 .cadastro-container input[type="date"] {
     display: block;
-    color: #000000;
+    color: var(--cor-text);
     width: 50%;
     padding: 10px;
     border: none;
@@ -289,7 +335,7 @@
 
 .cadastro-container button[type="submit"] {
     background-color: #4F4F4F;
-    color: #fff;
+    color: var(--cor-fundo);
     width: 50%;
     align-content: center;
 }
@@ -312,13 +358,13 @@
 }
 
 .textq {
-    color: #FFFFFF; 
+    color: var(--cor-textE); 
     text-align: left;
 }
 
 .custom-btn1 {
-    background-color: #FFFFFF; 
-    color: #000000; 
+    background-color: var(--cor-textE); 
+    color: var(--cor-text); 
     border: none;
     border-radius: 3px;
     cursor: pointer;
@@ -333,8 +379,8 @@
 
 
 .custom-btn2 {
-    background-color: #FFFFFF; 
-    color: #92E5FF; 
+    background-color: var(--cor-fundo); 
+    color: var(--cor-secundaria); 
     border: none;
     border-radius: 3px;
     cursor: pointer;
@@ -358,7 +404,7 @@
 }
 
 .btn-link1{
-    color: #1c2aec;
+    color: var(--cor-link);
     text-decoration: underline;
 }
 
@@ -366,29 +412,27 @@
 #submit-btn-cadastro2 {
     margin: 20px auto; /* Adiciona margem nas laterais automáticas para centralizar horizontalmente */
 }
-/* ---------------------------------------------------------- página coberta ------------------------------------------------------ */
+/* ---------------------------------------------------------- página coberta ------------------------------------------------------------------- */
 #titulo {
-    font-family: 'Inter'; /* Define a fonte como "Inter" */
-    font-size: 2.5em; /* Tamanho da fonte um pouco maior */
-    color: white; /* Cor do texto branco */
+    font-family: 'Inter'; 
+    font-size: 2.5em; 
+    color: var(--cor-fundo) 
 }
-
-/*  ---------------------------------------------------------- página inicial -------------------------------------------------------- */
+/*  ---------------------------------------------------------- página inicial ------------------------------------------------------------------ */
 
 .sbody2 {
     margin: 0;
     font-family: Arial, sans-serif;
-}
-
-header {
-    background-color: #f0f0f0;
-    padding: 20px;
-    text-align: center;
+    background-color: var(--cor-fundo);
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    display: flex;
 }
 
 /* Estilo para o cabeçalho */
 header {
-    background-color: #32C6F4;
+    background-color: var(--cor-primaria);
     padding: 10px;
     display: flex;
     justify-content: center; /* Centraliza horizontalmente */
@@ -400,30 +444,81 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Distribui os elementos igualmente */
-    max-width: 800px; /* Defina o valor máximo de largura conforme necessário */
-    width: 100%; /* Preenche a largura máxima */
 }
 
 /* Estilo para o nome da empresa */
 .company-info h1 {
     margin: 0;
+    color: var(--cor-text);
 }
 
 /* Estilo para o CNPJ */
 .company-info p {
     margin: 0;
     font-size: 14px;
-    color: #555;
+    color: var(--cor-text);
 }
 
 /* Estilo para a logo */
 .company-logo {
-    width: 100px; /* Ajuste conforme necessário */
-    height: auto; /* Para manter a proporção */
+    width: 100px; 
+    height: auto; 
 }
+
 main {
-    background-color: #fff;
-    min-height: calc(100vh - 150px); /* Ajusta para o tamanho da barra de navegação */
+    background-color: var(--cor-fundo);
+    min-height: calc(100vh - 150px); 
+}
+
+.modal-content {
+    background-color: var(--cor-primaria)
+}
+
+.modal-dialog {
+    width: 80%; 
+}
+
+#inicio-container{
+    
+    align-self: center;
+}
+
+.inicio-container {
+    background: linear-gradient(to bottom right, var(--cor-primaria), var(--cor-secundaria));
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Adiciona espaço abaixo de cada container */
+    text-align: center;
+    position: relative; 
+    z-index: 2;
+    transform-origin: top;
+    animation: animate .5s;
+}
+
+.inicio-container h2 {
+    margin-bottom: 10px;
+    color: (--cor-text);
+    text-align: left;
+}
+
+.usuario-container h4 {
+    margin-bottom: 10px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.inicio-container p {
+    margin-bottom: 20px;
+    color: var(--cor-text);
+    text-align: left;
+    font-size: 14px; 
+}
+
+#inicio-container:hover {
+    background-color: var(--cor-link);
+    transform: scale(1.05); 
+    transition: transform 0.3s ease; 
 }
 
 nav {
@@ -432,7 +527,7 @@ nav {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #32C6F4;
+    background-color: var(--cor-primaria);
 }
 
 nav ul {
@@ -447,12 +542,192 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #fff;
+    color: var(--cor-textE);
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 nav ul li a:hover {
-    background-color: #555;
+    background-color: var(--cor-terciaria);
+}
+
+.usuario2-container .col:hover {
+    background-color: var(--cor-fundo);
+    transform: scale(1.05); 
+    transition: transform 0.3s ease;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#usuario-container{
+    
+    align-self: center;
+}
+
+.usuario2-container {
+    background: linear-gradient(to bottom right, var(--cor-primaria), var(--cor-secundaria));
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Adiciona espaço abaixo de cada container */
+    text-align: center;
+    position: relative; 
+    z-index: 2;
+    transform-origin: top;
+    animation: animate .5s;
+}
+
+.usuario2-container h2 {
+    margin-bottom: 10px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.usuario2-container h4 {
+    margin-bottom: 10px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.usuario2-container p {
+    margin-bottom: 20px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.progress-bar-container1 {
+    width: 100%;
+    height: 20px; 
+    background-color: green; 
+    border-radius: 5px; 
+    margin-bottom: 10px; 
+}
+
+.progress-bar-container1 p{
+    color: var(--cor-textE);
+}
+
+.progress-bar-container2 {
+    width: 100%;
+    height: 20px; 
+    background-color: var(--cor-fundo); 
+    border-radius: 5px; 
+    margin-bottom: 10px; 
+}
+
+.progress-bar-container1 p{
+    color: var(--cor-textE);
+}
+
+
+/*  ---------------------------------------------------------- página tarefas ------------------------------------------------------------------ */
+
+#main1 {
+    background-color: var(--cor-fundo);
+    align-self: center;
+    position: relative;
+}
+
+#tarefa-container{
+    
+    align-self: center;
+}
+
+.tarefa-container {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    text-align: center;
+    position: relative; 
+    z-index: 2;
+    transform-origin: top;
+    animation: animate .5s;
+    margin-bottom: 20px;
+}
+
+.tarefa-container h2 {
+    margin-bottom: 10px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.tarefa-container .col:hover {
+    background-color: var(--cor-secundaria);
+    transform: scale(1.05); 
+    transition: transform 0.3s ease;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/*  ---------------------------------------------------------- página Usuario ------------------------------------------------------------------ */
+#main2 {
+    align-self: center;
+    position: relative;
+}
+
+#usuario-container{
+    
+    align-self: center;
+}
+
+.usuario-container {
+    background: linear-gradient(to bottom right, var(--cor-primaria), var(--cor-secundaria));
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    text-align: center;
+    position: relative; 
+    z-index: 2;
+    transform-origin: top;
+    animation: animate .5s;
+}
+
+.usuario-container h2 {
+    margin-bottom: 10px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.usuario-container h4 {
+    margin-bottom: 10px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.usuario-container p {
+    margin-bottom: 20px;
+    color: var(--cor-text);
+    text-align: left;
+}
+
+.btn-primaryU{
+    background-color: var(--cor-secundaria);
+    margin: 0;
+    border: 0;
+    padding: 15px; 
+    font-size: 1.25rem; 
+    border-radius: 3px;
+    cursor: pointer;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+.btn-primaryU:hover {
+    background-color: var(--cor-terciaria);
+}
+
+.btn-link2{
+    color: var(--cor-text);
+    text-decoration: underline;
+}
+
+.btn-link2:hover{
+    color: var(--cor-terciaria)
+}
+
+.container-imagem-direita {
+    text-align: right; /* Para alinhar a imagem à direita */
 }
