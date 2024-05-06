@@ -1,6 +1,23 @@
-/* Função tela de Cadastro 
+//Validar dados
+const email = document.querySelector('#email');
+    email.addEventListener("keydown", function(){
+        const label = document.querySelector('#fix-email');
+        var response = verifyEmail(email.value);
+        if(!response){
+            email.style.borderColor = 'red';
+            console.log(response);
+            label.style.color = 'red';
+            label.innerHTML = "Email inválido";
+        }else{
+            email.style.borderColor = '#C6C6C6';
+            label.innerHTML = "";
+            label.style.color = 'black';
+        }
+    });
+
+const telefone = document.querySelector('#phone');
 const pass = document.querySelector('#password');
-    pass.addEventListener("mouseout", function(){
+    pass.addEventListener("keydown", function(){
         const label = document.querySelector('#fix-data-pass');
         var response = verifyPass(pass.value);
         if(response.charAt(0)!=0){
@@ -20,21 +37,98 @@ const pass = document.querySelector('#password');
             label.style.color = 'black';
         }
     });
+
+const pass2 = document.querySelector('#confirm-password');
+    pass2.addEventListener("keydown", function(){
+        const label = document.querySelector('#fix-confirm-password');
+        if(pass2.value === pass.value){
+            pass2.style.borderColor = '#C6C6C6';
+            label.innerHTML = "";
+            label.style.color = 'black';
+        }else{
+            pass2.style.borderColor = 'red';
+            label.style.color = 'red';
+            label.innerHTML = "Senhas não conferem";
+        }
+    });
+//Segunda Tela
+const nameU = document.querySelector('#nome');
+nameU.addEventListener("keydown", function(){
+    const label = document.querySelector('#fix-data-name');
+    if(verifyName(nameU.value) == 0){
+        nameU.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Nome inválido";
+    }else{
+        nameU.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+});
+
  const ident = document.querySelector('#identifier');
-    ident.addEventListener("mouseout", function(){
+    ident.addEventListener("keydown", function(){
         const label = document.querySelector('#fix-data-ident');
         if(!verifyCPF(ident.value) && !verifyCNPJ(ident)){
             ident.style.borderColor = 'red';
             label.style.color = 'red';
-            label.innerHTML = "CPF inválido";
+            label.innerHTML = "CPF ou CNPJ inválido";
         }else{
             ident.style.borderColor = "#C6C6C6";
             label.innerHTML = "";
             label.style.color = 'black';
         }
     });   
-    
-    */
+
+ const cep = document.querySelector('#cep');
+ cep.addEventListener("keydown", function(){
+    const label = document.querySelector('#fix-data-cep');
+    if(!verifyCEP(cep.value)){
+        cep.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "CEP inválido";
+    }else{
+        cep.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+ })
+
+ const city = document.querySelector('#cidade');
+ city.addEventListener("keydown", function(){
+    const label = document.querySelector('#fix-data-city');
+    if(!verifyCity(city.value)){
+        city.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Cidade não possui nome válido";
+    }else{
+        city.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+ })
+
+ const end = document.querySelector('#endereco');
+ const complemento = document.querySelector('#compl');
+ const bairro = document.querySelector('#bairro');
+ const nasc = document.querySelector('#data-nascimento');
+
+ const number = document.querySelector('#number');
+ number.addEventListener("keydown", function(){
+    const label = document.querySelector('#fix-data-number');
+    if(!verifyNumber(number.value)){
+        number.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Número inválido";
+    }else{
+        number.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+ })
+
+ //Terceiro formulario
+const empresa = document.querySelector('#nome-empresa');
 
     // Função para avançar para o próximo container
 function avancarParaProximoContainer(containerAtual, proximoContainer) {
@@ -42,73 +136,45 @@ function avancarParaProximoContainer(containerAtual, proximoContainer) {
     proximoContainer.style.display = "block"; // Mostra o próximo container
 }
 
-// Função para lidar com o envio do formulário
-function enviarFormulario(event) {
-    event.preventDefault(); // Evita o comportamento padrão de envio de formulário
-
-    // Aqui você pode adicionar a lógica para enviar o formulário, por exemplo, via AJAX
-
-    // Exemplo de envio assíncrono do formulário
-    // fetch('url_do_destino', {
-    //     method: 'POST',
-    //     body: new FormData(event.target)
-    // })
-    // .then(response => {
-    //     if (response.ok) {
-    //         // Redirecionar para outra página após o envio bem-sucedido
-    //         window.location.href = 'outra_pagina.html';
-    //     } else {
-    //         // Tratar erros de envio, se necessário
-    //     }
-    // })
-    // .catch(error => console.error('Erro ao enviar formulário:', error));
-}
-
 // container do cadastro --------------------------------------------------------------------------------------------
 
 document.getElementById('submit-btn').addEventListener('click', function() {
     var containerAtual = document.getElementById('cadastro-container');
     var proximoContainer = document.getElementById('cadastro1-container');
-    avancarParaProximoContainer(containerAtual, proximoContainer);
+    if(verifyEmail(email.value) && telefone.value && verifyPass(pass.value) && pass2.value === pass.value){
+        avancarParaProximoContainer(containerAtual, proximoContainer);
+    }else{
+        Swal.fire({
+            icon: "error",
+            title: "Preencha os dados corretamente!",
+            text: "Usuário ou senha estão incorretos",
+            //footer: '<a href="#">Why do I have this issue?</a>'
+          });
+    }
 });
 
 
-document.getElementById('submit-btn1').addEventListener('click', function(event) {
-    enviarFormulario(event); 
-
+document.getElementById('submit-btn1').addEventListener('click', function(event){
     var containerAtual = document.getElementById('cadastro1-container');
     var proximoContainer = document.getElementById('cadastro2-container');
-    avancarParaProximoContainer(containerAtual, proximoContainer);
-});
 
-document.getElementById('submit-btn-cadastro2').addEventListener('click', function(event) {
-    enviarFormulario(event); 
-
-    window.location.href = 'paginaInicial.html';
-});
-
-document.getElementById('btn-link1-cadastro2').addEventListener('click', function(event) {
-    enviarFormulario(event); 
-
-    window.location.href = 'paginaInicial.html';
-});
-
-
-document.getElementById('data-nascimento').addEventListener('input', function() {
-    var input = this.value;
-    if (input.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)) {
-        var day = parseInt(input.split('/')[0]);
-        var month = parseInt(input.split('/')[1]);
-        var year = parseInt(input.split('/')[2]);
-
-        if (month < 1 || month > 12 || day < 1 || day > 31 || year < 1900 || year > (new Date().getFullYear())) {
-            document.getElementById('fix-data-date').textContent = "Data inválida";
-        } else {
-            document.getElementById('fix-data-date').textContent = "";
-        }
-    } else {
-        document.getElementById('fix-data-date').textContent = "Formato inválido";
+    if(verifyName(nameU.value) && end.value && complemento.value && bairro.value && nasc.value && verifyNumber(number.value) && (verifyCNPJ(ident) || verifyCPF(ident.value)) && verifyCEP(cep.value) && verifyCity(city.value)){
+        avancarParaProximoContainer(containerAtual, proximoContainer);
+    }else{
+        Swal.fire({
+            icon: "error",
+            title: "Preencha os dados corretamente!",
+            text: "Usuário ou senha estão incorretos",
+            //footer: '<a href="#">Why do I have this issue?</a>'
+          });
     }
+});
+
+//Enviando Formulario
+document.getElementById('submit-btn-cadastro2').addEventListener('click', function(event) {
+    ControlCadaster(email.value, telefone.value, pass.value, nameU.value, end.value, complemento.value, bairro.value, nasc.value,number.value, ident.value,cep.value, city.value, empresa.value);
+
+    window.location.href = 'paginaInicial.html';
 });
 
 // animando a barra de progresso --------------------------------------------------------------------------------------------
