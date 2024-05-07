@@ -1,6 +1,6 @@
 //Validar dados
 const email = document.querySelector('#email');
-    email.addEventListener("keydown", function(){
+    email.addEventListener("change", function(){
         const label = document.querySelector('#fix-email');
         var response = verifyEmail(email.value);
         if(!response){
@@ -17,7 +17,7 @@ const email = document.querySelector('#email');
 
 const telefone = document.querySelector('#phone');
 const pass = document.querySelector('#password');
-    pass.addEventListener("keydown", function(){
+    pass.addEventListener("change", function(){
         const label = document.querySelector('#fix-data-pass');
         var response = verifyPass(pass.value);
         if(response.charAt(0)!=0){
@@ -39,9 +39,10 @@ const pass = document.querySelector('#password');
     });
 
 const pass2 = document.querySelector('#confirm-password');
-    pass2.addEventListener("keydown", function(){
+    pass2.addEventListener("change", function(){
         const label = document.querySelector('#fix-confirm-password');
         if(pass2.value === pass.value){
+            console.log("Iguais");
             pass2.style.borderColor = '#C6C6C6';
             label.innerHTML = "";
             label.style.color = 'black';
@@ -49,11 +50,12 @@ const pass2 = document.querySelector('#confirm-password');
             pass2.style.borderColor = 'red';
             label.style.color = 'red';
             label.innerHTML = "Senhas não conferem";
+            console.log(pass2.value)
         }
     });
 //Segunda Tela
 const nameU = document.querySelector('#nome');
-nameU.addEventListener("keydown", function(){
+nameU.addEventListener("change", function(){
     const label = document.querySelector('#fix-data-name');
     if(verifyName(nameU.value) == 0){
         nameU.style.borderColor = 'red';
@@ -67,7 +69,7 @@ nameU.addEventListener("keydown", function(){
 });
 
  const ident = document.querySelector('#identifier');
-    ident.addEventListener("keydown", function(){
+    ident.addEventListener("change", function(){
         const label = document.querySelector('#fix-data-ident');
         if(!verifyCPF(ident.value) && !verifyCNPJ(ident)){
             ident.style.borderColor = 'red';
@@ -81,7 +83,7 @@ nameU.addEventListener("keydown", function(){
     });   
 
  const cep = document.querySelector('#cep');
- cep.addEventListener("keydown", function(){
+ cep.addEventListener("change", function(){
     const label = document.querySelector('#fix-data-cep');
     if(!verifyCEP(cep.value)){
         cep.style.borderColor = 'red';
@@ -95,7 +97,7 @@ nameU.addEventListener("keydown", function(){
  })
 
  const city = document.querySelector('#cidade');
- city.addEventListener("keydown", function(){
+ city.addEventListener("change", function(){
     const label = document.querySelector('#fix-data-city');
     if(!verifyCity(city.value)){
         city.style.borderColor = 'red';
@@ -114,7 +116,7 @@ nameU.addEventListener("keydown", function(){
  const nasc = document.querySelector('#data-nascimento');
 
  const number = document.querySelector('#number');
- number.addEventListener("keydown", function(){
+ number.addEventListener("change", function(){
     const label = document.querySelector('#fix-data-number');
     if(!verifyNumber(number.value)){
         number.style.borderColor = 'red';
