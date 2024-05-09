@@ -51,7 +51,6 @@ function login(){
                 icon: "error",
                 title: "Tente Novamente",
                 text: "Usuário ou senha estão incorretos",
-                //footer: '<a href="#">Why do I have this issue?</a>'
               });
         }
     }else{
