@@ -1,5 +1,5 @@
 const signup = "./paginaCadastro.html"
-const forgot = ""
+const forgot = "./paginaRecuperaSenha.html"
 const ident = document.querySelector('#identifier');
 const pass = document.querySelector('#password');
 
