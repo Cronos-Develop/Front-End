@@ -49,7 +49,7 @@ Este é o repositório que armazena o front-end do app Cronos.
 ![image](https://github.com/Cronos-Develop/Front-End/assets/107047839/d485a7af-b086-4c26-b4cd-0883e38455aa)
 
 ### Mobile:
-![image](https://github.com/Cronos-Develop/Front-End/assets/107047839/bd002355-b1b3-4b35-b2e4-a4ad9c8a7ccf)
+![image](https://github.com/Cronos-Develop/Front-End/assets/107047839/5d90248e-8ea3-405d-bde8-4a10b41f3c8d)
 ![image](https://github.com/Cronos-Develop/Front-End/assets/107047839/7ddbfb38-0703-4f2d-8c06-660e4053813b)
 
 ## User Flow:
