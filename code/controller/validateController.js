@@ -70,6 +70,27 @@ function verifyCNPJ(cnpj) {
     
 }
 
+function verifyDate(date){
+    var flag ="";
+    var n = 0;
+    const tempo = new Date();
+    const anoAtual = tempo.getFullYear().toString();
+    if(anoAtual - date[0] < 18 && anoAtual - date[0] > 0){
+        flag += "[Você não é de maior, não pode possuir empresa.]";
+        n++;
+    }
+    if(anoAtual - date[0] > 105){
+        flag += "[Você deveria estar aposentado e curtindo a vida.]";
+        n++;
+    }
+    if(anoAtual <= date[0]){
+        flag += "[Data inválida.]";
+        n++;
+    }
+
+    return n+flag; 
+}
+
 function verifyPass(password){
     var flag ="";
     var n = 0;
@@ -96,4 +117,69 @@ function verifyPass(password){
     }
 
     return n+flag;
+}
+
+function verifyCEP(cep){
+    return (/^\d{8}$/.test(cep.replace(/[^\d]+/g, "")));
+}
+
+function verifyName(nameU){
+    if(nameU.length < 3){
+        return 0;
+    }else{
+        for(i=0; i<nameU.length; i++){
+            if(parseInt(nameU.charAt(i))>0){
+                return 0;
+            } 
+        }
+        return 1;
+    }
+}
+
+function verifyCity(city){
+    if(city.length <3) return false;
+    for(i=0; i<city.length; i++){
+        if(parseInt(city.charAt(i))>0){
+            return false;
+        }
+    }
+    return true;
+}
+
+function verifyNumber(number){
+    for(i=0; i<number.length; i++){
+        if(/[a-zA-Z]/.test(number.charAt(i))) return false;
+    }
+    return true;
+}
+
+function verifyEmail(email) {
+    if ((email == null) || (email.length < 4))
+    return false;
+
+    var partes = email.split('@');
+    if (partes.length < 2 ) return false;
+
+    var pre = partes[0];
+    if (pre.length == 0) return false;
+    
+    if (!/^[a-zA-Z0-9_.-/+]+$/.test(pre))
+        return false;
+
+    // gmail.com, outlook.com, terra.com.br, etc.
+    var partesDoDominio = partes[1].split('.');
+    if (partesDoDominio.length < 2 ) return false;
+
+    for ( var indice = 0; indice < partesDoDominio.length; indice++ )
+    {
+        var parteDoDominio = partesDoDominio[indice];
+
+        // Evitando @gmail...com
+        if (parteDoDominio.length == 0) return false;  
+
+        if (!/^[a-zA-Z0-9-]+$/.test(parteDoDominio))
+            return false;
+    }
+
+    return true;
 }

@@ -35,7 +35,6 @@ function mostrarDadosUsuario() {
         }
     });
 }
-
 // Função para mostrar pop-up de configurações
 function mostrarConfiguracoes() {
     Swal.fire({
@@ -88,5 +87,4 @@ function confirmarSair() {
             icon: "success"
           });
         }
-      });
-}
+      })}

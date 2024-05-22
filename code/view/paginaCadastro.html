@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./css/style1.css">
+        <link rel="stylesheet" href="./css/style.css">
         <script src="./js/paginaCadastro.js" defer></script>
         <script src="js/mudaCor.js"></script>
         <title>Cadastro - Cronos</title>
@@ -35,21 +35,25 @@
                 <div class="input-group">
                     <label for="email">E-mail*</label>
                     <input class="input-cadastro" type="email" name="email" id="email" placeholder="Exemplo123@mail.com" required>
+                    <label for="email" class="fix" id="fix-email"></label>
                     <input  type="checkbox" id="receber-avisos" name="receber-avisos" class="checkbox-input">
                     <label for="receber-avisos" class="checkbox-label">Desejo receber avisos por e-mail</label>
                     
                 </div>
                 <div class="input-group">
                     <label for="tel">Telefone*</label>
-                    <input class="input-cadastro" type="tel" id="phone" name="phone" placeholder="+55 |66 12345-67891" minlength="10" required>
+                    <input class="input-cadastro" type="tel" id="phone" name="phone" placeholder="+55 |66 12345-67891" minlength="11" required>
+                    <label for="phone" class="fix" id="fix-phone"></label>
                 </div>
                 <div class="input-group">
                     <label for="password">Senha*</label>
                     <input class="input-cadastro" type="password" id="password" name="password" placeholder="Digite a sua senha" required>
+                    <label for="password" class="fix" id="fix-data-pass"></label>
                 </div>
                 <div class="input-group">
                     <label for="confirm-password">Confirmar senha*</label>
                     <input class="input-cadastro" type="password" id="confirm-password" name="confirm-password" placeholder="Digite sua senha novamente" required>
+                    <label for="confirm-password" class="fix" id="fix-confirm-password"></label>
                 </div>
                 <div class="">
                     <a class="btn-cadastro btn-next  ml-auto">Continuar</a>
@@ -64,22 +68,47 @@
                 <div class="input-group">
                     <label for="nome">Nome*</label>
                     <input class="input-cadastro" type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                    <label for="nome" class="fix" id="fix-data-name"></label>
                 </div>
                 <div class="input-group">
-                    <label for="cpf">CPF*</label>
-                    <input class="input-cadastro" type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" maxlength="11" minlength="11" required>
+                    <label for="cpf">CPF/CNPJ*</label>
+                    <input class="input-cadastro" type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" maxlength="11" minlength="14" required>
+                    <label for="identifier" class="fix" id="fix-data-ident"></label>
                 </div>
                 <div class="input-group">
                     <label for="cep">CEP*</label>
                     <input class="input-cadastro" type="text" id="cep" name="cep" placeholder="Digite seu CEP" maxlength="8" minlength="8" required>
+                    <label for="cep" class="fix" id="fix-data-cep"></label>
                 </div>
                 <div class="input-group">
-                    <label for="address">Endereço*</label>
+                    <label for="address">Cidade*</label>
+                    <input class="input-cadastro" type="text" id="cidade" name="cidade" placeholder="Digite a cidade que mora" required>
+                    <label for="cidade" class="fix" id="fix-data-city"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Rua/Avenida*</label>
                     <input class="input-cadastro" type="text" id="endereco" name="endereco" placeholder="Digite seu endereço" required>
+                    <label for="endereco" class="fix" id="fix-data-end"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Bairro*</label>
+                    <input class="input-cadastro" type="text" id="bairro" name="bairro" placeholder="Digite seu Bairro" required>
+                    <label for="bairro" class="fix" id="fix-data-end"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Número da casa*</label>
+                    <input class="input-cadastro" type="text" id="number" name="number" placeholder="N°" required>
+                    <label for="number" class="fix" id="fix-data-number"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Complemento</label>
+                    <input class="input-cadastro" type="text" id="compl" name="compl" placeholder="Complemento" required>
+                    <label for="compl" class="fix" id="fix-data-end"></label>
                 </div>
                 <div class="input-group">
                     <label for="address">Data de Nascimento:</label>
                     <input class="input-cadastro" type="date" class="width-50" id="data-nascimento" name="data-nascimento" placeholder="dd/mm/aaaa" minlength="8" required>
+                    <label for="data-nascimento" class="fix1" id="fix-data-date"></label>
                 </div>
                 <div class="btns-group">
                     <a href="#" class="btn-cadastro btn-prev">Voltar</a>
@@ -111,5 +140,9 @@
             </div>
         </form>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../model/Axios.js"></script>
+    <script src="../controller/validateController.js"></script>
+    <script src="../controller/modelController.js"></script>
     </body>
 </html>

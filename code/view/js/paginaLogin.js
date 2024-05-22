@@ -40,7 +40,20 @@ function direct(page){
 
 function login(){
     if(ident.value && pass.value){
-        //Aqui vão acontecer as requisições de usuário e senha
+        if(Controllogin(ident.value, pass.value)){
+            Swal.fire({
+                title: "Login feito",
+                text: "Usuário e senha corretos",
+                icon: "success"
+              });
+              window.location.href = "./paginaInicial.html";
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: "Tente Novamente",
+                text: "Usuário ou senha estão incorretos",
+              });
+        }
     }else{
         stateIdent(false);//false para deixar campo vermelho
         statePass(false);//true para deixar campo normal
