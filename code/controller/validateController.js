@@ -70,6 +70,27 @@ function verifyCNPJ(cnpj) {
     
 }
 
+function verifyDate(date){
+    var flag ="";
+    var n = 0;
+    const tempo = new Date();
+    const anoAtual = tempo.getFullYear().toString();
+    if(anoAtual - date[0] < 18 && anoAtual - date[0] > 0){
+        flag += "[Você não é de maior, não pode possuir empresa.]";
+        n++;
+    }
+    if(anoAtual - date[0] > 105){
+        flag += "[Você deveria estar aposentado e curtindo a vida.]";
+        n++;
+    }
+    if(anoAtual <= date[0]){
+        flag += "[Data inválida.]";
+        n++;
+    }
+
+    return n+flag; 
+}
+
 function verifyPass(password){
     var flag ="";
     var n = 0;

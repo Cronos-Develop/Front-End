@@ -1,255 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início - Cronos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="./css/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="./js/paginaInicial.js" defer></script>
+        <script src="./js/mudaCor.js" defer></script>
 
-    <div class="modal fade" id="modalEmpresas" tabindex="-1" aria-labelledby="modalEmpresasLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalEmpresasLabel">Empresas Cadastradas</h5>
+        <title>Usuário - Cronos</title>
+    </head>
+    <body>
+        <header class="header-geral"> 
+            <div class="header-content">
+                <div class="company-info">
+                    <h2>Nome da Empresa</h2>
+                    <p>CNPJ: 00.000.000/0001-00</p>
+                </div>
             </div>
-            <div class="modal-body">
-              <!-- Lista de empresas aqui -->
-              <div class="inicio-container">
-                  <div class="row align-items-center">
-                      <div class="col">
-                          <h4>I-Pobre</h4>
-                          <p>CNPJ: 00.000.000/0001-00</p>
-                      </div>
-                      <div class="col text-end">
-                          <img src="img/chessL1.jpg" alt="Foto do Usuário" class="img-fluid" style="max-width: 100px;">
-                      </div>
-                  </div>
-              </div>
+        </header>
 
-              <div class="inicio-container">
-                  <div class="row align-items-center">
-                      <div class="col">
-                          <h4>Cola-coca</h4>
-                          <p>CNPJ: 00.000.000/0001-00</p>
-                      </div>
-                      <div class="col text-end">
-                          <img src="img/chessL1.jpg" alt="Foto do Usuário" class="img-fluid" style="max-width: 100px;">
-                      </div>
-                  </div>
-              </div>
-
-              <div class="inicio-container">
-                  <div class="row align-items-center">
-                      <div class="col">
-                          <h4>Tigrinho</h4>
-                          <p>CNPJ: 00.000.000/0001-00</p>
-                      </div>
-                      <div class="col text-end">
-                          <img src="img/chessL1.jpg" alt="Foto do Usuário" class="img-fluid" style="max-width: 100px;">
-                      </div>
-                  </div>
-              </div>
-            </div>
-            <!-- Adicione mais botões conforme necessário -->
-            <div class="modal-footer">
-            </div>
-            <button class="btn btn-primary ms-3">Editar Empresas <span>&#9999;</span></button>
-          </div>
-        </div>
-      </div>
-
-    <header> 
-        <div class="header-content">
-            <div class="company-info">
-                <h1>Nome da Empresa</h1>
-                <p>CNPJ: 00.000.000/0001-00</p>
-            </div>
-            <img src="img/chessL.jpg" alt="Logo da Empresa" class="company-logo">
-        </div>
-    </header>
-    <section class="sbody2">
-            <main id="main2">
-                <div class="usuario-container">
+        <section class="sbody2">
+            <form action="#" class="form">
+                <div class="form-step form-step-active">
                     <div class="row align-items-center">
-                    <div class="col">
-                        <h4>Nome do usuário</h4>
-                        <p>CNPJ: 00.000.000/0001-00</p>
+                        <div class="col">
+                            <h2 class="text-left no-wrap h2-user">Nome do Usuário</h2>
+                            <p class="p-user">CNPJ: 00.000.000/0001-00</p>
+                        </div>
+                        <div class="col text-end">
+                            <img src="img/pngegg.png" alt="Foto do Usuário" class="img-fluid" style="max-width: 90px;">
+                        </div>
                     </div>
-                    <div class="col text-end">
-                        <img src="img/chessL1.jpg" alt="Foto do Usuário" class="img-fluid" style="max-width: 100px;">
+
+                    <div class="btn-list d-flex flex-column align-items-center">
+                        <a class="btn-conf width-50" onclick="mostrarDadosUsuario()">Informações da conta</a>
+                        <a class="btn-conf width-50" onclick="mostrarConfiguracoes()">Configurações</a>
+                        <a class="btn-conf width-50" onclick="sucesso()">Suporte e Ajuda</a> 
+                        <a class="btn-conf width-50" onclick="confirmarSair()">Sair</a>
+                        <button class="btn-link2" id="btn-link2">Mais sobre nós</button>
                     </div>
-                </div>
-                <div class="row mt-4 text-center">
-                    <div class="col">
-                        <button class="btn btn-primaryU" onclick="mostrarDadosUsuario()">Dados do Usuário</button>
-                    </div>
-                </div>
-                <div class="row mt-2 text-center">
-                    <div class="col">
-                        <button class="btn btn-primaryU" onclick="mostrarConfiguracoes()">Configurações</button>
-                    </div>
-                </div>
-                <div class="row mt-2 text-center">
-                    <div class="col">
-                        <button class="btn btn-primaryU" onclick="sucesso()">Suporte e Ajuda</button>
-                    </div>
-                </div>
-                <button class="btn btn-link2" id="btn btn-link2">Mais sobre nós</button>
-                    
-                <div class="row mt-2 text-center">
-                    <div class="col">
-                        <div class="container-imagem-direita">
-                            <img src="img/ED.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 60px;">
+
+                    <div class="row mt-2 text-center">
+                        <div class="col">
+                            <div class="container-imagem-direita">
+                                <img src="img/ED.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 60px; cursor: pointer;">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            </main>
-        
+            </form>
             <nav>
                 <ul>
-                    <li><a href="paginaTarefas.html">Planos</a></li>
-                    <li><a href="paginaInicial.html">Home</a></li>
-                    <li><a href="paginaUsuario.html">Meu Perfil</a></li>
+                    <li><a href="paginaTarefas.html"><img src="img/pranchetas.png" alt="Icone de Tarefas" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
+                    <li><a href="paginaInicial.html"><img src="img/casa.png" alt="Icone de Início" class="img-fluid usuario-imagem" style="max-width: 60px;"></a></li>
+                    <li><a href="paginaUsuario.html"><img src="img/definicoes.png" alt="Icone de Configurações" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
                 </ul>
             </nav>
-    </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="js/paginaUsuario.js"></script>
-    <script src="js/mudaCor.js"></script>
-    <script src="js/paginaInicial.js"></script>
-
-    <script>
-        function mostrarConfiguracoes() {
-            // Defina o conteúdo do modal
-            const modalContent = `
-                <div class="modal fade" id="modalConfiguracoes" tabindex="-1" aria-labelledby="modalConfiguracoesLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalConfiguracoesLabel">Configurações</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Conteúdo das configurações aqui -->
-                                <button class="btn btn-danger">Deletar Conta</button>
-                                <button class="btn btn-secondary">Fazer Logout</button>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-    
-            // Adicione o modal ao corpo do documento
-            document.body.insertAdjacentHTML('beforeend', modalContent);
-    
-            // Exiba o modal
-            const modal = new bootstrap.Modal(document.getElementById('modalConfiguracoes'));
-            modal.show();
-        }
-    </script>
-
-<script>
-    function mostrarDadosUsuario() {
-        // Defina o conteúdo do modal
-        const modalContent = `
-            <div class="modal fade" id="modalDadosUsuario" tabindex="-1" aria-labelledby="modalDadosUsuarioLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalDadosUsuarioLabel">Dados do Usuário</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Conteúdo dos dados do usuário aqui -->
-                            <p>Nome do usuário: John Doe</p>
-                            <p>Empresa: Nome da Empresa</p>
-                            <p>CNPJ: 00.000.000/0001-00</p>
-                            <img src="img/chessL1.jpg" alt="Foto do Usuário" class="img-fluid" style="max-width: 100px;">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="button" class="btn btn-primary">Editar Informações</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // Adicione o modal ao corpo do documento
-        document.body.insertAdjacentHTML('beforeend', modalContent);
-
-        // Exiba o modal
-        const modal = new bootstrap.Modal(document.getElementById('modalDadosUsuario'));
-        modal.show();
-    }
-</script>
-
-
-    <script>
-        document.querySelector('.container-imagem-direita img').addEventListener('click', function() {
-            // Chamar a função para alternar o modo de cor
-            alternarModoCor();
-        });
-
-        // Função para definir o modo de cor
-        function definirModoCor(modo) {
-            if (modo === 'escuro') {
-                // Mudar para o modo escuro
-                document.documentElement.setAttribute('data-modo', 'escuro');
-
-                // Alterar as cores para o modo escuro
-                document.documentElement.style.setProperty('--cor-primaria', '#2A4F83');
-                document.documentElement.style.setProperty('--cor-secundaria', '#07194F');
-                document.documentElement.style.setProperty('--cor-terciaria', '#0056b3');
-                document.documentElement.style.setProperty('--cor-fundo', '#1A1818');
-                document.documentElement.style.setProperty('--cor-text', '#fff');
-                document.documentElement.style.setProperty('--cor-link', '#1c2aec');
-            } else {
-                // Mudar para o modo claro (padrão)
-                document.documentElement.setAttribute('data-modo', 'claro');
-
-                // Alterar as cores para o modo claro
-                document.documentElement.style.setProperty('--cor-primaria', '#32C6F4');
-                document.documentElement.style.setProperty('--cor-secundaria', '#92E5FF');
-                document.documentElement.style.setProperty('--cor-terciaria', '#0056b3');
-                document.documentElement.style.setProperty('--cor-fundo', '#fff');
-                document.documentElement.style.setProperty('--cor-text', '#000000');
-                document.documentElement.style.setProperty('--cor-link', '#1c2aec');
-            }
-        }
-
-        // Função para recuperar o modo de cor armazenado
-        function recuperarModoCor() {
-            return localStorage.getItem('modoCor') || 'claro'; // Retorna o modo armazenado ou o modo padrão (claro)
-        }
-
-        // Função para alternar o modo de cor
-        function alternarModoCor() {
-            const modoAtual = document.documentElement.getAttribute('data-modo');
-            const novoModo = modoAtual === 'claro' ? 'escuro' : 'claro';
-
-            // Definir o novo modo de cor
-            definirModoCor(novoModo);
-
-            // Armazenar o novo modo de cor
-            localStorage.setItem('modoCor', novoModo);
-        }
-
-        // Chamar a função para recuperar o modo de cor armazenado
-        const modoCor = recuperarModoCor();
-
-        // Chamar a função para definir o modo de cor com base no que foi recuperado
-        definirModoCor(modoCor);
-    </script>
-</body>
+        </section>
+        <script src="./js/paginaUsuario.js"></script>
+    </body>
 </html>

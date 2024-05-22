@@ -1,5 +1,5 @@
 const signup = "./paginaCadastro.html"
-const forgot = ""
+const forgot = "./paginaRecuperaSenha.html"
 const ident = document.querySelector('#identifier');
 const pass = document.querySelector('#password');
 
@@ -46,12 +46,12 @@ function login(){
                 text: "Usuário e senha corretos",
                 icon: "success"
               });
+              window.location.href = "./paginaInicial.html";
         }else{
             Swal.fire({
                 icon: "error",
                 title: "Tente Novamente",
                 text: "Usuário ou senha estão incorretos",
-                //footer: '<a href="#">Why do I have this issue?</a>'
               });
         }
     }else{
