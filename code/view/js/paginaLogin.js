@@ -46,6 +46,7 @@ function login(){
                 text: "Usuário e senha corretos",
                 icon: "success"
               });
+              window.location.href = "./paginaInicial.html";
         }else{
             Swal.fire({
                 icon: "error",
