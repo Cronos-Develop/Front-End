@@ -79,3 +79,11 @@ Swal.fire({
   }
 });
 }
+
+function deleteUser(){
+  Swal.fire({
+    title: "Parabéns!",
+    text: "Sua conta foi deletada com Sucesso",
+    icon: "success"
+  });
+}
