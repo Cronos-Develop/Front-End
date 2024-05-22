@@ -1,154 +1,148 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fazer Cadastro - Cronos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./js/jquery.js"></script>
-</head>
-<body>
-    <section class="sbody">
-        <div class="cadastro-cancelar" id="cadastro-cancelar">
-        <button id="cancel-btn" class="custom-btn1" onclick="window.location.href='paginaLogin.html'">&#8592;   Cancelar cadastro</button>
-    </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/style.css">
+        <script src="./js/paginaCadastro.js" defer></script>
+        <script src="js/mudaCor.js"></script>
+        <title>Cadastro - Cronos</title>
+    </head>
+    <body> 
+        <section class="sbody1">
 
-    <div class="cadastro-container cadastro-container-ativo" id="cadastro-container">
+        <form action="#" class="form">
 
-        <div class="progressbar">
-            <div class="progress" id="progress"></div>
-            <div 
-            class="progress-step progress-step-active" 
-            data-title=""
-            ></div>
-            <div class="progress-step" data-title=""></div>
-            <div class="progress-step" data-title=""></div>
-        </div>
+            <div class="cadastro-cancelar" id="cadastro-cancelar">
+                <button id="cancel-btn" class="custom-btn1" onclick="window.location.href='paginaLogin.html'">&#8592;   Cancelar cadastro</button>
+            </div>
 
-        <h2>Conta</h2>
-        <form id="cadastro-form" class="cadastro-form">
-            <label class="textq">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Exemplo123@mail.com" required>
-            <label for="email" class="fix" id="fix-email"></label>
-            
-            <label class="textq">Telefone:</label>
-            <input type="tel" id="phone" name="phone" placeholder="63923456789" minlength="11" required>
-            <label for="phone" class="fix" id="fix-phone"></label>
-
-            <label class="textq">Senha:</label>
-            <input type="password" id="password" name="password" placeholder="Digite a sua senha" required>
-            <label for="password" class="fix" id="fix-data-pass"></label>
-
-            <label class="textq">Confirmar senha:</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Digite sua senha novamente" required>
-            <label for="confirm-password" class="fix" id="fix-confirm-password"></label>
-        </form>
-        <button type="submit" class="btn btn-primary" id="submit-btn">Continuar</button>
-        <button id="login-btn" class="custom-btn2" onclick="window.location.href='paginaLogin.html'">Possui uma conta?</button>
-    </div>
-
-
-    <div class="cadastro-container" id="cadastro1-container" style="display: none;">
-
-        <div class="progressbar">
-            <div class="progress" id="progress"></div>
-            <div 
-            class="progress-step" 
-            data-title=""
-            ></div>
-            <div class="progress-step progress-step-active" data-title=""></div>
-            <div class="progress-step" data-title=""></div>
-        </div>
-
-        <h2>Dados pessoais</h2>
-           <form id="cadastro-form" class="cadastro-form">
-             <label class="textq">Nome*</label>
-             <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
-             <label for="nome" class="fix" id="fix-data-name"></label>
-    
-             <label class="textq">CPF/CNPJ*</label>
-             <input type="text" id="identifier" name="identifier" placeholder="Digite seu CPF ou CNPJ" maxlength="11" minlength="14" required>
-             <label for="identifier" class="fix" id="fix-data-ident"></label>
-             <div id="end">
-                <div id="end2">
-                    <div id="end">
-                        <label class="textq">CEP*</label>
-                        <input type="text" id="cep" name="cep" placeholder="Digite seu CEP" maxlength="8" minlength="8" required>
-                        <label for="cep" class="fix" id="fix-data-cep"></label>
-                    </div>
-                    <div id="end">
-                        <label class="textq">Cidade*</label>
-                        <input type="text" id="cidade" name="cidade" placeholder="Cidade" required>
-                        <label for="cidade" class="fix" id="fix-data-city"></label>
-                    </div>
+            <div class="progressbar">
+                <div class="progress" id="progress">
+                    
                 </div>
-                <div id="end">
-                    <label class="textq">Rua/Avenida*</label>
-                    <input type="text" id="endereco" name="endereco" placeholder="Digite seu endereço" required>
+                <div class="progress-step progress-step-active" data-title="Conta"></div>
+                <div class="progress-step" data-title="Pessoal"></div>
+                <div class="progress-step" data-title="Empresa"></div>
+            </div>
+
+            <!-- Etapas do cadastro-->
+            <div class="form-step form-step-active">
+
+                <h1 class="text-left">Conta</h1>
+
+                <div class="input-group">
+                    <label for="email">E-mail*</label>
+                    <input class="input-cadastro" type="email" name="email" id="email" placeholder="Exemplo123@mail.com" required>
+                    <label for="email" class="fix" id="fix-email"></label>
+                    <input  type="checkbox" id="receber-avisos" name="receber-avisos" class="checkbox-input">
+                    <label for="receber-avisos" class="checkbox-label">Desejo receber avisos por e-mail</label>
+                    
+                </div>
+                <div class="input-group">
+                    <label for="tel">Telefone*</label>
+                    <input class="input-cadastro" type="tel" id="phone" name="phone" placeholder="+55 |66 12345-67891" minlength="11" required>
+                    <label for="phone" class="fix" id="fix-phone"></label>
+                </div>
+                <div class="input-group">
+                    <label for="password">Senha*</label>
+                    <input class="input-cadastro" type="password" id="password" name="password" placeholder="Digite a sua senha" required>
+                    <label for="password" class="fix" id="fix-data-pass"></label>
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">Confirmar senha*</label>
+                    <input class="input-cadastro" type="password" id="confirm-password" name="confirm-password" placeholder="Digite sua senha novamente" required>
+                    <label for="confirm-password" class="fix" id="fix-confirm-password"></label>
+                </div>
+                <div class="">
+                    <a class="btn-cadastro btn-next  ml-auto">Continuar</a>
+                    <button id="login-btn" class="custom-btn2 " onclick="window.location.href='paginaLogin.html'">Possui uma conta?</button>
+                </div>
+            </div>
+
+            <div class="form-step">
+
+                <h1 class="text-left">Dados Pessoais</h1>
+
+                <div class="input-group">
+                    <label for="nome">Nome*</label>
+                    <input class="input-cadastro" type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                    <label for="nome" class="fix" id="fix-data-name"></label>
+                </div>
+                <div class="input-group">
+                    <label for="cpf">CPF/CNPJ*</label>
+                    <input class="input-cadastro" type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" maxlength="11" minlength="14" required>
+                    <label for="identifier" class="fix" id="fix-data-ident"></label>
+                </div>
+                <div class="input-group">
+                    <label for="cep">CEP*</label>
+                    <input class="input-cadastro" type="text" id="cep" name="cep" placeholder="Digite seu CEP" maxlength="8" minlength="8" required>
+                    <label for="cep" class="fix" id="fix-data-cep"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Cidade*</label>
+                    <input class="input-cadastro" type="text" id="cidade" name="cidade" placeholder="Digite a cidade que mora" required>
+                    <label for="cidade" class="fix" id="fix-data-city"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Rua/Avenida*</label>
+                    <input class="input-cadastro" type="text" id="endereco" name="endereco" placeholder="Digite seu endereço" required>
                     <label for="endereco" class="fix" id="fix-data-end"></label>
                 </div>
-                <div id="end2">
-                    <div id="end">
-                        <label class="textq">Bairro*</label>
-                        <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
-                        <label for="bairro" class="fix" id="fix-data-end"></label>
-                    </div>
-                    <div id="end">
-                        <label class="textq">Número da Casa*</label>
-                        <input type="text" id="number" name="number" placeholder="N°" required>
-                        <label for="number" class="fix" id="fix-data-number"></label>
-                    </div>
-                    <div id="end">
-                        <label class="textq">Complemento*</label>
-                        <input type="text" id="compl" name="compl" placeholder="Complemento" required>
-                        <label for="compl" class="fix" id="fix-data-end"></label>
-                    </div>
+                <div class="input-group">
+                    <label for="address">Bairro*</label>
+                    <input class="input-cadastro" type="text" id="bairro" name="bairro" placeholder="Digite seu Bairro" required>
+                    <label for="bairro" class="fix" id="fix-data-end"></label>
                 </div>
-             </div>
-             <label class="textq">Data de Nascimento*</label>
-             <input type="date" id="data-nascimento" name="data-nascimento" placeholder="dd/mm/aaaa" minlength="8" required>
-             <label for="data-nascimento" class="fix1" id="fix-data-date"></label>
-    
-            </form>
-            <button type="submit" class="btn btn-primary1" id="submit-btn1">Continuar</button>
-        <button id="login-btn" class="custom-btn2" onclick="window.location.href='paginaLogin.html'">Possui uma conta?</button>
-</div>
+                <div class="input-group">
+                    <label for="address">Número da casa*</label>
+                    <input class="input-cadastro" type="text" id="number" name="number" placeholder="N°" required>
+                    <label for="number" class="fix" id="fix-data-number"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Complemento</label>
+                    <input class="input-cadastro" type="text" id="compl" name="compl" placeholder="Complemento" required>
+                    <label for="compl" class="fix" id="fix-data-end"></label>
+                </div>
+                <div class="input-group">
+                    <label for="address">Data de Nascimento:</label>
+                    <input class="input-cadastro" type="date" class="width-50" id="data-nascimento" name="data-nascimento" placeholder="dd/mm/aaaa" minlength="8" required>
+                    <label for="data-nascimento" class="fix1" id="fix-data-date"></label>
+                </div>
+                <div class="btns-group">
+                    <a href="#" class="btn-cadastro btn-prev">Voltar</a>
+                    <a href="#" class="btn-cadastro btn-next">Continuar</a>
+                </div>
+                <button id="login-btn" class="custom-btn2" onclick="window.location.href='paginaLogin.html'">Possui uma conta?</button>
+            </div>
 
-    <div class="cadastro-container" id="cadastro2-container" style="display: none;">
+            <div class="form-step">
 
-        <div class="progressbar">
-            <div class="progress" id="progress"></div>
-            <div 
-            class="progress-step" 
-            data-title=""
-            ></div>
-            <div class="progress-step" data-title=""></div>
-            <div class="progress-step progress-step-active" data-title=""></div>
-        </div>
+                <h1 class="text-left">Dados da Empresa</h1>
 
-        <h2>Dados da empresa</h2>
-        <form id="cadastro-form" class="cadastro-form">
-
-            <label class="textq">Nome da empresa *</label>
-        <div class="input-group">
-            <input type="text" id="nome-empresa" name="nome-empresa" placeholder="Digite o nome da empresa" required>
-        </div>
-        <!--<label for="identifier" class="fix" id="fix-data-nameE"></label>-->
+                <div class="input-group">
+                    <div class="container" id="forgot">
+                        <button class="btn-link2 ml-auto" id="btn-link" onclick="window.location.href='paginaInicial.html'" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">Configurar depois</button>
+                    </div>
+                    <label for="nomeEmpresa"> Nome da empresa*</label>
+                    <input class="input-cadastro" type="text" id="nome-empresa" name="nome-empresa" placeholder="Digite o nome da empresa" required>
+                </div>
+                <div class="input-group">
+                    <label for="cnpj">CNPJ*</label>
+                    <input class="input-cadastro" type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" maxlength="14" minlength="14" required>
+                </div>
+                <div class="btns-group">
+                    <a href="#" class="btn-cadastro btn-prev">Voltar</a>
+                    <input type="submit" value="Cadastrar" class="btn-cadastro" onclick="direct(1)">
+                </div>
+                <button id="login-btn" class="custom-btn2" onclick="window.location.href='paginaLogin.html'">Possui uma conta?</button>
+            </div>
         </form>
-        <div class="container" id="forgot">
-            <a href="paginaInicial.html"><button class="btn btn-link1" id="btn btn-link1" onclick="direct(1)">Configurar depois</button></a>
-        </div>
-        <button type="submit" id="submit-btn-cadastro2">Cadastrar</button>
-        <button id="login-btn" class="custom-btn2" onclick="window.location.href='paginaLogin.html'">Possui uma conta?</button>
-    </div>
-</section>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../model/Axios.js"></script>
     <script src="../controller/validateController.js"></script>
     <script src="../controller/modelController.js"></script>
-    <script src="./js/paginaCadastro.js"></script>
-    <script src="js/mudaCor.js"></script>
-</body>
+    </body>
 </html>
