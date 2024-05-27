@@ -21,10 +21,10 @@ function mostrarDadosUsuario() {
     Swal.fire({
         title: 'Informações da Conta',
         html: `
-            <p><strong>Nome do Usuário:</strong> Nome do Usuário</p>
-            <p><strong>CNPJ:</strong> 00.000.000/0001-00</p>
-            <p><strong>Email:</strong> usuario@empresa.com</p>
-            <p><strong>Telefone:</strong> (00) 0000-0000</p>
+            <p><strong>Nome do Usuário:</strong> ${Nusuario[0].name}</p>
+            <p><strong>CNPJ:</strong> ${Nusuario[0].cpf_cnpj}</p>
+            <p><strong>Email:</strong> ${Nusuario[0].email}</p>
+            <p><strong>Telefone:</strong> ${Nusuario[0].telefone}</p>
         `,
         icon: 'info',
         confirmButtonText: 'Fechar',
@@ -81,10 +81,12 @@ function confirmarSair() {
         confirmButtonText: "Sim"
       }).then((result) => {
         if (result.isConfirmed) {
+          localStorage.removeItem("myHash");
           Swal.fire({
             title: "saiu",
             text: "vc saiu da conta",
             icon: "success"
           });
+          window.location.href = './paginaLogin.html';
         }
       })}
