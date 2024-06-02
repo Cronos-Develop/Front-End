@@ -1,5 +1,4 @@
 function sucesso() {
-
     Swal.fire({
         title: "Boa sorte!",
         text: "Esse é todo suporte que você precisa",

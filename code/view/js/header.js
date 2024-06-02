@@ -1,6 +1,6 @@
 const template = document.createElement('template');
 var i = 0;
-localStorage.setItem("myHash", "C53100D555A5356C4720a4818a4837");
+localStorage.setItem("myHash", "A4983G5552a5177C4759a4858a5654");
 var response = ControlEnterprises();
 let empresa = JSON.parse(response);
 let nomeEmpresa = empresa[i].nome_da_empresa;
