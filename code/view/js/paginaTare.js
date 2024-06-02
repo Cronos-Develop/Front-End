@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-
+ 
   var dragSrcEl = null;
   
   function handleDragStart(e) {
