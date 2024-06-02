@@ -15,12 +15,17 @@
                 <img src="./img/logots.png" alt="Logo do App" class="logo">
             </div>
             <div class="mb-3">
-                <label for="identifier" class="form-label">CPF/CNPJ:</label>
-                <input class="form-control" id="identifier" type="number" placeholder="Digite seu CPF/CNPJ" maxlength="14" minlength="11" required/>
-                <label for="identifier" class="fix" id="fix-data-ident"></label>
-            </div>
+                <label for="password" class="form-label">Nova Senha:</label>
+                <input class="form-control" id="new-password" type="password" placeholder="Digite sua Nova Senha" maxlength="20" minlength="8" required/>
+                <label for="new-password" class="fix" id="fix-data-new-pass"></label>
+            </div> 
+            <div class="mb-3">
+                <label for="confirm-password" class="form-label">Confirme a Nova Senha:</label>
+                <input class="form-control" id="confirm-password" type="password" placeholder="Confirme sua Nova Senha" maxlength="20" minlength="8" required/>
+                <label for="confirm-password" class="fix" id="fix-data-confirm-pass"></label>
+            </div> 
             <div class="container">
-                <button type="submit" onclick="window.location.href='paginaAlteraSenha.html'" class="btn btn-primary">Continuar</button>
+                <button type="submit" class="btn btn-primary">Alterar Senha</button>
             </div>
             <div class="container" id="forgot">
                 <button class="btn btn-link" onclick="window.location.href='paginaLogin.html'">Voltar para Login</button>

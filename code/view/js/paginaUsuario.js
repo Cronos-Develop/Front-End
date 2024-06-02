@@ -4,14 +4,13 @@ function sucesso() {
         text: "Esse é todo suporte que você precisa",
         icon: "success"
       });
-
 }
 
 function dados() {
-Swal.fire({
-    title: "Dados da conta",
-    text: "Nome: Pedro Pascal",
-    icon: "question"
+  Swal.fire({
+      title: "Dados da conta",
+      text: "Nome: Pedro Pascal",
+      icon: "question"
   });
 }
 
@@ -26,48 +25,55 @@ function mostrarDadosUsuario() {
             <p><strong>Telefone:</strong> ${Nusuario[0].telefone}</p>
         `,
         icon: 'info',
+        showCancelButton: true,
         confirmButtonText: 'Fechar',
+        cancelButtonText: 'Alterar Dados',
         customClass: {
-            popup: 'custom-swal-popup',
-            title: 'custom-swal-title',
-            confirmButton: 'custom-swal-button'
-        }
-    });
+          popup: 'custom-swal-popup',
+          title: 'custom-swal-title',
+          confirmButton: 'custom-swal-button',
+          cancelButton: 'custom-swal-button-alt'
+      }
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.cancel) {
+          window.location.href = 'paginaAlteraDados.html';
+      }
+  });
 }
+
 // Função para mostrar pop-up de configurações
 function mostrarConfiguracoes() {
-    Swal.fire({
-        title: 'Configurações',
-        html: `
-            <p><a href="#" class="config-link">Alterar Senha</a></p>
-            <p><a href="#" class="config-link">Configurações de Privacidade</a></p>
-            <p><a href="#" class="config-link">Notificações</a></p>
-        `,
-        icon: 'info',
-        confirmButtonText: 'Fechar',
-        customClass: {
-            popup: 'custom-swal-popup',
-            title: 'custom-swal-title',
-            confirmButton: 'custom-swal-button'
-        }
-    });
+  Swal.fire({
+      title: 'Configurações',
+      html: `
+          <p><a href="#" class="config-link">Alterar Senha</a></p>
+          <p><a href="#" class="config-link">Configurações de Privacidade</a></p>
+          <p><a href="#" class="config-link">Notificações</a></p>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Fechar',
+      customClass: {
+          popup: 'custom-swal-popup',
+          title: 'custom-swal-title',
+          confirmButton: 'custom-swal-button'
+      }
+  });
 }
 
 function salvarMudanca() {
-    Swal.fire({
-        title: "Do you want to save the changes?",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Save",
-        denyButtonText: `Don't save`
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
+  Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+  }).then((result) => {
+      if (result.isConfirmed) {
           Swal.fire("Saved!", "", "success");
-        } else if (result.isDenied) {
+      } else if (result.isDenied) {
           Swal.fire("Changes are not saved", "", "info");
-        }
-      });
+      }
+  });
 }
 
 function confirmarSair() {
@@ -82,9 +88,9 @@ function confirmarSair() {
         if (result.isConfirmed) {
           localStorage.removeItem("myHash");
           Swal.fire({
-            title: "saiu",
-            text: "vc saiu da conta",
-            icon: "success"
+              title: "saiu",
+              text: "vc saiu da conta",
+              icon: "success"
           });
           window.location.href = './paginaLogin.html';
         }
