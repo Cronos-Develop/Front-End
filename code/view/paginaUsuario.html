@@ -61,7 +61,8 @@
             let Nusuario = JSON.parse(response2);
             console.log(Nusuario);
             const Name = document.querySelector("#nameUser");
-            Name.innerText = Nusuario[0].name;
+            var vetor = Nusuario[0].name.split(" ");
+            Name.innerText = vetor[0]+" "+vetor[1]+" "+vetor[2];
             const CNPJ = document.querySelector("#CNPJUser");
             CNPJ.innerText = "CPF/CNPJ: "+Nusuario[0].cpf_cnpj;
         </script>
