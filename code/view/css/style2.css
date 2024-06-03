@@ -13,7 +13,35 @@
   --tag-4:#f2dcf5;
   --tag-4-text:#a734ba;
   --purple:#7784ee;
+
+  --cor-primaria: #32C6F4; /* Azul */
+  --cor-secundaria: #92E5FF; /* Azul claro */
+  --cor-terciaria: #0056b3; /* Azul escuro */
+  --cor-fundo: #fff; /* Branco para o fundo no modo claro */
+  --cor-text: #000000;
+  --cor-link: #1c2aec;
+  --cor-link1: #2B9BC0;
+  --cor-container: #55D1F8;
+  --cor-butãoU: #fff;
+  --cor-botão: #fff;
+  --cor-nav: #92E5FF;
+  --cor-link2: #2A8353;
+  --cor-title: #fff;
+  --cor-fundoC: #32C6F4;
+  --cor-botaoT: #fff;
+
+  /*Para o modo escuro*/
+
+  --cor-fundoE: #1A1818; /* Preto de fundo para o modo escuro*/
+  --cor-primariaE: #2A4F83; /* Azul escuro*/
+  --cor-secundariaE: #07194F;
+  --cor-textE: #fff;
+  --cor-linkE: #fff;
+  --cor-navE: #3565A9;
+  --cor-link2E: #32F474;
+  --cor-title: #2A4F83;
 }
+
 *{
   margin:0;
   padding:0;
@@ -22,8 +50,9 @@
   
 }
 
-body {
-  color:var(--text);
+.sbody-4 {
+  color:var(--cor-text);
+  background-color: var(--cor-fundo);
 }
 
 @mixin display {
@@ -34,14 +63,39 @@ body {
 }
 
 .app {
-  background-color:var(--bg);
+  background-color:linear-gradient(to left, var(--cor-primaria), var(--cor-secundaria));
   width:100%;
   min-height:100vh;
+}
+
+.project-activites__add,
+.project-participants__add {
+    padding: 0.75rem 1.5rem;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: var(--cor-primaria); /* Cor do botão */
+    color: var(--cor-textE); /* Cor do texto do botão */
+    text-align: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    border: 2px solid transparent;
+}
+
+.project-activites__add:hover,
+.project-participants__add:hover {
+    background-color: var(--cor-text); /* Cor do botão ao passar o mouse */
+    color: var(--cor-primaria); /* Cor do texto ao passar o mouse */
+    border-color: var(--cor-primaria); /* Cor da borda ao passar o mouse */
 }
 
 h1 {
   font-size:30px;
 }
+
 .project {
   padding:2rem;
   max-width:75%;
@@ -55,6 +109,7 @@ h1 {
     justify-content:space-between;
     align-items:center;
   }
+
   &-participants {
     @include display;
     span,
@@ -110,8 +165,9 @@ h1 {
 }
 
 .task {
+  color: var(--cor-textE);
   cursor:move;
-  background-color:var(--white);
+  background-color: var(--cor-primaria);
   padding:1rem;
   border-radius:8px;
   width:100%;
@@ -122,6 +178,9 @@ h1 {
   &:hover {
      box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;
     border-color:rgba(162,179,207,.2)!important;
+    padding: 1.5rem;
+    background-color: var(--cor-secundaria);
+    color: var(--cor-fundoE);
   }
   
   p {
@@ -188,6 +247,12 @@ h1 {
   }
 }
 
+.subtask.completed span {
+  font-weight: bold;
+  color: lightgreen;
+  text-decoration: line-through;
+}
+
 .task-hover {
 border:3px dashed var(--light-grey)!important;
 }
@@ -201,72 +266,94 @@ border:3px dashed var(--light-grey)!important;
 }
 
 .tag-progress {
-  margin:1.5rem 0;
-  h2 {
-    font-size:16px;
-    margin-bottom:1rem;
-  }
-  p {
-    display:flex;
-    width:100%;
-    justify-content:space-between;
-    
-    span {
-      color:rgb(180,180,180);
-    }
-  }
-  .progress {
-    width:100%;
-    -webkit-appearance: none;
-    appearance: none;
-    border:none;
-    border-radius:10px;
-    height:10px;
-    
-    &::-webkit-progress-bar,
-    &::-webkit-progress-value {
-      border-radius:10px;
-    }
-    &--copyright {
-      &::-webkit-progress-bar {
-      background-color:#ecd8e6;
-    }
-    
-    &::-webkit-progress-value {
-      background:#d459e8
-    }
-    }
-    
-        &--illustration {
-      &::-webkit-progress-bar {
-      background-color:#dee7e3;
-      
-    }
-    
-    &::-webkit-progress-value {
-      background-color:#46bd84;
-    }
-    }
-    
-        &--design {
-      &::-webkit-progress-bar {
-      
-      background-color:#d8e7f4;
-    }
-    
-    &::-webkit-progress-value {
-      background-color:#08a0f7;
-    }
-    }
-    
+  margin: 1.5rem 0;
 
+  h2 {
+    font-size: 16px;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    span {
+      color: rgb(180, 180, 180);
+    }
+  }
+
+  .progress-container {
+    margin-top: 20px;
+  }
+
+  .progress-bar {
+    margin-bottom: 10px;
+    span {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+  }
+
+  .progress {
+    display: flex;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    background-color: #e0e0e0; /* Background for the gray part */
+  }
+
+  .progress__bar--green {
+    background-color: #4caf50; /* Green color for the completed part */
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .progress__bar--gray {
+    background-color: #e0e0e0; /* Gray color for the remaining part */
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .progress--copyright {
+    &::-webkit-progress-bar {
+      background-color: #ecd8e6;
+    }
+
+    &::-webkit-progress-value {
+      background: #d459e8;
+    }
+  }
+
+  .progress--illustration {
+    &::-webkit-progress-bar {
+      background-color: #dee7e3;
+    }
+
+    &::-webkit-progress-value {
+      background-color: #46bd84;
+    }
+  }
+
+  .progress--design {
+    &::-webkit-progress-bar {
+      background-color: #d8e7f4;
+    }
+
+    &::-webkit-progress-value {
+      background-color: #08a0f7;
+    }
   }
 }
+
 
 .task-activity {
    h2 {
     font-size:16px;
     margin-bottom:1rem;
+    color: var(--cor-linkE);
   }
   
   li {
@@ -311,6 +398,25 @@ border:3px dashed var(--light-grey)!important;
 }
 
 
+.search-filter {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.0rem;
+  margin-bottom: 2.0rem;
+}
+
+#search-bar {
+  padding: 5px;
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#status-filter {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
 
 
@@ -363,4 +469,89 @@ border:3px dashed var(--light-grey)!important;
   h1 {
     font-size:25px;
   }
+}
+
+.project-column-heading_title {
+  margin-bottom: 2rem;
+}
+
+nav {
+  text-align: center;
+  border-radius: 1.835rem; /* Valor igual a metade da altura */
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 23%;
+  background-color: var(--cor-primaria);
+  box-shadow: 0 0 0 5px var(--cor-nav);
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--cor-textE);
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+nav ul li:hover {
+  background-color: var(--cor-nav);
+  box-shadow: 0 0 0 3px var(--cor-secundaria);
+  border-radius: 30px;
+}
+
+/* Estilo para o cabeçalho */
+.header-geral {
+  background-color: var(--cor-primaria);
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
+
+/* Estilo para o conteúdo do cabeçalho */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribui os elementos igualmente */
+  
+}
+
+/* Estilo para o nome da empresa */
+.company-info h2 {
+  margin: 0;
+  color: var(--cor-text);
+}
+
+/* Estilo para o CNPJ */
+.company-info p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--cor-text);
+}
+
+/* Estilo para a logo */
+.company-logo {
+  width: 100px; 
+  height: auto; 
+}
+
+/* CSS adicionado */
+.column-title {
+  margin-bottom: 20px; /* Ajuste o valor conforme necessário */
+}
+
+.in-progress-column, .done-column {
+  margin-top: 20px; /* Ajuste o valor conforme necessário */
 }
