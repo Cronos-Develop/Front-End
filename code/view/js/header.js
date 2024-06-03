@@ -6,7 +6,13 @@ var response2 = ControlUsers();
 let usuario = JSON.parse(response2);
 userCNPJ = usuario[0].cpf_cnpj;
 
-let i = 0;
+var t = localStorage.getItem("myEnterprise");
+let i;
+if(t){
+    i = t;
+}else{
+    i = 0;
+}
 let nomeEmpresa = empresa[i].nome_da_empresa;
     template.innerHTML = `
     <header class="header-geral"> 
@@ -23,7 +29,7 @@ document.body.appendChild(template.content);
 
 function Ftemplate(j){
     document.getElementById('titleEnterprise').innerHTML = empresa[j].nome_da_empresa;
-    i = j;
+    localStorage.setItem("myEnterprise", j);
     Swal.close();
 }
 
