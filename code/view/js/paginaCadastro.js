@@ -74,7 +74,7 @@ function verifyForm(){
         return false;
     }else{
         if(formStepsNum == 1){
-            if(verifyName(nameU.value) && end.value && complemento.value && bairro.value && verifyDate(nasc.value) && verifyNumber(number.value) && (verifyCNPJ(ident.value) || verifyCPF(ident.value)) && verifyCEP(cep.value) && verifyCity(city.value)){
+            if(verifyName(nameU.value) && end.value && bairro.value && verifyDate(nasc.value) && verifyNumber(number.value) && (verifyCNPJ(ident.value) || verifyCPF(ident.value)) && verifyCEP(cep.value) && verifyCity(city.value)){
                 return true;
             }
             return false;

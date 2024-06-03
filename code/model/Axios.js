@@ -37,3 +37,42 @@ function apiPOST(url, data){
     });
     return response;
 }
+
+function apiPUT(url, data){
+    var response;
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: data,
+        dataType: 'html',
+        async: false,
+        success: function(data){
+            console.log(data);
+            response = true;
+        },
+        error: function(data){
+            console.log(data);
+            response = false;
+        }
+    });
+    return response;
+}
+
+function apiDELETE(url){
+    var response;
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        dataType: 'html',
+        async: false,
+        success: function(data){
+            console.log(data);
+            response = true;
+        },
+        error: function(data){
+            console.log(data);
+            response = false;
+        }
+    });
+    return response;
+}

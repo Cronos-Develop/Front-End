@@ -45,7 +45,7 @@ function ControlUsers(){
     }
 }
 
-function ControlCadaster(email, telefone, pass, nameU, end, complemento, bairro, nasc, number, ident, cep, city, empresa){
+function ControlCadaster(email, telefone, pass, nameU, end, complemento=null, bairro, nasc, number, ident, cep, city, empresa){
     const url = URL + '/api/users/f4945H4870A5220j4776A4880a5619';
 
     const data = {
@@ -63,6 +63,60 @@ function ControlCadaster(email, telefone, pass, nameU, end, complemento, bairro,
     console.log(data);
     var response = apiPOST(url, data);
     if(response == 1){
+        if(ControlEnterpriseCadaster(ident, pass, empresa)==1){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+function ControlEnterpriseCadaster(ident, pass, empresa, nicho=null, resumo=null){
+    Controllogin(ident, pass)
+    hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/'+hash;
+
+    const data = {
+        "usuario_id": hash,
+        "nome_da_empresa": empresa,
+        "nicho": nicho,
+        "resumo": resumo
+    }
+
+    console.log(data);
+    var response = apiPOST(url, data);
+    if(response == 1){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function alteraCadastro(Nome, email, telefone, cep, endereco, bairro, number, cidade, compl=null){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/users/' + hash + "/<hash>";
+
+    const data = {
+        "name": Nome,
+        "email": email,
+        "telefone": telefone,
+        "endereco": cidade + ',' + bairro + ',' + endereco + ', Número:' + number + ',' + compl,
+        "cep": cep,
+    }
+
+    var response = apiPUT(url, data);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function deletaUsuario(){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/users/' + hash + "/<hash>";
+
+    var response = apiDELETE(url);
+    if(response == true){
         return 1;
     }else{
         return 0;
