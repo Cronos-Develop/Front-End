@@ -1,4 +1,5 @@
 const URL = 'http://localhost:8000'
+
 function Controllogin(login, password){
     const url = URL+'/api/users/';
     const data = login + ':' + password + '/userHash';
@@ -133,4 +134,17 @@ function controlEmail(ident){
         }else{
             return false;
         }
+}
+
+function ControlTasks(specify=0){
+    var hash = localStorage.getItem("myHash");
+    if(hash){
+        const url = URL+'/api/empresas/'+ specify + '/tarefas/' + hash;
+        var response = apiGET(url);
+        if(response != false){
+            return response;
+        }else{
+            return false;
+        }
+    }
 }

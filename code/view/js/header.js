@@ -19,7 +19,6 @@ let nomeEmpresa = empresa[i].nome_da_empresa;
         </div>
     </header>
     `;
-
 document.body.appendChild(template.content);
 
 function Ftemplate(j){
