@@ -10,6 +10,7 @@
         <script src="./js/paginaInicial.js" defer></script>
         <script src="./js/mudaCor.js" defer></script>
         <script src="./js/jquery.js"></script>
+        <script src="js/sweetalert.js"></script>
         <script src="../controller/modelController.js"></script>
         <script src="../model/Axios.js"></script>
         <title>Usuário - Cronos</title>
@@ -60,7 +61,14 @@
             console.log(Nusuario);
             const Name = document.querySelector("#nameUser");
             var vetor = Nusuario[0].name.split(" ");
-            Name.innerText = vetor[0]+" "+vetor[1]+" "+vetor[2];
+            var cont = 0;
+            vetor.forEach(imprimeNome);
+            function imprimeNome(nome){
+                if(cont <= 3){
+                    Name.innerText += " " + nome;
+                }
+                cont++;
+            }
             const CNPJ = document.querySelector("#CNPJUser");
             CNPJ.innerText = "CPF/CNPJ: "+Nusuario[0].cpf_cnpj;
         </script>

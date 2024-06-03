@@ -93,7 +93,7 @@ function ControlEnterpriseCadaster(ident, pass, empresa, nicho=null, resumo=null
 
 function alteraCadastro(Nome, email, telefone, cep, endereco, bairro, number, cidade, compl=null){
     var hash = localStorage.getItem("myHash");
-    const url = URL + '/api/users/' + hash + "/<hash>";
+    const url = URL + '/api/users/' + hash + "/hash";
 
     const data = {
         "name": Nome,
