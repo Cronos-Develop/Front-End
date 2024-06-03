@@ -233,25 +233,16 @@ O **Cronos** oferece uma variedade de serviços projetados para otimizar a gest�
 
 #### 3. **Análise e Recomendações com IA**
 - **Análise de Dados:** Coleta e análise de dados qualitativos e quantitativos fornecidos pelos usuários.
-- **Recomendações Personalizadas:** Sugestões de melhorias em prazos e métodos com base na análise de dados, adaptando-se continuamente às preferências e padrões de trabalho dos usuários.
 
 #### 4. **Interface Amigável e Intuitiva**
 - **Design Simplificado:** Interface fácil de usar, que facilita a navegação e a utilização das ferramentas da plataforma.
 - **Customização:** Opções de personalização para adaptar a interface às necessidades e preferências dos usuários.
 
-#### 5. **Colaboração e Compartilhamento**
-- **Trabalho em Equipe:** Ferramentas para facilitar a colaboração entre membros de uma equipe, com compartilhamento de tarefas e projetos.
-- **Comunicação Integrada:** Recursos para comunicação interna e troca de informações diretamente na plataforma.
-
-#### 6. **Relatórios e Insights**
-- **Geração de Relatórios:** Criação de relatórios detalhados sobre o progresso das tarefas e projetos.
-- **Insights de Produtividade:** Análises que fornecem insights sobre a produtividade e ajudam a identificar áreas de melhoria.
-
-#### 7. **Suporte ao Cliente**
+#### 5. **Suporte ao Cliente**
 - **Ajuda e Suporte:** Equipe de suporte disponível para ajudar com dúvidas e problemas técnicos.
 - **Recursos de Autoajuda:** Guias, tutoriais e FAQs para auxiliar os usuários a maximizar o uso da plataforma.
 
-#### 8. **Segurança e Privacidade**
+#### 6. **Segurança e Privacidade**
 - **Proteção de Dados:** Medidas avançadas de segurança para proteger as informações dos usuários.
 - **Controle de Acesso:** Opções para gerenciar quem pode acessar e modificar dados na plataforma.
 - 
@@ -376,13 +367,10 @@ Para acessar as ferramentas de gestão do **Cronos**, siga estas etapas simples:
 - **Listas de Tarefas:**
   - Acesse a seção "Tarefas" e selecione "Listas de Tarefas".
   - Crie listas e adicione tarefas e subtarefas.
-- **Calendários Integrados:**
-  - Navegue até "Calendário" e visualize suas tarefas e eventos.
-  - Integre outros calendários, como Google Calendar, para sincronização.
 
 #### 5. **Personalização e Configurações**
-- **Configurações da Conta:** Acesse "Configurações" para personalizar as preferências de uso, notificações e integrações.
-- **Personalização de Ferramentas:** Em cada ferramenta, utilize as opções de personalização para adaptá-las às suas necessidades específicas.
+- **Configurações da Conta:** Acesse "Configurações" para personalizar as preferências de uso e notificações
+- **Personalização de Tarefas:** Em cada tarefa, utilize as opções de personalização para adaptá-las às suas necessidades específicas.
 
 #### 6. **Ajuda e Suporte**
 - **Tutoriais e Guias:** Consulte a seção de "Ajuda" para acessar tutoriais e guias detalhados sobre como usar cada ferramenta.
