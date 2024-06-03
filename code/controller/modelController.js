@@ -122,3 +122,15 @@ function deletaUsuario(){
         return 0;
     }
 }
+
+function controlEmail(ident){
+    const url = URL + '/api/recuperar/' + ident;
+
+    var response = apiGET(url);
+        if(response!=null){
+            console.log(response);
+            return response;
+        }else{
+            return false;
+        }
+}
