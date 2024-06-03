@@ -15,7 +15,7 @@ let nomeEmpresa = empresa[i].nome_da_empresa;
                 <h1 class="cortxt" id="titleEnterprise">  ${nomeEmpresa} </h1>
                 <p>CNPJ: ${userCNPJ} </p>
             </div>
-            <button class="btn-conf width-10" onclick="geraEmmpresas()" style="border:none;"><img src="img/pngegg.png" alt="Logo da Empresa" class="company-logo"></button>
+            <button class="btn-conf width-10" onclick="geraEmmpresas()" style="border:none; border-radius:90px"><img src="img/pngegg.png" alt="Logo da Empresa" class="company-logo"></button>
         </div>
     </header>
     `;
