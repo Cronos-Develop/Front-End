@@ -16,6 +16,7 @@ function definirModoCor(modo) {
         document.documentElement.style.setProperty('--cor-link2', '#2A8353');
         document.documentElement.style.setProperty('--cor-title', '#2A4F83');
         document.documentElement.style.setProperty('--cor-fundoC', '#1A1818');
+        document.documentElement.style.setProperty('--cor-botaoT', '#');
     } else {
         // Mudar para o modo claro (padrão)
         document.documentElement.setAttribute('data-modo', 'claro');
@@ -32,6 +33,7 @@ function definirModoCor(modo) {
         document.documentElement.style.setProperty('--cor-link2', '#32F474');
         document.documentElement.style.setProperty('--cor-title', '#fff');
         document.documentElement.style.setProperty('--cor-fundoC', '#32C6F4');
+        document.documentElement.style.setProperty('--cor-botaoT', '#32C6F4');
     }
 }
 

@@ -13,233 +13,169 @@
         crossorigin="anonymous" 
         referrerpolicy="no-referrer" 
         />
-
+        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="./js/paginaTare.js" defer></script>
+        <script src="./js/mudaCor.js" defer></script>
 
         <title>Atividades - Cronos</title>
+
     </head>
-
     <body>
-       <section class="sbody3">
+       <section class="sbody-4">
 
-        <!-- Working version of https://dribbble.com/shots/14552329--Exploration-Task-Management-Dashboard -->
-
-<div class='app'>
-    <main class='project'>
-      <div class='project-info'>
-        <h1>Atividades da Empresa</h1>
-        <div class='project-participants'>
-          <span></span>
-          <span></span>
-          <span></span>
-          <button class='project-participants__add'>Adicionar Participantes</button>
-            
+        <header class="header-geral"> 
+          <div class="header-content">
+              <div class="company-info">
+                  <h1 class="cortxt">Nome da Empresa</h1>
+                  <p>CNPJ: 00.000.000/0001-00</p>
+              </div>
+              <img src="img/pngegg.png" alt="Logo da Empresa" class="company-logo">
           </div>
-      </div>
-      <div class='project-tasks'>
+      </header>
+
+        <div class='app'>
+          <main class='project'>
+
+           <div class='project-info'>
+             <h1>Atividades da Empresa</h1>
+              <div class='project-participants'>
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <button class='project-activites__add'>Adicionar Atividades</button>
+                <button class='project-participants__add' id="adicionar-participante">Adicionar Participantes</button>
+              </div>
+
+              <div class='search-filter'>
+                <input type='text' id='search-bar' placeholder='Buscar atividades...' />
+                <select id='status-filter'>
+                  <option value='all'>Todas</option>
+                  <option value='in-progress'>Em Progresso</option>
+                  <option value='done'>Concluídas</option>
+                </select>
+              </div>
+
+            </div>
+          <div class='project-tasks'>
+
         <div class='project-column'>
-          <div class='project-column'><div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Em Progresso</h2><button class='project-column-heading__options'><i class="fas fa-ellipsis-h"></i></button>
-          </div>
+
+          <h2 class="column-title">Em Progresso</h2>
+
+          <div class='project-column in-progress-column'>
             
           <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--design'>UI Design</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Replace lorem ipsum text in the final designs</p>
+            <div class='task__tags'><span class='task__tag task__tag--design'>Definição dos horários de venda</span></div>
+            <p>Análise dos críterios para os melhores horários para o ínicio e fim das vendas</p>
             <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>5</span>
-              <span><i class="fas fa-paperclip"></i>5</span> 
               <span class='task__owner'></span>
             </div>
           </div>
           
           <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--illustration'>Illustration</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Create and generate the custom SVG illustrations.</p>
+            <div class='task__tags'><span class='task__tag task__tag--illustration'>Marketing da marca</span></div>
+            <p>Definição de como será a publicidade da marca.</p>
             <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>8</span>
-              <span><i class="fas fa-paperclip"></i>7</span>
               <span class='task__owner'></span>
             </div>
           </div>
           
           <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--copyright'>Copywriting</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Proof read the legal page and check for and loopholes</p>
+            <div class='task__tags'><span class='task__tag task__tag--copyright'>Entrega dos componentes eletrônicos</span></div>
+            <p>Definição da data e o encarregado da entrega dos componentes eletrônicos</p>
             <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>12</span>
-              <span><i class="fas fa-paperclip"></i>11</span>
               <span class='task__owner'></span>
             </div>
           </div>
           
           <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--illustration'>Illustration</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Create the landing page graphics for the hero slider.</p>
+            <div class='task__tags'><span class='task__tag task__tag--illustration'>Local físico</span></div>
+            <p>Achar o local físico da empresa que cumpra os requisitos.</p>
             <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>4</span>
-              <span><i class="fas fa-paperclip"></i>8</span>
               <span class='task__owner'></span>
             </div>
           </div>
           
-          </div>
-          <div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Atividades Concluidas</h2><button class='project-column-heading__options'><i class="fas fa-ellipsis-h"></i></button>
-          </div>
-          <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--copyright'>Copywriting</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Konsep hero title yang menarik</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>3</span>
-              <span><i class="fas fa-paperclip"></i>7</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
+        </div>
+
+        <h2 class="column-title">Atividades concluidas</h2>
+
+        <div class='project-column done-column'>
+
           
-                  <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--design'>UI Design</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Icon di section our services</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>2</span>
-              <span><i class="fas fa-paperclip"></i>5</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
           
-                  <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--copyright'>Copywriting</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Konsep hero title yang menarik</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>2</span>
-              <span><i class="fas fa-paperclip"></i>3</span>
-              <span class='task__owner'></span>
-            </div>
+        <div class='task' draggable='true'>
+          <div class='task__tags'><span class='task__tag task__tag--design'>Pesquisa de Mercado</span></div>
+          <p>Analisar o mercado de tecnologia para identificar oportunidades e tendências, Definir o público-alvo da empresa, Pesquisar os concorrentes e seus produtos ou serviços.</p>
+          <div class='task__stats'>
+            <span class='task__owner'></span>
           </div>
         </div>
         
-        <div class='project-column'><div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Precisa de revisão</h2><button class='project-column-heading__options'><i class="fas fa-ellipsis-h"></i></button>
+        <div class='task' draggable='true'>
+          <div class='task__tags'><span class='task__tag task__tag--illustration'>Definição do Modelo de Negócio</span></div>
+          <p> Definir o tipo de empresa que será aberta (LTDA, MEI, etc.), escolher o nicho de mercado em que a empresa irá atuar, definir os produtos ou serviços que serão oferecidos.</p>
+          <div class='task__stats'>
+            <span class='task__owner'></span>
           </div>
-            
-          <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--copyright'>Copywriting</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Check the company we copied doesn't think we copied them.</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>4</span>
-              <span><i class="fas fa-paperclip"></i>0</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
-          <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--design'>UI Design</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Design the about page.</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>0</span>
-              <span><i class="fas fa-paperclip"></i>5</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
-          <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--illustration'>Illustration</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Move that one image 5px down to make Phil Happy.</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>2</span>
-              <span><i class="fas fa-paperclip"></i>2</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
-          </div>
-        <div class='project-column'><div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Finalizado</h2><button class='project-column-heading__options'><i class="fas fa-ellipsis-h"></i></button>
-          </div>
-          
-           <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--illustration'>Illustration</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Send Advert illustrations over to production company.</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>12</span>
-              <span><i class="fas fa-paperclip"></i>5</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
-          
-           <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--illustration'>Illustration</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Dawn wants to move the text 3px to the right.</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>3</span>
-              <span><i class="fas fa-paperclip"></i>7</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
-          
-           <div class='task' draggable='true'>
-            <div class='task__tags'><span class='task__tag task__tag--copyright'>Copywriting</span><button class='task__options'><i class="fas fa-ellipsis-h"></i></button></div>
-            <p>Amend the contract details.</p>
-            <div class='task__stats'>
-              <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
-              <span><i class="fas fa-comment"></i>8</span>
-              <span><i class="fas fa-paperclip"></i>16</span>
-              <span class='task__owner'></span>
-            </div>
-          </div>
-          
-          </div>
+        </div>
         
+        <div class='task' draggable='true'>
+          <div class='task__tags'><span class='task__tag task__tag--copyright'>Planejamento Estratégico</span></div>
+          <p>Criar um plano de negócios detalhado, incluindo projeções financeiras.</p>
+          <div class='task__stats'>
+            <span class='task__owner'></span>
+          </div>
+        </div>
+        
+        <div class='task' draggable='true'>
+          <div class='task__tags'><span class='task__tag task__tag--illustration'>Captação de Recursos</span></div>
+          <p>Buscar investimento para a empresa através de bancos, fundos de investimento ou crowdfunding.</p>
+          <div class='task__stats'>
+            <span class='task__owner'></span>
+          </div>
+        </div>
       </div>
+
     </main>
+
     <aside class='task-details'>
       <div class='tag-progress'>
-        <h2>Task Progress</h2>
+
+        <h2>Progresso das Atividades</h2>
+
         <div class='tag-progress'>
-          <p>Copywriting <span>3/8</span></p>
-          <progress class="progress progress--copyright" max="8" value="3"> 3 </progress>
+          <p>Definição dos hórarios de venda <span>0/1</span></p>
+          <progress class="progress progress--copyright" max="1" value="0"> 1 </progress>
         </div>
+
         <div class='tag-progress'>
-          <p>Illustration <span>6/10</span></p>
-          <progress class="progress progress--illustration" max="10" value="6"> 6 </progress>
+          <p>Marketing da marca <span>0/1</span></p>
+          <progress class="progress progress--copyright" max="1" value="0"> 3 </progress>
         </div>
-        <div class='tag-progress'>
-          <p>UI Design <span>2/7</span></p>
-          <progress class="progress progress--design" max="7" value="2"> 2 </progress>
+
+          <div class='tag-progress'>
+            <p>Entrega dos componentes eletrônicos <span>0/1</span></p>
+            <progress class="progress progress--illustration" max="1" value="0"> 2 </progress>
+          </div>
+          
+          <div class='tag-progress'>
+            <p>Local fisíco <span>0/1</span></p>
+            <progress class="progress progress--illustration" max="1" value="0"> 3 </progress>
         </div>
-      </div>
-      <div class='task-activity'>
-        <h2>Atividade Recente</h2>
-        <ul>
-          <li>
-            <span class='task-icon task-icon--attachment'><i class="fas fa-paperclip"></i></span>
-            <b>Andrea </b>uploaded 3 documents
-            <time datetime="2021-11-24T20:00:00">Aug 10</time>
-          </li>
-           <li>
-               <span class='task-icon task-icon--edit'><i class="fas fa-pencil-alt"></i></span>
-            <b>Karen </b>uploaded 3 documents
-            <time datetime="2021-11-24T20:00:00">Aug 11</time>
-          </li>
-            <li>
-                <span class='task-icon task-icon--attachment'><i class="fas fa-paperclip"></i></span>
-            <b>Andrea </b>uploaded 3 documents
-            <time datetime="2021-11-24T20:00:00">Aug 11</time>
-          </li>
-        </ul>
+
       </div>
     </aside>
   </div>
-      
-       
+  <nav>
+    <ul>
+      <li><a href="paginaTare.html"><img src="img/pranchetas.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
+      <li><a href="paginaInicia.html"><img src="img/casa.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 60px;"></a></li>
+      <li><a href="paginaUsuario.html"><img src="img/definicoes.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
+    </ul>
+</nav>
        </section>
     </body>
 </html>
