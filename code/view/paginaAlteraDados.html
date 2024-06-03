@@ -5,8 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="./css/style.css">
-        <script src="./js/paginaCadastro.js" defer></script>
         <script src="js/mudaCor.js"></script>
+         <script src="./js/jquery.js"></script>
+        <script src="../model/Axios.js"></script>
+        <script src="./js/paginaUsuario.js"></script>
+        <script src="../controller/validateController.js"></script>
+        <script src="js/sweetalert.js"></script>
+        <script src="../controller/modelController.js"></script>
+        <script src="./js/paginaAlteraDados.js" defer></script>
         <title>Alterar Dados - Cronos</title>
     </head>
     <body> 
@@ -77,15 +83,12 @@
                 <div class="btns-group">
 
                     <a class="btn-cadastro btn-prev  ml-auto" onclick="window.location.href='paginaUsuario.html'">Cancelar Alteração</a>
-                    <a class="btn-cadastro btn-next  ml-auto">Alterar Dados</a>
+                    <a class="btn-cadastro btn-next  ml-auto" onclick="alteraCad()">Alterar Dados</a>
                     
                 </div>
             </div>
         </form>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../model/Axios.js"></script>
-    <script src="../controller/validateController.js"></script>
-    <script src="../controller/modelController.js"></script>
     </body>
 </html>

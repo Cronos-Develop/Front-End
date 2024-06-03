@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="./css/style.css">
         <script src="./js/paginaCadastro.js" defer></script>
         <script src="js/mudaCor.js"></script>
+        <script src="js/sweetalert.js"></script>
+        <script src="js/jquery.js"></script>
         <title>Cadastro - Cronos</title>
     </head>
     <body> 
@@ -61,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="form-step">
+            <div class="form-step" id="form-step1">
 
                 <h1 class="text-left">Dados Pessoais</h1>
 
@@ -72,7 +74,7 @@
                 </div>
                 <div class="input-group">
                     <label for="cpf">CPF/CNPJ*</label>
-                    <input class="input-cadastro" type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" maxlength="11" minlength="14" required>
+                    <input class="input-cadastro" type="text" id="identifier" name="identifier" placeholder="Digite seu CPF" maxlength="14" minlength="11" required>
                     <label for="identifier" class="fix" id="fix-data-ident"></label>
                 </div>
                 <div class="input-group">
@@ -122,19 +124,12 @@
                 <h1 class="text-left">Dados da Empresa</h1>
 
                 <div class="input-group">
-                    <div class="container" id="forgot">
-                        <button class="btn-link2 ml-auto" id="btn-link" onclick="window.location.href='paginaInicial.html'" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">Configurar depois</button>
-                    </div>
                     <label for="nomeEmpresa"> Nome da empresa*</label>
                     <input class="input-cadastro" type="text" id="nome-empresa" name="nome-empresa" placeholder="Digite o nome da empresa" required>
                 </div>
-                <div class="input-group">
-                    <label for="cnpj">CNPJ*</label>
-                    <input class="input-cadastro" type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" maxlength="14" minlength="14" required>
-                </div>
                 <div class="btns-group">
                     <a href="#" class="btn-cadastro btn-prev">Voltar</a>
-                    <input type="submit" value="Cadastrar" class="btn-cadastro" onclick="direct(1)">
+                    <button id="cadaster" class="btn-cadastro" onclick="cadastro()">Cadastrar</button>
                 </div>
                 <button id="login-btn" class="custom-btn2" onclick="window.location.href='paginaLogin.html'">Possui uma conta?</button>
             </div>

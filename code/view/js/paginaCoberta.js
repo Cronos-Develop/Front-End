@@ -14,6 +14,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Redireciona após a animação de fade-out
     setTimeout(() => {
-        window.location.href = 'paginaLogin.html';
+        window.location.href = './view/paginaLogin.html';
     }, 5500); // Redireciona após 5.5 segundos
 });
