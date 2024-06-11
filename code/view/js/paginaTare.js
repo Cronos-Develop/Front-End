@@ -305,9 +305,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <button id="add-subtask" class="swal2-confirm swal2-styled">
           <i class="fas fa-plus"></i>
         </button>
-        <button id="save-task" class="swal2-confirm swal2-styled">
-            <i class="fas fa-save"></i>
-          </button>
         <div style="margin-top: 20px;"></div>
         <div class="button-group">
           <button id="delete-task" class="swal2-confirm swal2-styled">
@@ -319,7 +316,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <button id="complete-task" class="swal2-confirm swal2-styled">
             <i class="fas fa-check"></i>
           </button>
-          
+          <button id="save-task" class="swal2-confirm swal2-styled">
+            <i class="fas fa-save"></i>
+          </button>
         </div>
       `,
         showConfirmButton: false,
