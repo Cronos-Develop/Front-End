@@ -1,7 +1,6 @@
 // função para a barra de busca e o filtro de pesquisa:
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  // Código existente
 
   const searchBar = document.getElementById('search-bar');
   const statusFilter = document.getElementById('status-filter');
@@ -180,7 +179,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     item.addEventListener('click', handleTaskClick, false);
   });
 
-  // Aqui está o pop - up de adicionar uma atividade a lista, é automaticamente "Em progresso"
+  // Aqui está o pop - up de adicionar uma atividade a lista, é direcionado automaticamente para "Em progresso"
 
   document.querySelector('.project-activites__add').addEventListener('click', () => {
     Swal.fire({
@@ -232,7 +231,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     newTask.addEventListener('dragleave', handleDragLeave, false);
     newTask.addEventListener('drop', handleDrop, false);
     newTask.addEventListener('dragend', handleDragEnd, false);
-    newTask.addEventListener('click', handleTaskClick, false); // Add click event
+    newTask.addEventListener('click', handleTaskClick, false);
 
     if (save) {
       saveTasks();
@@ -287,6 +286,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
       return; // Impede que o pop-up seja exibido ao clicar no checkbox das subtarefas das atividades
     }
 
+    // Aqui tá o pop-up das atividades
+
     Swal.fire({
       title: title,
       html: `
@@ -304,7 +305,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <button id="add-subtask" class="swal2-confirm swal2-styled">
           <i class="fas fa-plus"></i>
         </button>
-        
+        <button id="save-task" class="swal2-confirm swal2-styled">
+            <i class="fas fa-save"></i>
+          </button>
         <div style="margin-top: 20px;"></div>
         <div class="button-group">
           <button id="delete-task" class="swal2-confirm swal2-styled">
@@ -322,7 +325,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         showConfirmButton: false,
     });
 
-    // Handle adding subtasks
+    // Cuida de adicionar as sub-tarefas:
+
     document.getElementById('add-subtask').addEventListener('click', () => {
         const subtaskText = document.getElementById('new-subtask-text').value;
         if (subtaskText) {
@@ -338,7 +342,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    // Handle checkbox changes in subtasks
+    // Cuida das mudanças de checkbox das sub-tarefas: (ativado ou não)
+
     document.getElementById('subtasks-list').addEventListener('change', (event) => {
         if (event.target.type === 'checkbox') {
             saveTasks(); 
@@ -441,7 +446,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-  // Função para adicionar subtarefas ao elemento de tarefa
+  // Função para adicionar subtarefas ao elemento da atividade:
+
   function addSubtask(taskElement, text, completed = false) {
     const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
     if (!subtasksContainer.classList.contains('subtasks-container')) {
@@ -470,7 +476,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
       updateProgress();
     });
   }
-  // função que em tese atualizaria a area de "progresso das atividades" com erro;
+
+  function savePA(taskElement) {
+    const title = Swal.getPopup().querySelector('.swal2-title').textContent;
+    const description = Swal.getPopup().querySelector('p').textContent;
+    const subtasks = Array.from(Swal.getPopup().querySelectorAll('#subtasks-list .subtask')).map(subtask => ({
+      text: subtask.querySelector('span').textContent,
+      completed: subtask.querySelector('input').checked,
+    }));
+
+    taskElement.querySelector('.task__tag').textContent = title;
+    taskElement.querySelector('p').textContent = description;
+
+    const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
+    if (!subtasksContainer.classList.contains('subtasks-container')) {
+      subtasksContainer.classList.add('subtasks-container');
+      taskElement.appendChild(subtasksContainer);
+    }
+    subtasksContainer.innerHTML = '';
+    subtasks.forEach(subtask => {
+      addSubtask(taskElement, subtask.text, subtask.completed);
+    });
+    saveTasks();
+  }
+
+
+  // função que atualiza a area de "progresso das atividades"
 
   function updateProgress() {
 
@@ -505,4 +536,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
   doneTasks.forEach(task => addActivity(task.title, task.description, task.subtasks, false));
   updateProgress();
 });
-// -------------------------------------------------------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------------------------------------------------
