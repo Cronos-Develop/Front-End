@@ -316,12 +316,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <button id="complete-task" class="swal2-confirm swal2-styled">
             <i class="fas fa-check"></i>
           </button>
-          <button id="save-task" class="swal2-confirm swal2-styled">
-            <i class="fas fa-save"></i>
-          </button>
+          
         </div>
       `,
-        showConfirmButton: false,
+        showConfirmButton: true,
+        ConfirmButtonText: 'Salvar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          savePA(task);
+        }
     });
 
     // Cuida de adicionar as sub-tarefas:
