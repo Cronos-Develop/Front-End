@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   }
 
-  
+  // Aqui começa as funções para os pop-ups das atividades
 
   function handleTaskClick(e) {
     const task = e.currentTarget;
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }));
 
     if (e.target.type === 'checkbox') {
-      return; // Impede que o pop-up seja exibido ao clicar no checkbox
+      return; // Impede que o pop-up seja exibido ao clicar no checkbox das subtarefas das atividades
     }
 
     Swal.fire({
