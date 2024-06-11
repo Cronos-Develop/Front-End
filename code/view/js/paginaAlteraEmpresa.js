@@ -1,110 +1,47 @@
-var response2 = ControlUsers();
-let Nusuario = JSON.parse(response2);
-console.log(Nusuario);
+// Função para carregar os dados da empresa
+function carregarDadosEmpresa() {
+    var response = ControlUsers();
+    let empresa = JSON.parse(response)[0];
+    document.querySelector('#nomeE').value = empresa.name;
+    document.querySelector('#descricaoE').value = empresa.description;
+    document.querySelector('#identifierE').value = empresa.cnpj;
+    document.querySelector('#cepE').value = empresa.cep;
 
-const Nome = document.querySelector('#nome');
+    // Dividir o endereço em partes
+    let enderecoCompleto = empresa.endereco.split(", ");
+    document.querySelector('#endereco').value = enderecoCompleto[1];
+    document.querySelector('#bairro').value = enderecoCompleto[0];
 
-const email = document.querySelector('#email');
+    let numeroECidade = enderecoCompleto[2].split(". ");
+    document.querySelector('#number').value = numeroECidade[0];
+    document.querySelector('#cidade').value = numeroECidade[1];
+    document.querySelector('#compl').value = empresa.compl;
+}
 
-const telefone = document.querySelector('#phone');
+// Função para validar os campos do formulário
+function validarCampos() {
+    let nomeValido = verifyName(document.querySelector('#nomeE').value);
+    let descricaoValida = document.querySelector('#descricaoE').value !== "";
+    let cnpjValido = verifyCNPJ(document.querySelector('#identifierE').value);
+    let cepValido = verifyCEP(document.querySelector('#cepE').value);
 
-const cep = document.querySelector('#cep');
+    return nomeValido && descricaoValida && cnpjValido && cepValido;
+}
 
-const cidade = document.querySelector('#cidade');
+// Função para alterar os dados da empresa
+function alteraCad() {
+    if (validarCampos()) {
+        let nome = document.querySelector('#nomeE').value;
+        let descricao = document.querySelector('#descricaoE').value;
+        let cnpj = document.querySelector('#identifierE').value;
+        let cep = document.querySelector('#cepE').value;
+        let endereco = document.querySelector('#endereco').value;
+        let bairro = document.querySelector('#bairro').value;
+        let numero = document.querySelector('#number').value;
+        let cidade = document.querySelector('#cidade').value;
+        let compl = document.querySelector('#compl').value;
 
-const endereco = document.querySelector('#endereco');
-
-const bairro = document.querySelector('#bairro');
-
-const number = document.querySelector('#number');
-
-const compl = document.querySelector('#compl');
-
-Nome.value = Nusuario[0].name;
-email.value = Nusuario[0].email;
-telefone.value = Nusuario[0].telefone;
-cep.value = Nusuario[0].cep;
-
-let vetor = Nusuario[0].endereco.split(",")
-endereco.value = vetor[1];
-bairro.value = vetor[0];
-
-vetor = vetor[2].split(".")
-number.value = vetor[0];
-
-vetor = vetor[1].split('\n');
-cidade.value = vetor[1];
-compl.value = vetor[0];
-
-Nome.addEventListener("change", function(){
-    const label = document.querySelector('#fix-data-name');
-    if(verifyName(nameU.value) == 0){
-        nameU.style.borderColor = 'red';
-        label.style.color = 'red';
-        label.innerHTML = "Nome inválido";
-    }else{
-        nameU.style.borderColor = "#C6C6C6";
-        label.innerHTML = "";
-        label.style.color = 'black';
-    }
-});
-email.addEventListener("change", function(){
-    const label = document.querySelector('#fix-email');
-    var response = verifyEmail(email.value);
-    if(!response){
-        email.style.borderColor = 'red';
-        console.log(response);
-        label.style.color = 'red';
-        label.innerHTML = "Email inválido";
-    }else{
-        email.style.borderColor = '#C6C6C6';
-        label.innerHTML = "";
-        label.style.color = 'black';
-    }
-});
-
-cep.addEventListener("change", function(){
-    const label = document.querySelector('#fix-data-cep');
-    if(!verifyCEP(cep.value)){
-        cep.style.borderColor = 'red';
-        label.style.color = 'red';
-        label.innerHTML = "CEP inválido";
-    }else{
-        cep.style.borderColor = "#C6C6C6";
-        label.innerHTML = "";
-        label.style.color = 'black';
-    }
-});
-
-number.addEventListener("change", function(){
-    const label = document.querySelector('#fix-data-number');
-    if(!verifyNumber(number.value)){
-        number.style.borderColor = 'red';
-        label.style.color = 'red';
-        label.innerHTML = "Número inválido";
-    }else{
-        number.style.borderColor = "#C6C6C6";
-        label.innerHTML = "";
-        label.style.color = 'black';
-    }
-});
-
-cidade.addEventListener("change", function(){
-    const label = document.querySelector('#fix-data-city');
-    if(!verifyCity(cidade.value)){
-        cidade.style.borderColor = 'red';
-        label.style.color = 'red';
-        label.innerHTML = "Cidade não possui nome válido";
-    }else{
-        cidade.style.borderColor = "#C6C6C6";
-        label.innerHTML = "";
-        label.style.color = 'black';
-    }
-});
-
-function alteraCad(){
-    if(verifyName(Nome.value) && verifyEmail(email.value) && telefone.value && verifyCEP(cep.value) && endereco.value && bairro.value && verifyNumber(number.value) && verifyCity(cidade.value)){
-        if(alteraCadastro(Nome.value, email.value, telefone.value, cep.value, endereco.value, bairro.value, number.value, cidade.value, compl.value) == 1){
+        if (alteraCadastro(nome, descricao, cnpj, cep, endereco, bairro, numero, cidade, compl) == 1) {
             Swal.fire({
                 icon: "success",
                 title: "Alteração feita com sucesso!",
@@ -115,9 +52,10 @@ function alteraCad(){
                 confirmButtonText: "Voltar à página inicial"
             }).then((result) => {
                 if (result.isConfirmed) {
-                  window.location.href = './paginaInicial.html';
-                }});
-        }else{
+                    window.location.href = './paginaInicial.html';
+                }
+            });
+        } else {
             Swal.fire({
                 icon: "error",
                 title: "Algo deu errado!",
@@ -128,14 +66,71 @@ function alteraCad(){
                 confirmButtonText: "Tentar Novamente!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                  alteraCad();
-            }});
+                    alteraCad();
+                }
+            });
         }
-    }else{
+    } else {
         Swal.fire({
             icon: "error",
             title: "Algo não está correto",
             text: "Verifique se há alguma coisa escrita em vermelho para você corrigir ou se você deixou algo vazio.",
-        })
+        });
     }
 }
+
+// Carregar os dados da empresa ao carregar a página
+document.addEventListener('DOMContentLoaded', carregarDadosEmpresa);
+
+// Funções de validação específicas
+document.querySelector('#nomeE').addEventListener("change", function() {
+    const label = document.querySelector('#fix-data-name');
+    if (!verifyName(this.value)) {
+        this.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Nome inválido";
+    } else {
+        this.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+});
+
+document.querySelector('#descricaoE').addEventListener("change", function() {
+    const label = document.querySelector('#fix-data-descricao');
+    if (this.value === "") {
+        this.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "Descrição inválida";
+    } else {
+        this.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+});
+
+document.querySelector('#identifierE').addEventListener("change", function() {
+    const label = document.querySelector('#fix-data-ident');
+    if (!verifyCNPJ(this.value)) {
+        this.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "CNPJ inválido";
+    } else {
+        this.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+});
+
+document.querySelector('#cepE').addEventListener("change", function() {
+    const label = document.querySelector('#fix-data-cep');
+    if (!verifyCEP(this.value)) {
+        this.style.borderColor = 'red';
+        label.style.color = 'red';
+        label.innerHTML = "CEP inválido";
+    } else {
+        this.style.borderColor = "#C6C6C6";
+        label.innerHTML = "";
+        label.style.color = 'black';
+    }
+});
