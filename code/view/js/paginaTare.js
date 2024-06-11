@@ -471,6 +471,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       } else {
         subtask.classList.remove('completed');
       }
+      savePA(task);
       saveTasks();
       updateProgress();
     });
