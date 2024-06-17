@@ -1,9 +1,97 @@
+const dict = {
+  "logout": `<h2 id="sair-da-conta-logout-">Sair da conta(logout)</h2>
+              <ol>
+                <li>Selecione a aba &#39;Perfil&#39;</li>
+                <li>Pressione o botão &#39;Sair&#39;</li>
+                <li>Pressione &#39;Sim&#39; para confirmar</li>
+              </ol>`,
+  "AlteraSenha": `<h2 id="mudan-a-de-senha">Mudança de senha</h2>
+                  <ol>
+                    <li>Selecione a aba &#39;Perfil&#39;</li>
+                    <li>Pressione o botão &#39;Informações de conta&#39;</li>
+                    <li>Pressione o ícone do &#39;lápis&#39; na seção &#39;Informações de Conta&#39; para editar</li>
+                    <li>Insira a senha anterior</li>
+                    <li>Insira a senha nova</li>
+                    <li>Confirme as alterações</li>
+                  </ol>`,
+  "Criaempresa": `<h2 id="cria-o-de-empresa">Criação de empresa</h2>
+                    <ol>
+                      <li>Selecione a aba &#39;Empresas&#39;</li>
+                      <li>Pressione o botão &#39;Editar Empresas&#39;</li>
+                      <li>Pressione o botão &#39;Nova Empresa&#39;</li>
+                      <li>Insira os dados da nova empresa</li>
+                      <li>Confirme as alterações</li>
+                    </ol>`,
+  "AlteraEmpresa": `<h2 id="alterar-empresa-gerenciada">Alterar empresa gerenciada</h2>
+                    <ol>
+                      <li>Selecione a aba &#39;Empresas&#39;</li>
+                      <li>Selecione uma empresa existente</li>
+                      <li>Confirme a mudança</li>
+                    </ol>`,
+  "AlteraEmpresaD": `<h2 id="alterar-dados-de-empresa">Alterar dados de empresa</h2>
+                    <ol>
+                      <li>Selecione a aba &#39;Empresas&#39;</li>
+                      <li>Pressione o botão &#39;Editar Empresas&#39;</li>
+                      <li>Selecione uma empresa existente</li>
+                      <li>Faça a edição da empresa selecionada</li>
+                      <li>Confirme as alterações</li>
+                    </ol>`,
+  "CriaTarefa": `<h2 id="criar-tarefas">Criar tarefas</h2>
+                  <ol>
+                    <li>Selecione a aba &#39;Tarefas&#39;</li>
+                    <li>Pressione o botão &#39;Criar Tarefa&#39;</li>
+                    <li>Insira as informações necessárias</li>
+                    <li>Confirme as alterações</li>
+                  </ol>`,
+  "EditaTarefa": `<h2 id="editar-tarefas">Editar tarefas</h2>
+                  <ol>
+                    <li>Selecione a aba &#39;Tarefas&#39;</li>
+                    <li>Selecione uma tarefa</li>
+                    <li>Aperte no ícone do &#39;lápis&#39; para poder editar</li>
+                    <li>Edite as informações</li>
+                    <li>Confirme as alterações</li>
+                  </ol>`,
+  "ExcluiTarefa": `<h2 id="excluir-tarefas">Excluir tarefas</h2>
+                    <ol>
+                      <li>Selecione a aba &#39;Tarefas&#39;</li>
+                      <li>Selecione uma tarefa</li>
+                      <li>Aperte no ícone da &#39;lixeira&#39; para poder excluir</li>
+                      <li>Confirme as alterações</li>
+                    </ol>`,
+  "MarcarTArefa": `<h2 id="marcar-tarefas">Marcar tarefas</h2>
+                    <ol>
+                      <li>Selecione a aba &#39;Tarefas&#39;</li>
+                      <li>Seleciona uma tarefa</li>
+                      <li>Pressione o botão &#39;Marcar Tarefa&#39;</li>
+                      <li>Confirme as alterações</li>
+                    </ol>`
+}
 function sucesso() {
     Swal.fire({
-        title: "Boa sorte!",
-        text: "Esse é todo suporte que você precisa",
-        icon: "success"
+        title: "Tutorial",
+        html: `
+        <p><a href="#" onclick="tutorial('logout')" class="config-link">Sair da conta(logout)</a></p>
+        <p><a href="#" onclick="tutorial('AlteraSenha')" class="config-link">Mudança de senha</a></p>
+        <p><a href="#" onclick="tutorial('Criaempresa')" class="config-link">Criação de empresa</a></p>
+        <p><a href="#" onclick="tutorial('AlteraEmpresa')" class="config-link">Alterar empresa gerenciada</a></p>
+        <p><a href="#" onclick="tutorial('AlteraEmpresaD')" class="config-link">Alterar dados de empresa</a></p>
+        <p><a href="#" onclick="tutorial('CriaTarefa')" class="config-link">Criar tarefas</a></p>
+        <p><a href="#" onclick="tutorial('EditaTarefa')" class="config-link">Editar tarefas</a></p>
+        <p><a href="#" onclick="tutorial('ExcluiTarefa')" class="config-link">Excluir tarefas</a></p>
+        <p><a href="#" onclick="tutorial('MarcarTArefa')" class="config-link">Marcar tarefas</a></p>
+        `,
+        icon: "question"
       });
+}
+
+function tutorial(dictN){
+  Swal.fire({
+    title: "Tutorial",
+    html: `<div style="justify-content: left; align=itens: left; text-align:left;">
+    ${dict[dictN]}
+    </div>`,
+    icon: "question"
+  });
 }
 
 function dados() {
@@ -89,7 +177,7 @@ function confirmarSair() {
           localStorage.removeItem("myHash");
           Swal.fire({
               title: "saiu",
-              text: "vc saiu da conta",
+              text: "Você saiu da conta",
               icon: "success"
           });
           window.location.href = './paginaLogin.html';
