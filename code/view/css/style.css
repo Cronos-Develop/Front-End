@@ -405,6 +405,7 @@ label {
     cursor: pointer;
     transition: 0.3s;
     margin-bottom: 1.0rem;
+    
 }
 
 .btn-link2 {
@@ -421,7 +422,8 @@ label {
 }
 
 .btn-conf:hover{
-    background-color: var(--cor-secundaria);
+    background-color: #fff; /* Cor do botão ao passar o mouse */
+    color: var(--cor-primaria); /* Cor do texto ao passar o mouse */
     box-shadow: 0 0 0 3px var(--cor-fundo), 0 0 0 2px var(--cor-fundo);
 }
 
@@ -443,10 +445,6 @@ label {
 
 /* --------------------------------------------------------- Pagina de Tarefas -------------------------------------------------------------- */
 
-.cortxt {
-    color: var(--cor-text);
-}
-
 .sbody3 {
     background-color: var(--cor-fundo);
     font-family: Montserrat, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -457,10 +455,39 @@ label {
     
 }
 
+.cortxt {
+    color: var(--cor-text);
+}
+
+
 .header-tarefa {
     display: flex;
     justify-content: center; /* Centraliza horizontalmente */
     align-items: center; /* Centraliza verticalmente */
+}
+
+.project-activites__add,
+.project-participants__add {
+    padding: 0.75rem 1.5rem;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: var(--cor-botão);
+    color: var(--cor-text);
+    text-align: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    border: 2px solid transparent;
+}
+
+.project-activites__add:hover,
+.project-participants__add:hover {
+    background-color: #fff; 
+    color: var(--cor-primaria); 
+    
 }
 
 .button-tarefa {
@@ -610,6 +637,18 @@ label {
     font-style: italic;
 }
 
+/* formulario das configurações de empresa */
+
+.pE{
+    color: var(--cor-text);
+    text-decoration: solid, underline;
+    margin-top: 2rem;
+}
+
+.labelE{
+    color: var(--cor-text);
+}
+
 /* --------------------------------------------------------- Pagina Inicial ----------------------------------------------------------------- */
 
 /* Estilo para o cabeçalho */
@@ -665,7 +704,7 @@ nav ul {
     padding: 0;
 }
 
-nav ul li {
+nav ul li { 
     display: inline-block;
     margin: 0 10px;
 }
@@ -685,7 +724,7 @@ nav ul li:hover {
 }
 
 .container-imagem-direita {
-    text-align: right; /* Para alinhar a imagem à direita */
+    text-align: right;
 }
 
 .inicio-container {
@@ -693,7 +732,7 @@ nav ul li:hover {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Adiciona espaço abaixo de cada container */
+    margin-bottom: 20px;
     text-align: center;
     position: relative; 
     z-index: 2;
@@ -724,4 +763,14 @@ nav ul li:hover {
     background-color: var(--cor-link);
     transform: scale(1.05); 
     transition: transform 0.3s ease; 
+}
+
+/* --------------------------------------------------------- Pagina de Alterar Empresa ----------------------------------------------------------------- */
+
+.input-confE {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
 }

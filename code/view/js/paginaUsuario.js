@@ -104,30 +104,54 @@ function dados() {
 
 // Função para mostrar pop-up com informações do usuário
 function mostrarDadosUsuario() {
-    Swal.fire({
-        title: 'Informações da Conta',
-        html: `
-            <p><strong>Nome do Usuário:</strong> ${Nusuario[0].name}</p>
-            <p><strong>CNPJ:</strong> ${Nusuario[0].cpf_cnpj}</p>
-            <p><strong>Email:</strong> ${Nusuario[0].email}</p>
-            <p><strong>Telefone:</strong> ${Nusuario[0].telefone}</p>
-        `,
-        icon: 'info',
-        showCancelButton: true,
-        confirmButtonText: 'Fechar',
-        cancelButtonText: 'Alterar Dados',
-        customClass: {
+  Swal.fire({
+      title: 'Informações da Conta',
+      html: `
+          <p><strong>Nome do Usuário:</strong> ${Nusuario[0].name}</p>
+          <p><strong>CNPJ:</strong> ${Nusuario[0].cpf_cnpj}</p>
+          <p><strong>Email:</strong> ${Nusuario[0].email}</p>
+          <p><strong>Telefone:</strong> ${Nusuario[0].telefone}</p>
+      `,
+      icon: 'info',
+      showCancelButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Fechar',
+      cancelButtonText: 'Alterar Dados',
+      denyButtonText: 'Deletar Dados',
+      customClass: {
           popup: 'custom-swal-popup',
           title: 'custom-swal-title',
           confirmButton: 'custom-swal-button',
-          cancelButton: 'custom-swal-button-alt'
+          cancelButton: 'custom-swal-button-alt',
+          denyButton: 'custom-swal-button-delete' 
       }
-    }).then((result) => {
+  }).then((result) => {
       if (result.dismiss === Swal.DismissReason.cancel) {
           window.location.href = 'paginaAlteraDados.html';
+      } else if (result.isDenied) {
+          // Adicione aqui a lógica para deletar os dados do usuário
+          Swal.fire({
+              title: 'Tem certeza?',
+              text: "Esta ação não pode ser desfeita !",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Deletar',
+              cancelButtonText: 'Cancelar',
+              customClass: {
+                  confirmButton: 'custom-swal-button-delete',
+                  cancelButton: 'custom-swal-button'
+              }
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Lógica para deletar os dados
+                  deleteUserData(Nusuario[0].id); // Supondo que deleteUserData é uma função que deleta os dados do usuário
+                  Swal.fire('Deletado!', 'Os dados foram deletados com sucesso.', 'success');
+              }
+          });
       }
   });
 }
+
 
 // Função para mostrar pop-up de configurações
 function mostrarConfiguracoes() {

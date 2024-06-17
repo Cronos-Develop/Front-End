@@ -12,7 +12,7 @@ const eraseBtn = document.querySelector("#erase-button");
 const filterBtn = document.querySelector("#filter-select");
 
 let oldInputValue;
-let oldTitleValue;
+let oldTitleValue; 
 
 // Funções
 const saveTodo = (title, text, done = 0, save = 1) => {

@@ -1,7 +1,6 @@
 // função para a barra de busca e o filtro de pesquisa:
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  // Código existente
 
   const searchBar = document.getElementById('search-bar');
   const statusFilter = document.getElementById('status-filter');
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   doneTasks.forEach(task => addActivity(task.title, task.description, task.subtasks, false));
   filterTasks();
 });
-
+ 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 
 // função para adicionar o participante para as tarefas da empresa:
@@ -180,7 +179,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     item.addEventListener('click', handleTaskClick, false);
   });
 
-  // Aqui está o pop - up de adicionar uma atividade a lista, é automaticamente "Em progresso"
+  // Aqui está o pop - up de adicionar uma atividade a lista, é direcionado automaticamente para "Em progresso"
 
   document.querySelector('.project-activites__add').addEventListener('click', () => {
     Swal.fire({
@@ -232,7 +231,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     newTask.addEventListener('dragleave', handleDragLeave, false);
     newTask.addEventListener('drop', handleDrop, false);
     newTask.addEventListener('dragend', handleDragEnd, false);
-    newTask.addEventListener('click', handleTaskClick, false); // Add click event
+    newTask.addEventListener('click', handleTaskClick, false);
 
     if (save) {
       saveTasks();
@@ -260,7 +259,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     `;
     subtasksContainer.appendChild(subtask);
 
-    subtask.querySelector('input').addEventListener('change', () => {
+    subtask.querySelector('input').addEventListener('change', (e) => {
+      e.stopPropagation();
       if (subtask.querySelector('input').checked) {
         subtask.classList.add('completed');
       } else {
@@ -271,6 +271,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   }
 
+  // Aqui começa as funções para os pop-ups das atividades
+
   function handleTaskClick(e) {
     const task = e.currentTarget;
     const title = task.querySelector('.task__tag').textContent;
@@ -280,113 +282,174 @@ document.addEventListener('DOMContentLoaded', (event) => {
       completed: subtask.querySelector('input').checked,
     }));
 
+    if (e.target.type === 'checkbox') {
+      return; // Impede que o pop-up seja exibido ao clicar no checkbox das subtarefas das atividades
+    }
+
+    // Aqui tá o pop-up das atividades
+
     Swal.fire({
       title: title,
       html: `
         <p>${description}</p>
+        <ul id="subtasks-list" style="margin-top: 2rem">
+          ${subtasks.map(subtask => `
+            <li class="subtask">
+              <input type="checkbox" ${subtask.completed ? 'checked' : ''}>
+              <span>${subtask.text}</span>
+            </li>
+          `).join('')}
+        </ul>
         <div style="margin-top: 20px;"></div>
-        <button id="delete-task" class="swal2-confirm swal2-styled">Deletar Tarefa</button>
-        <button id="edit-task" class="swal2-confirm swal2-styled">Editar Tarefa</button>
-        <button id="complete-task" class="swal2-confirm swal2-styled">Concluir Tarefa</button>
+        <input type="text" id="new-subtask-text" placeholder="Nova Sub-tarefa">
+        <button id="add-subtask" class="swal2-confirm swal2-styled">
+          <i class="fas fa-plus"></i>
+        </button>
+        <div style="margin-top: 20px;"></div>
+        <div class="button-group">
+          <button id="delete-task" class="swal2-confirm swal2-styled">
+            <i class="fas fa-trash"></i>
+          </button>
+          <button id="edit-task" class="swal2-confirm swal2-styled">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button id="complete-task" class="swal2-confirm swal2-styled">
+            <i class="fas fa-check"></i>
+          </button>
+          
+        </div>
       `,
-      showConfirmButton: false,
+        showConfirmButton: true,
+        ConfirmButtonText: 'Salvar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          savePA(task);
+        }
+    });
+
+    // Cuida de adicionar as sub-tarefas:
+
+    document.getElementById('add-subtask').addEventListener('click', () => {
+        const subtaskText = document.getElementById('new-subtask-text').value;
+        if (subtaskText) {
+            const newSubtask = document.createElement('li');
+            newSubtask.classList.add('subtask');
+            newSubtask.innerHTML = `
+                <input type="checkbox">
+                <span>${subtaskText}</span>
+            `;
+            document.getElementById('subtasks-list').appendChild(newSubtask);
+            document.getElementById('new-subtask-text').value = '';
+            saveTasks();
+        }
+    });
+
+    // Cuida das mudanças de checkbox das sub-tarefas: (ativado ou não)
+
+    document.getElementById('subtasks-list').addEventListener('change', (event) => {
+        if (event.target.type === 'checkbox') {
+            saveTasks(); 
+        }
     });
 
     document.getElementById('delete-task').addEventListener('click', () => {
-      task.remove();
-      Swal.close();
-      saveTasks();
-      saveDoneTasks();
-      updateProgress();
+        task.remove();
+        Swal.close();
+        saveTasks();
+        saveDoneTasks();
+        updateProgress();
     });
 
     document.getElementById('edit-task').addEventListener('click', () => {
-      const currentSubtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
-        text: subtask.querySelector('span').textContent,
-        completed: subtask.querySelector('input').checked,
-      }));
+        const currentSubtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
+            text: subtask.querySelector('span').textContent,
+            completed: subtask.querySelector('input').checked,
+        }));
 
-      Swal.fire({
-        title: 'Editar Tarefa',
-        html: `
-          <input type="text" id="edit-task-title" class="swal2-input" value="${title}">
-          <textarea id="edit-task-description" class="swal2-textarea">${description}</textarea>
-          <ul id="edit-subtasks-list">
-            ${currentSubtasks.map(subtask => `
-              <li>
-                <input type="checkbox" ${subtask.completed ? 'checked' : ''}>
-                <input type="text" class="edit-subtask-text" value="${subtask.text}">
-                <button class="delete-subtask">Excluir</button>
-              </li>
-            `).join('')}
-          </ul>
-          <div style="margin-top: 20px;"></div>
-          <input type="text" id="new-edit-subtask-text" placeholder="Nova Sub-tarefa">
-          <button id="add-edit-subtask" class="swal2-confirm swal2-styled">Adicionar Sub-tarefa</button>
-        `,
-        confirmButtonText: 'Salvar',
-        preConfirm: () => {
-          const newTitle = Swal.getPopup().querySelector('#edit-task-title').value;
-          const newDescription = Swal.getPopup().querySelector('#edit-task-description').value;
-          const updatedSubtasks = Array.from(Swal.getPopup().querySelectorAll('#edit-subtasks-list li')).map(li => ({
-            text: li.querySelector('.edit-subtask-text').value,
-            completed: li.querySelector('input[type="checkbox"]').checked,
-          }));
+        Swal.fire({
+            title: 'Editar Tarefa',
+            html: `
+                <input type="text" id="edit-task-title" class="swal2-input" value="${title}">
+                <textarea id="edit-task-description" class="swal2-textarea">${description}</textarea>
+                <ul id="edit-subtasks-list">
+                    ${currentSubtasks.map(subtask => `
+                        <li>
+                            <input type="checkbox" ${subtask.completed ? 'checked' : ''}>
+                            <input type="text" class="edit-subtask-text" value="${subtask.text}">
+                            <button class="delete-subtask">Excluir</button>
+                        </li>
+                    `).join('')}
+                </ul>
+                <div style="margin-top: 20px;"></div>
+                <input type="text" id="new-edit-subtask-text" placeholder="Nova Sub-tarefa">
+                <button id="add-edit-subtask" class="swal2-confirm swal2-styled">Adicionar Sub-tarefa</button>
+            `,
+            confirmButtonText: 'Salvar',
+            preConfirm: () => {
+                const newTitle = Swal.getPopup().querySelector('#edit-task-title').value;
+                const newDescription = Swal.getPopup().querySelector('#edit-task-description').value;
+                const updatedSubtasks = Array.from(Swal.getPopup().querySelectorAll('#edit-subtasks-list li')).map(li => ({
+                    text: li.querySelector('.edit-subtask-text').value,
+                    completed: li.querySelector('input[type="checkbox"]').checked,
+                }));
 
-          return { newTitle, newDescription, updatedSubtasks };
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const { newTitle, newDescription, updatedSubtasks } = result.value;
-          task.querySelector('.task__tag').textContent = newTitle;
-          task.querySelector('p').textContent = newDescription;
+                return { newTitle, newDescription, updatedSubtasks };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const { newTitle, newDescription, updatedSubtasks } = result.value;
+                task.querySelector('.task__tag').textContent = newTitle;
+                task.querySelector('p').textContent = newDescription;
 
-          const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
-          if (!subtasksContainer.classList.contains('subtasks-container')) {
-            subtasksContainer.classList.add('subtasks-container');
-            task.appendChild(subtasksContainer);
-          }
-          subtasksContainer.innerHTML = '';
-          updatedSubtasks.forEach(subtask => {
-            addSubtask(task, subtask.text, subtask.completed);
-          });
-          saveTasks();
-          saveDoneTasks();
-        }
-      });
+                const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
+                if (!subtasksContainer.classList.contains('subtasks-container')) {
+                    subtasksContainer.classList.add('subtasks-container');
+                    task.appendChild(subtasksContainer);
+                }
+                subtasksContainer.innerHTML = '';
+                updatedSubtasks.forEach(subtask => {
+                    addSubtask(task, subtask.text, subtask.completed);
+                });
+                saveTasks();
+                saveDoneTasks();
+            }
+        });
 
-      document.getElementById('add-edit-subtask').addEventListener('click', () => {
-        const subtaskText = document.getElementById('new-edit-subtask-text').value;
-        if (subtaskText) {
-          const newSubtask = document.createElement('li');
-          newSubtask.innerHTML = `
-            <input type="checkbox">
-            <input type="text" class="edit-subtask-text" value="${subtaskText}">
-            <button class="delete-subtask">Excluir</button>
-          `;
-          document.getElementById('edit-subtasks-list').appendChild(newSubtask);
-        }
-      });
+        document.getElementById('add-edit-subtask').addEventListener('click', () => {
+            const subtaskText = document.getElementById('new-edit-subtask-text').value;
+            if (subtaskText) {
+                const newSubtask = document.createElement('li');
+                newSubtask.innerHTML = `
+                    <input type="checkbox">
+                    <input type="text" class="edit-subtask-text" value="${subtaskText}">
+                    <button class="delete-subtask">Excluir</button>
+                `;
+                document.getElementById('edit-subtasks-list').appendChild(newSubtask);
+            }
+        });
 
-      document.getElementById('edit-subtasks-list').addEventListener('click', (event) => {
-        if (event.target.classList.contains('delete-subtask')) {
-          const subtask = event.target.closest('li');
-          subtask.remove();
-        }
-      });
+        document.getElementById('edit-subtasks-list').addEventListener('click', (event) => {
+            if (event.target.classList.contains('delete-subtask')) {
+                const subtask = event.target.closest('li');
+                subtask.remove();
+            }
+        });
     });
 
     document.getElementById('complete-task').addEventListener('click', () => {
-      const doneColumn = document.querySelector('.done-column');
-      doneColumn.appendChild(task);
-      saveTasks();
-      saveDoneTasks();
-      updateProgress();
-      Swal.close();
+        const doneColumn = document.querySelector('.done-column');
+        doneColumn.appendChild(task);
+        saveTasks();
+        saveDoneTasks();
+        updateProgress();
+        Swal.close();
     });
-  }
+}
 
-  // Função para adicionar subtarefas ao elemento de tarefa
+
+
+  // Função para adicionar subtarefas ao elemento da atividade:
+
   function addSubtask(taskElement, text, completed = false) {
     const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
     if (!subtasksContainer.classList.contains('subtasks-container')) {
@@ -411,11 +474,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
       } else {
         subtask.classList.remove('completed');
       }
+      savePA(task);
       saveTasks();
       updateProgress();
     });
   }
-  // função que em tese atualizaria a area de "progresso das atividades" com erro;
+
+  function savePA(taskElement) {
+    const title = Swal.getPopup().querySelector('.swal2-title').textContent;
+    const description = Swal.getPopup().querySelector('p').textContent;
+    const subtasks = Array.from(Swal.getPopup().querySelectorAll('#subtasks-list .subtask')).map(subtask => ({
+      text: subtask.querySelector('span').textContent,
+      completed: subtask.querySelector('input').checked,
+    }));
+
+    taskElement.querySelector('.task__tag').textContent = title;
+    taskElement.querySelector('p').textContent = description;
+
+    const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
+    if (!subtasksContainer.classList.contains('subtasks-container')) {
+      subtasksContainer.classList.add('subtasks-container');
+      taskElement.appendChild(subtasksContainer);
+    }
+    subtasksContainer.innerHTML = '';
+    subtasks.forEach(subtask => {
+      addSubtask(taskElement, subtask.text, subtask.completed);
+    });
+    saveTasks();
+  }
+
+
+  // função que atualiza a area de "progresso das atividades"
 
   function updateProgress() {
 
@@ -450,4 +539,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
   doneTasks.forEach(task => addActivity(task.title, task.description, task.subtasks, false));
   updateProgress();
 });
-// -------------------------------------------------------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------------------------------------------------
