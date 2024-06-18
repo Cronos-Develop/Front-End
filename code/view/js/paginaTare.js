@@ -1,4 +1,119 @@
-// função para a barra de busca e o filtro de pesquisa:
+// conjunto para as funções de atividades e sub-tarefas:
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  var dragSrcEl = null;
+
+  function handleDragStart(e) {
+    this.style.opacity = '0.1';
+    this.style.border = '3px dashed #c4cad3';
+    dragSrcEl = this;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+  }
+
+  function handleDragOver(e) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+  }
+
+  function handleDragEnter(e) {
+    this.classList.add('task-hover');
+  }
+
+  function handleDragLeave(e) {
+    this.classList.remove('task-hover');
+  }
+
+  function handleDrop(e) {
+    if (e.stopPropagation) {
+      e.stopPropagation();
+    }
+    if (dragSrcEl != this) {
+      dragSrcEl.innerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData('text/html');
+    }
+    return false;
+  }
+
+  function handleDragEnd(e) {
+    this.style.opacity = '1';
+    this.style.border = 0;
+    items.forEach(function (item) {
+      item.classList.remove('task-hover');
+    });
+  }
+
+  function saveTasks() {
+    const tasks = [];
+    document.querySelectorAll('.in-progress-column .task').forEach(task => {
+      const title = task.querySelector('.task__tag').textContent;
+      const description = task.querySelector('p').textContent;
+      const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
+        text: subtask.querySelector('span').textContent,
+        completed: subtask.querySelector('input').checked,
+      }));
+      tasks.push({ title, description, subtasks });
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+
+  let items = document.querySelectorAll('.task');
+  items.forEach(function (item) {
+    item.addEventListener('dragstart', handleDragStart, false);
+    item.addEventListener('dragenter', handleDragEnter, false);
+    item.addEventListener('dragover', handleDragOver, false);
+    item.addEventListener('dragleave', handleDragLeave, false);
+    item.addEventListener('drop', handleDrop, false);
+    item.addEventListener('dragend', handleDragEnd, false);
+    item.addEventListener('click', handleTaskClick, false);
+  });
+
+function addActivity(title, id, subtasks = [{}], save = true) {
+  const newTask = document.createElement('div');
+  newTask.classList.add('task');
+  newTask.setAttribute('draggable', 'true');
+  newTask.innerHTML = `
+    <div class='task__tags'>
+      <span class='task__tag task__tag--design'>${title}</span>
+    </div>
+    <p style="display:none">${id}</p>
+    <div class='task__stats'>
+      <span class='task__owner'></span>
+    </div>
+  `;
+  for(k=0; k<subtasks.length; k++){
+    addSubtask(newTask, subtasks[k].subtarefa);
+  }
+
+  console.log("render");
+  const inProgressColumn = document.querySelector('.in-progress-column');
+  inProgressColumn.appendChild(newTask);
+
+  newTask.addEventListener('dragstart', handleDragStart, false);
+  newTask.addEventListener('dragenter', handleDragEnter, false);
+  newTask.addEventListener('dragover', handleDragOver, false);
+  newTask.addEventListener('dragleave', handleDragLeave, false);
+  newTask.addEventListener('drop', handleDrop, false);
+  newTask.addEventListener('dragend', handleDragEnd, false);
+  newTask.addEventListener('click', handleTaskClick, false);
+
+  if (save) {
+    saveTasks();
+  }
+}
+
+var response = ControlTasks(empresa[i].id);
+let tarefas = JSON.parse(response);
+
+for(j=0; j<tarefas.length; j++){
+  console.log("chamoou")
+  if(tarefas[j]){
+    addActivity(tarefas[j].tarefa, null, tarefas[j].subtarefas);
+  }
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
 
@@ -17,12 +132,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const title = task.querySelector('.task__tag').textContent.toLowerCase();
       const description = task.querySelector('p').textContent.toLowerCase();
       const isInProgress = task.closest('.in-progress-column') !== null;
-      const isDone = task.closest('.done-column') !== null;
 
       let matchesSearch = title.includes(searchText) || description.includes(searchText);
       let matchesStatus = (filterStatus === 'all') ||
-                          (filterStatus === 'in-progress' && isInProgress) ||
-                          (filterStatus === 'done' && isDone);
+                          (filterStatus === 'in-progress' && isInProgress);
 
       if (matchesSearch && matchesStatus) {
         task.style.display = '';
@@ -32,9 +145,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   }
 
-  loadTasks();
-  const doneTasks = JSON.parse(localStorage.getItem('doneTasks')) || [];
-  doneTasks.forEach(task => addActivity(task.title, task.description, task.subtasks, false));
   filterTasks();
 });
  
@@ -83,102 +193,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-
-// conjunto para as funções de atividades e sub-tarefas:
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  var dragSrcEl = null;
-
-  function handleDragStart(e) {
-    this.style.opacity = '0.1';
-    this.style.border = '3px dashed #c4cad3';
-    dragSrcEl = this;
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.innerHTML);
-  }
-
-  function handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault();
-    }
-    e.dataTransfer.dropEffect = 'move';
-    return false;
-  }
-
-  function handleDragEnter(e) {
-    this.classList.add('task-hover');
-  }
-
-  function handleDragLeave(e) {
-    this.classList.remove('task-hover');
-  }
-
-  function handleDrop(e) {
-    if (e.stopPropagation) {
-      e.stopPropagation();
-    }
-    if (dragSrcEl != this) {
-      dragSrcEl.innerHTML = this.innerHTML;
-      this.innerHTML = e.dataTransfer.getData('text/html');
-      updateProgress();
-    }
-    return false;
-  }
-
-  function handleDragEnd(e) {
-    this.style.opacity = '1';
-    this.style.border = 0;
-    items.forEach(function (item) {
-      item.classList.remove('task-hover');
-    });
-  }
-
-  function loadTasks() {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.forEach(task => addActivity(task.title, task.description, task.subtasks || [], false));
-    updateProgress();
-  }
-
-  function saveTasks() {
-    const tasks = [];
-    document.querySelectorAll('.in-progress-column .task').forEach(task => {
-      const title = task.querySelector('.task__tag').textContent;
-      const description = task.querySelector('p').textContent;
-      const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
-        text: subtask.querySelector('span').textContent,
-        completed: subtask.querySelector('input').checked,
-      }));
-      tasks.push({ title, description, subtasks });
-    });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }
-
-  function saveDoneTasks() {
-    const doneTasks = [];
-    document.querySelectorAll('.done-column .task').forEach(task => {
-      const title = task.querySelector('.task__tag').textContent;
-      const description = task.querySelector('p').textContent;
-      const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
-        text: subtask.querySelector('span').textContent,
-        completed: subtask.querySelector('input').checked,
-      }));
-      doneTasks.push({ title, description, subtasks });
-    });
-    localStorage.setItem('doneTasks', JSON.stringify(doneTasks));
-  }
-
-  let items = document.querySelectorAll('.task');
-  items.forEach(function (item) {
-    item.addEventListener('dragstart', handleDragStart, false);
-    item.addEventListener('dragenter', handleDragEnter, false);
-    item.addEventListener('dragover', handleDragOver, false);
-    item.addEventListener('dragleave', handleDragLeave, false);
-    item.addEventListener('drop', handleDrop, false);
-    item.addEventListener('dragend', handleDragEnd, false);
-    item.addEventListener('click', handleTaskClick, false);
-  });
-
   // Aqui está o pop - up de adicionar uma atividade a lista, é direcionado automaticamente para "Em progresso"
 
   document.querySelector('.project-activites__add').addEventListener('click', () => {
@@ -203,42 +217,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const activity = result.value;
         addActivity(activity.title, activity.description);
         saveTasks();
-        updateProgress();
       }
     });
   });
-
-  function addActivity(title, description, subtasks = [], save = true) {
-    const newTask = document.createElement('div');
-    newTask.classList.add('task');
-    newTask.setAttribute('draggable', 'true');
-    newTask.innerHTML = `
-      <div class='task__tags'>
-        <span class='task__tag task__tag--design'>${title}</span>
-      </div>
-      <p>${description}</p>
-      <div class='task__stats'>
-        <span class='task__owner'></span>
-      </div>
-    `;
-
-    const inProgressColumn = document.querySelector('.in-progress-column');
-    inProgressColumn.appendChild(newTask);
-
-    newTask.addEventListener('dragstart', handleDragStart, false);
-    newTask.addEventListener('dragenter', handleDragEnter, false);
-    newTask.addEventListener('dragover', handleDragOver, false);
-    newTask.addEventListener('dragleave', handleDragLeave, false);
-    newTask.addEventListener('drop', handleDrop, false);
-    newTask.addEventListener('dragend', handleDragEnd, false);
-    newTask.addEventListener('click', handleTaskClick, false);
-
-    if (save) {
-      saveTasks();
-    }
-    updateProgress();
-  }
-
   //  Aqui para adicionar a lista de sub-tarefas na atividade da empresa
 
   function addSubtask(taskElement, text, completed = false) {
@@ -267,7 +248,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         subtask.classList.remove('completed');
       }
       saveTasks();
-      updateProgress();
     });
   }
 
@@ -356,8 +336,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         task.remove();
         Swal.close();
         saveTasks();
-        saveDoneTasks();
-        updateProgress();
     });
 
     document.getElementById('edit-task').addEventListener('click', () => {
@@ -411,7 +389,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     addSubtask(task, subtask.text, subtask.completed);
                 });
                 saveTasks();
-                saveDoneTasks();
             }
         });
 
@@ -437,16 +414,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     document.getElementById('complete-task').addEventListener('click', () => {
-        const doneColumn = document.querySelector('.done-column');
-        doneColumn.appendChild(task);
         saveTasks();
-        saveDoneTasks();
-        updateProgress();
         Swal.close();
     });
 }
-
-
 
   // Função para adicionar subtarefas ao elemento da atividade:
 
@@ -476,7 +447,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
       }
       savePA(task);
       saveTasks();
-      updateProgress();
     });
   }
 
@@ -502,42 +472,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
     saveTasks();
   }
-
-
-  // função que atualiza a area de "progresso das atividades"
-
-  function updateProgress() {
-
-    const inProgressTasks = document.querySelectorAll('.in-progress-column .task');
-    const progressContainer = document.querySelector('.progress-container');
-    progressContainer.innerHTML = '';
-
-    inProgressTasks.forEach(task => {
-
-      const title = task.querySelector('.task__tag').textContent;
-      const subtasks = task.querySelectorAll('.subtask');
-      const completedSubtasks = task.querySelectorAll('.subtask input:checked');
-      const totalSubtasks = subtasks.length;
-      const completedCount = completedSubtasks.length;
-      const progressPercentage = totalSubtasks === 0 ? 0 : (completedCount / totalSubtasks) * 100;
-
-      const progressBar = document.createElement('div');
-      progressBar.classList.add('progress-bar');
-      progressBar.innerHTML = `
-        <span>${title}</span>
-        <div class="progress">
-          <div class="progress__bar--green" style="width: ${progressPercentage}%;"></div>
-          <div class="progress__bar--gray" style="width: ${100 - progressPercentage}%;"></div>
-        </div>
-      `;
-      progressContainer.appendChild(progressBar);
-    });
-  }
-
-  loadTasks();
-  const doneTasks = JSON.parse(localStorage.getItem('doneTasks')) || [];
-  doneTasks.forEach(task => addActivity(task.title, task.description, task.subtasks, false));
-  updateProgress();
 });
 
 // -------------------------------------------------------------------------------------------------------------------------------------------

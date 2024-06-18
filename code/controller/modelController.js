@@ -148,3 +148,7 @@ function ControlTasks(specify=0){
         }
     }
 }
+
+function alteraCadastroEmpresa(nome, descricao, nicho){
+    
+}

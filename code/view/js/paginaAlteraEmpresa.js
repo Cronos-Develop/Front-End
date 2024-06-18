@@ -1,31 +1,32 @@
 // Função para carregar os dados da empresa
 function carregarDadosEmpresa() {
-    var response = ControlUsers();
-    let empresa = JSON.parse(response)[0];
-    document.querySelector('#nomeE').value = empresa.name;
-    document.querySelector('#descricaoE').value = empresa.description;
-    document.querySelector('#identifierE').value = empresa.cnpj;
-    document.querySelector('#cepE').value = empresa.cep;
-
-    // Dividir o endereço em partes
-    let enderecoCompleto = empresa.endereco.split(", ");
-    document.querySelector('#endereco').value = enderecoCompleto[1];
-    document.querySelector('#bairro').value = enderecoCompleto[0];
-
-    let numeroECidade = enderecoCompleto[2].split(". ");
-    document.querySelector('#number').value = numeroECidade[0];
-    document.querySelector('#cidade').value = numeroECidade[1];
-    document.querySelector('#compl').value = empresa.compl;
+    var response = ControlEnterprises();
+    var t = localStorage.getItem("myEnterprise");
+    let i;
+    if(t){
+        i = t;
+    }else{
+        i = 0;
+    }
+    let empresa = JSON.parse(response);
+    console.log(empresa)
+    empresa = empresa[i];
+    console.log(empresa)
+    document.querySelector('#nomeE').value = empresa.nome_da_empresa;
+    document.querySelector('#descricaoE').value = empresa.resumo;
+    document.querySelector('#identifierE').value = empresa.nicho;
 }
 
 // Função para validar os campos do formulário
 function validarCampos() {
     let nomeValido = verifyName(document.querySelector('#nomeE').value);
     let descricaoValida = document.querySelector('#descricaoE').value !== "";
-    let cnpjValido = verifyCNPJ(document.querySelector('#identifierE').value);
-    let cepValido = verifyCEP(document.querySelector('#cepE').value);
+    let nichoValido = document.querySelector('#identifierE').value;
 
-    return nomeValido && descricaoValida && cnpjValido && cepValido;
+    if (nomeValido && descricaoValida && nichoValido){
+        return true;
+    }
+    return false;
 }
 
 // Função para alterar os dados da empresa
@@ -33,15 +34,9 @@ function alteraCad() {
     if (validarCampos()) {
         let nome = document.querySelector('#nomeE').value;
         let descricao = document.querySelector('#descricaoE').value;
-        let cnpj = document.querySelector('#identifierE').value;
-        let cep = document.querySelector('#cepE').value;
-        let endereco = document.querySelector('#endereco').value;
-        let bairro = document.querySelector('#bairro').value;
-        let numero = document.querySelector('#number').value;
-        let cidade = document.querySelector('#cidade').value;
-        let compl = document.querySelector('#compl').value;
+        let nicho = document.querySelector('#identifierE').value;
 
-        if (alteraCadastro(nome, descricao, cnpj, cep, endereco, bairro, numero, cidade, compl) == 1) {
+        if (alteraCadastroEmpresa(nome, descricao, nicho) == 1) {
             Swal.fire({
                 icon: "success",
                 title: "Alteração feita com sucesso!",
@@ -66,7 +61,7 @@ function alteraCad() {
                 confirmButtonText: "Tentar Novamente!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    alteraCad();
+                    alteraCadastroEmpresa(nome, descricao, nicho);
                 }
             });
         }

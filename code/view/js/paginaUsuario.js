@@ -144,7 +144,7 @@ function mostrarDadosUsuario() {
           }).then((result) => {
               if (result.isConfirmed) {
                   // Lógica para deletar os dados
-                  deleteUserData(Nusuario[0].id); // Supondo que deleteUserData é uma função que deleta os dados do usuário
+                  deletaUsuario();
                   Swal.fire('Deletado!', 'Os dados foram deletados com sucesso.', 'success');
               }
           });

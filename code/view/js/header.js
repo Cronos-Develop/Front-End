@@ -31,6 +31,7 @@ function Ftemplate(j){
     document.getElementById('titleEnterprise').innerHTML = empresa[j].nome_da_empresa;
     localStorage.setItem("myEnterprise", j);
     Swal.close();
+    window.location.reload(false);
 }
 
 
