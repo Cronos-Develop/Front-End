@@ -65,8 +65,26 @@ function apiDELETE(url){
     var response;
     $.ajax({
         url: url,
-        type: 'PUT',
+        type: 'DELETE',
         dataType: 'html',
+        async: false,
+        success: function(data){
+            console.log(data);
+            response = true;
+        },
+        error: function(data){
+            console.log(data);
+            response = false;
+        }
+    });
+    return response;
+}
+
+function apiPATCH(url){
+    var response;
+    $.ajax({
+        url: url,
+        type: 'PATCH',
         async: false,
         success: function(data){
             console.log(data);

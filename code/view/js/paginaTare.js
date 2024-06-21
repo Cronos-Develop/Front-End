@@ -1,4 +1,29 @@
 // conjunto para as funções de atividades e sub-tarefas:
+function deletaTarefa(id){
+  if(apagaTarefa(id)==1){
+    Swal.fire({
+      title: "Tarefa apagada com sucesso",
+      icon: "success",
+        showConfirmButton: true,
+        ConfirmButtonText: 'Salvar',
+        showCancelButton: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          task.remove();
+          Swal.close();
+          saveTasks();
+        }
+    });
+  }
+}
+
+function addSub(id, tarefa){
+  if(tarefa) addSubtarefa(id, tarefa);
+}
+
+function deleteSubtask(id){
+  apagaSubtarefa(id);
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
@@ -85,10 +110,9 @@ function addActivity(title, id, subtasks = [{}], save = true) {
     </div>
   `;
   for(k=0; k<subtasks.length; k++){
-    addSubtask(newTask, subtasks[k].subtarefa);
+    addSubtask(newTask, subtasks[k].subtarefa, subtasks[k].id, false);
   }
 
-  console.log("render");
   const inProgressColumn = document.querySelector('.in-progress-column');
   inProgressColumn.appendChild(newTask);
 
@@ -107,11 +131,9 @@ function addActivity(title, id, subtasks = [{}], save = true) {
 
 var response = ControlTasks(empresa[i].id);
 let tarefas = JSON.parse(response);
-
 for(j=0; j<tarefas.length; j++){
-  console.log("chamoou")
   if(tarefas[j]){
-    addActivity(tarefas[j].tarefa, null, tarefas[j].subtarefas);
+    addActivity(tarefas[j].tarefa, tarefas[j].id, tarefas[j].subtarefas);
   }
 }
 
@@ -215,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }).then((result) => {
       if (result.isConfirmed) {
         const activity = result.value;
+        adicionaAtividade(empresa[i].id, activity.title, activity.description)
         addActivity(activity.title, activity.description);
         saveTasks();
       }
@@ -222,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   //  Aqui para adicionar a lista de sub-tarefas na atividade da empresa
 
-  function addSubtask(taskElement, text, completed = false) {
+  function addSubtask(taskElement, text, id, completed = false) {
     const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
     if (!subtasksContainer.classList.contains('subtasks-container')) {
       subtasksContainer.classList.add('subtasks-container');
@@ -237,9 +260,9 @@ document.addEventListener('DOMContentLoaded', function () {
     subtask.innerHTML = `
       <input type="checkbox" ${completed ? 'checked' : ''}>
       <span>${text}</span>
+      <div style="display:none">${id}</div>
     `;
     subtasksContainer.appendChild(subtask);
-
     subtask.querySelector('input').addEventListener('change', (e) => {
       e.stopPropagation();
       if (subtask.querySelector('input').checked) {
@@ -282,21 +305,17 @@ document.addEventListener('DOMContentLoaded', function () {
         </ul>
         <div style="margin-top: 20px;"></div>
         <input type="text" id="new-subtask-text" placeholder="Nova Sub-tarefa">
-        <button id="add-subtask" class="swal2-confirm swal2-styled">
+        <button id="add-subtask" class="swal2-confirm swal2-styled" onclick="addSub(${description}, document.getElementById('new-subtask-text').value)">
           <i class="fas fa-plus"></i>
         </button>
         <div style="margin-top: 20px;"></div>
         <div class="button-group">
-          <button id="delete-task" class="swal2-confirm swal2-styled">
+          <button id="delete-task" class="swal2-confirm swal2-styled" onclick="deletaTarefa(${description})">
             <i class="fas fa-trash"></i>
           </button>
           <button id="edit-task" class="swal2-confirm swal2-styled">
             <i class="fas fa-edit"></i>
           </button>
-          <button id="complete-task" class="swal2-confirm swal2-styled">
-            <i class="fas fa-check"></i>
-          </button>
-          
         </div>
       `,
         showConfirmButton: true,
@@ -332,35 +351,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('delete-task').addEventListener('click', () => {
-        task.remove();
-        Swal.close();
-        saveTasks();
-    });
-
     document.getElementById('edit-task').addEventListener('click', () => {
         const currentSubtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
             text: subtask.querySelector('span').textContent,
             completed: subtask.querySelector('input').checked,
+            id: subtask.querySelector('div').textContent
         }));
-
         Swal.fire({
             title: 'Editar Tarefa',
             html: `
                 <input type="text" id="edit-task-title" class="swal2-input" value="${title}">
-                <textarea id="edit-task-description" class="swal2-textarea">${description}</textarea>
+                <textarea id="edit-task-description" class="swal2-textarea" readonly>${description}</textarea>
                 <ul id="edit-subtasks-list">
                     ${currentSubtasks.map(subtask => `
                         <li>
                             <input type="checkbox" ${subtask.completed ? 'checked' : ''}>
                             <input type="text" class="edit-subtask-text" value="${subtask.text}">
-                            <button class="delete-subtask">Excluir</button>
+                            <button class="delete-subtask" onclick="deleteSubtask(${subtask.id})">Excluir</button>
                         </li>
                     `).join('')}
                 </ul>
                 <div style="margin-top: 20px;"></div>
-                <input type="text" id="new-edit-subtask-text" placeholder="Nova Sub-tarefa">
-                <button id="add-edit-subtask" class="swal2-confirm swal2-styled">Adicionar Sub-tarefa</button>
             `,
             confirmButtonText: 'Salvar',
             preConfirm: () => {
@@ -378,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const { newTitle, newDescription, updatedSubtasks } = result.value;
                 task.querySelector('.task__tag').textContent = newTitle;
                 task.querySelector('p').textContent = newDescription;
-
+                editaTarefa(empresa[i].id, newDescription, newTitle);//|Função AXIOS
                 const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
                 if (!subtasksContainer.classList.contains('subtasks-container')) {
                     subtasksContainer.classList.add('subtasks-container');
@@ -387,6 +398,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 subtasksContainer.innerHTML = '';
                 updatedSubtasks.forEach(subtask => {
                     addSubtask(task, subtask.text, subtask.completed);
+                    editaSubtarefa()//////
                 });
                 saveTasks();
             }
@@ -420,35 +432,6 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 
   // Função para adicionar subtarefas ao elemento da atividade:
-
-  function addSubtask(taskElement, text, completed = false) {
-    const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
-    if (!subtasksContainer.classList.contains('subtasks-container')) {
-      subtasksContainer.classList.add('subtasks-container');
-      taskElement.appendChild(subtasksContainer);
-    }
-
-    const subtask = document.createElement('div');
-    subtask.classList.add('subtask');
-    if (completed) {
-      subtask.classList.add('completed');
-    }
-    subtask.innerHTML = `
-      <input type="checkbox" ${completed ? 'checked' : ''}>
-      <span>${text}</span>
-    `;
-    subtasksContainer.appendChild(subtask);
-
-    subtask.querySelector('input').addEventListener('change', () => {
-      if (subtask.querySelector('input').checked) {
-        subtask.classList.add('completed');
-      } else {
-        subtask.classList.remove('completed');
-      }
-      savePA(task);
-      saveTasks();
-    });
-  }
 
   function savePA(taskElement) {
     const title = Swal.getPopup().querySelector('.swal2-title').textContent;

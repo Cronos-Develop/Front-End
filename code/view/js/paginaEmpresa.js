@@ -1,27 +1,62 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-
     // Função para exibir pop-up de Participantes
-    function showParticipants() {
+    function addParticipants(){
+        let CPF;
         Swal.fire({
             title: 'Participantes',
             html: `
                 <p>Aqui você pode visualizar e gerenciar os participantes da empresa.</p>
-                <label for="participantName">Nome do Participante:</label>
-                <input type="text" id="participantName" class="swal2-input" placeholder="Nome do Participante">
-                <label for="participantRole">Cargo do Participante:</label>
-                <input type="text" id="participantRole" class="swal2-input" placeholder="Cargo do Participante">
+                <label for="participantName">CPF do Participante:</label>
+                <input type="text" id="participantName" class="swal2-input" placeholder="CPF do Participante">
             `,
             confirmButtonText: 'Adicionar',
             preConfirm: () => {
                 const participantName = document.getElementById('participantName').value;
-                const participantRole = document.getElementById('participantRole').value;
-                return { participantName, participantRole };
+                CPF = participantName.value;
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                const { participantName, participantRole } = result.value;
-                // Aqui você pode adicionar a lógica para adicionar o participante
-                Swal.fire('Sucesso!', 'Participante adicionado com sucesso!', 'success');
+                if (adicionarParticipante(CPF) == 1) Swal.fire('Sucesso!', 'Participante adicionado com sucesso!', 'success');
+                else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Algo deu errado!",
+                        text: "Tente novamente mais tarde.",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Tentar novamente!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            aux()
+                        }});
+                }
+            }
+        });
+    }
+
+    function aux(){
+        Swal.close()
+        addParticipants();
+    }
+
+    console.log(empresa)
+    var code = `<table>`;
+    let resp = getPartiners(empresa[i].id)
+    let info = JSON.parse(resp);
+    console.log(info)
+    for(j=0; j<info.lenght; j++){
+        code += `<tr><td>${info[j].name}</td><td><button onclick="deletaPartner(${empresa[i].id},${info[j].id})"></button?</td></tr>`
+    }
+    code += `</table>`;
+    
+    function showParticipants() {
+        Swal.fire({
+            title: 'Participantes',
+            html: code,
+            confirmButtonText: 'Adicionar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                aux()
             }
         });
     }
@@ -60,5 +95,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.querySelector('.btn-conf[onclick=""]').addEventListener('click', showCompanyInfo);
     document.querySelector('.btn-conf[onclick=""]').addEventListener('click', showParticipants);
     document.querySelector('.btn-conf[onclick=""]').addEventListener('click', showPermissions);
-});
-

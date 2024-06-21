@@ -13,8 +13,9 @@ ident.addEventListener("change", function(){
 });  
 
 function enviaEmail(){
-    response = controlEmail(ident.value);
+    let response = controlEmail(ident.value);
     let email = JSON.parse(response);
+    console.log(email)
     if(response!=false){
         Swal.fire({
             icon: "success",

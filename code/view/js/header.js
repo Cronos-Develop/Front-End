@@ -1,5 +1,5 @@
 const template = document.createElement('template');
-localStorage.setItem("myHash", "A4983G5552a5177C4759a4858a5654"); //Para testes
+localStorage.setItem("myHash", "A5147b5359A5195b472a4831A5181"); //Para testes
 var response = ControlEnterprises();
 let empresa = JSON.parse(response);
 var response2 = ControlUsers();

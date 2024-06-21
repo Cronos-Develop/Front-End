@@ -1,4 +1,5 @@
 // Função para carregar os dados da empresa
+var empresaF;
 function carregarDadosEmpresa() {
     var response = ControlEnterprises();
     var t = localStorage.getItem("myEnterprise");
@@ -11,6 +12,7 @@ function carregarDadosEmpresa() {
     let empresa = JSON.parse(response);
     console.log(empresa)
     empresa = empresa[i];
+    empresaF = empresa;
     console.log(empresa)
     document.querySelector('#nomeE').value = empresa.nome_da_empresa;
     document.querySelector('#descricaoE').value = empresa.resumo;
@@ -36,7 +38,7 @@ function alteraCad() {
         let descricao = document.querySelector('#descricaoE').value;
         let nicho = document.querySelector('#identifierE').value;
 
-        if (alteraCadastroEmpresa(nome, descricao, nicho) == 1) {
+        if (alteraCadastroEmpresa(nome, descricao, nicho, empresaF.id) == 1) {
             Swal.fire({
                 icon: "success",
                 title: "Alteração feita com sucesso!",
@@ -47,7 +49,7 @@ function alteraCad() {
                 confirmButtonText: "Voltar à página inicial"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = './paginaInicial.html';
+                    window.location.href = './paginaInicia.html';
                 }
             });
         } else {
@@ -61,7 +63,7 @@ function alteraCad() {
                 confirmButtonText: "Tentar Novamente!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    alteraCadastroEmpresa(nome, descricao, nicho);
+                    alteraCadastroEmpresa(nome, descricao, nicho, empresaF.id);
                 }
             });
         }
