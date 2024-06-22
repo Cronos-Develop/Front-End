@@ -28,6 +28,9 @@ function deleteSubtask(id){
 function alterState(id, type){
   alteraEstado(id, type);
 }
+// ------------------------------------------------------------------------------------------------------------------------------------------------
+
+// conjunto para as funções de atividades e sub-tarefas:
 
 document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
@@ -63,6 +66,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (dragSrcEl != this) {
       dragSrcEl.innerHTML = this.innerHTML;
       this.innerHTML = e.dataTransfer.getData('text/html');
+      updateProgress();
     }
     return false;
   }
@@ -73,6 +77,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     items.forEach(function (item) {
       item.classList.remove('task-hover');
     });
+  }
+
+  function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(task => addActivity(task.title, task.description, task.subtasks || [], false));
+    updateProgress();
   }
 
   function saveTasks() {
@@ -89,6 +99,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
+  function saveDoneTasks() {
+    const doneTasks = [];
+    document.querySelectorAll('.done-column .task').forEach(task => {
+      const title = task.querySelector('.task__tag').textContent;
+      const description = task.querySelector('p').textContent;
+      const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
+        text: subtask.querySelector('span').textContent,
+        completed: subtask.querySelector('input').checked,
+      }));
+      doneTasks.push({ title, description, subtasks });
+    });
+    localStorage.setItem('doneTasks', JSON.stringify(doneTasks));
+  }
+
   let items = document.querySelectorAll('.task');
   items.forEach(function (item) {
     item.addEventListener('dragstart', handleDragStart, false);
@@ -99,82 +123,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     item.addEventListener('dragend', handleDragEnd, false);
     item.addEventListener('click', handleTaskClick, false);
   });
-
-function addActivity(title, id, subtasks = [{}], save = true) {
-  const newTask = document.createElement('div');
-  newTask.classList.add('task');
-  newTask.setAttribute('draggable', 'true');
-  newTask.innerHTML = `
-    <div class='task__tags'>
-      <span class='task__tag task__tag--design'>${title}</span>
-    </div>
-    <p style="display:none">${id}</p>
-    <div class='task__stats'>
-      <span class='task__owner'></span>
-    </div>
-  `;
-  for(k=0; k<subtasks.length; k++){
-    addSubtask(newTask, subtasks[k].subtarefa, subtasks[k].id, false);
-  }
-
-  const inProgressColumn = document.querySelector('.in-progress-column');
-  inProgressColumn.appendChild(newTask);
-
-  newTask.addEventListener('dragstart', handleDragStart, false);
-  newTask.addEventListener('dragenter', handleDragEnter, false);
-  newTask.addEventListener('dragover', handleDragOver, false);
-  newTask.addEventListener('dragleave', handleDragLeave, false);
-  newTask.addEventListener('drop', handleDrop, false);
-  newTask.addEventListener('dragend', handleDragEnd, false);
-  newTask.addEventListener('click', handleTaskClick, false);
-
-  if (save) {
-    saveTasks();
-  }
-}
-
-var response = ControlTasks(empresa[i].id);
-let tarefas = JSON.parse(response);
-for(j=0; j<tarefas.length; j++){
-  if(tarefas[j]){
-    addActivity(tarefas[j].tarefa, tarefas[j].id, tarefas[j].subtarefas);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-
-  const searchBar = document.getElementById('search-bar');
-  const statusFilter = document.getElementById('status-filter');
-
-  searchBar.addEventListener('input', filterTasks);
-  statusFilter.addEventListener('change', filterTasks);
-
-  function filterTasks() {
-    const searchText = searchBar.value.toLowerCase();
-    const filterStatus = statusFilter.value;
-
-    const allTasks = document.querySelectorAll('.task');
-    allTasks.forEach(task => {
-      const title = task.querySelector('.task__tag').textContent.toLowerCase();
-      const description = task.querySelector('p').textContent.toLowerCase();
-      const isInProgress = task.closest('.in-progress-column') !== null;
-
-      let matchesSearch = title.includes(searchText) || description.includes(searchText);
-      let matchesStatus = (filterStatus === 'all') ||
-                          (filterStatus === 'in-progress' && isInProgress);
-
-      if (matchesSearch && matchesStatus) {
-        task.style.display = '';
-      } else {
-        task.style.display = 'none';
-      }
-    });
-  }
-
-  filterTasks();
-});
- 
-// ------------------------------------------------------------------------------------------------------------------------------------------------
 
 // função para adicionar o participante para as tarefas da empresa:
 
@@ -278,23 +226,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Aqui começa as funções para os pop-ups das atividades
-
   function handleTaskClick(e) {
     const task = e.currentTarget;
     const title = task.querySelector('.task__tag').textContent;
     const description = task.querySelector('p').textContent;
+    const gutGravity = parseInt(task.getAttribute('data-gut-gravity'));
+    const gutUrgency = parseInt(task.getAttribute('data-gut-urgency'));
+    const gutTendency = parseInt(task.getAttribute('data-gut-tendency'));
     const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
       text: subtask.querySelector('span').textContent,
       completed: subtask.querySelector('input').checked,
     }));
-
+  
     if (e.target.type === 'checkbox') {
       return; // Impede que o pop-up seja exibido ao clicar no checkbox das subtarefas das atividades
     }
-
-    // Aqui tá o pop-up das atividades
-
+  
+    // Pop-up das atividades
     Swal.fire({
       title: title,
       html: `
@@ -309,25 +257,79 @@ document.addEventListener('DOMContentLoaded', function () {
         </ul>
         <div style="margin-top: 20px;"></div>
         <input type="text" id="new-subtask-text" placeholder="Nova Sub-tarefa">
-        <button id="add-subtask" class="swal2-confirm swal2-styled" onclick="addSub(${description}, document.getElementById('new-subtask-text').value)">
+        <button id="add-subtask" class="swal2-confirm swal2-styled">
           <i class="fas fa-plus"></i>
         </button>
+
+        <div style="margin-top: 20px;"></div>
+        <h2 style="text-align: left; font-size: 1.5em;">Matriz GUT </h2>
+        <div style="margin-top: 5px;"></div>
+        <label for="gut-gravity">Gravidade:</label>
+        <select id="gut-gravity" class="swal2-select">
+          <option value="1" ${gutGravity === 1 ? 'selected' : ''}>Sem gravidade</option>
+          <option value="2" ${gutGravity === 2 ? 'selected' : ''}>Pouco grave</option>
+          <option value="3" ${gutGravity === 3 ? 'selected' : ''}>Grave</option>
+          <option value="4" ${gutGravity === 4 ? 'selected' : ''}>Muito grave</option>
+          <option value="5" ${gutGravity === 5 ? 'selected' : ''}>Extremamente grave</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="gut-urgency">Urgência:</label>
+        <select id="gut-urgency" class="swal2-select">
+          <option value="1" ${gutUrgency === 1 ? 'selected' : ''}>Pode esperar</option>
+          <option value="2" ${gutUrgency === 2 ? 'selected' : ''}>Pouco urgente</option>
+          <option value="3" ${gutUrgency === 3 ? 'selected' : ''}>Urgente</option>
+          <option value="4" ${gutUrgency === 4 ? 'selected' : ''}>Muito urgente</option>
+          <option value="5" ${gutUrgency === 5 ? 'selected' : ''}>Imediatamente</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="gut-tendency">Tendência:</label>
+        <select id="gut-tendency" class="swal2-select">
+          <option value="1" ${gutTendency === 1 ? 'selected' : ''}>Não irá mudar</option>
+          <option value="2" ${gutTendency === 2 ? 'selected' : ''}>Irá piorar a longo prazo</option>
+          <option value="3" ${gutTendency === 3 ? 'selected' : ''}>Irá piorar a médio prazo</option>
+          <option value="4" ${gutTendency === 4 ? 'selected' : ''}>Irá piorar a curto prazo</option>
+          <option value="5" ${gutTendency === 5 ? 'selected' : ''}>Irá piorar rapidamente</option>
+        </select>
+        <div style="margin-top: 20px;"></div>
+        <label style="text-align: left; font-weight: bold;">Resultado da Matriz GUT:</label>
+        <span id="multiplication-result">${gutGravity * gutUrgency * gutTendency}</span>
         <div style="margin-top: 20px;"></div>
         <div class="button-group">
-          <button id="delete-task" class="swal2-confirm swal2-styled" onclick="deletaTarefa(${description})">
+          <button id="delete-task" class="swal2-confirm swal2-styled">
             <i class="fas fa-trash"></i>
           </button>
           <button id="edit-task" class="swal2-confirm swal2-styled">
             <i class="fas fa-edit"></i>
           </button>
+          <button id="complete-task" class="swal2-confirm swal2-styled">
+            <i class="fas fa-check"></i>
+          </button>
         </div>
       `,
-        showConfirmButton: true,
-        ConfirmButtonText: 'Salvar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          savePA(task);
-        }
+      showConfirmButton: true,
+      confirmButtonText: 'Salvar', // Correção aqui
+      preConfirm: () => {
+        const gutGravity = parseInt(Swal.getPopup().querySelector('#gut-gravity').value);
+        const gutUrgency = parseInt(Swal.getPopup().querySelector('#gut-urgency').value);
+        const gutTendency = parseInt(Swal.getPopup().querySelector('#gut-tendency').value);
+        const question = Swal.getPopup().querySelector('#question').value;
+  
+        const multiplicationResult = gutGravity * gutUrgency * gutTendency;
+        Swal.getPopup().querySelector('#multiplication-result').textContent = multiplicationResult;
+  
+        return { gutGravity, gutUrgency, gutTendency, question };
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const { gutGravity, gutUrgency, gutTendency, question } = result.value;
+        task.setAttribute('data-gut-gravity', gutGravity);
+        task.setAttribute('data-gut-urgency', gutUrgency);
+        task.setAttribute('data-gut-tendency', gutTendency);
+        task.setAttribute('data-question', question);
+        savePA(task);
+        saveTasks();
+        updateProgress();
+      }
     });
 
     // Cuida de adicionar as sub-tarefas:
@@ -376,9 +378,41 @@ document.addEventListener('DOMContentLoaded', function () {
                     `).join('')}
                 </ul>
                 <div style="margin-top: 20px;"></div>
+                <input type="text" id="new-edit-subtask-text" placeholder="Nova Sub-tarefa">
+                <button id="add-edit-subtask" class="swal2-confirm swal2-styled">Adicionar Sub-tarefa</button>
+                <div style="margin-top: 5px;"></div>
+        <label for="edit-gut-gravity">Gravidade:</label>
+        <select id="edit-gut-gravity" class="swal2-select">
+          <option value="1" ${gutGravity == 1 ? 'selected' : ''}>Sem gravidade</option>
+          <option value="2" ${gutGravity == 2 ? 'selected' : ''}>Pouco grave</option>
+          <option value="3" ${gutGravity == 3 ? 'selected' : ''}>Grave</option>
+          <option value="4" ${gutGravity == 4 ? 'selected' : ''}>Muito grave</option>
+          <option value="5" ${gutGravity == 5 ? 'selected' : ''}>Extremamente grave</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="edit-gut-urgency">Urgência:</label>
+        <select id="edit-gut-urgency" class="swal2-select">
+          <option value="1" ${gutUrgency == 1 ? 'selected' : ''}>Pode esperar</option>
+          <option value="2" ${gutUrgency == 2 ? 'selected' : ''}>Pouco urgente</option>
+          <option value="3" ${gutUrgency == 3 ? 'selected' : ''}>Urgente</option>
+          <option value="4" ${gutUrgency == 4 ? 'selected' : ''}>Muito urgente</option>
+          <option value="5" ${gutUrgency == 5 ? 'selected' : ''}>Imediatamente</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="edit-gut-tendency">Tendência:</label>
+        <select id="edit-gut-tendency" class="swal2-select">
+          <option value="1" ${gutTendency == 1 ? 'selected' : ''}>Não irá mudar</option>
+          <option value="2" ${gutTendency == 2 ? 'selected' : ''}>Irá piorar a longo prazo</option>
+          <option value="3" ${gutTendency == 3 ? 'selected' : ''}>Irá piorar a médio prazo</option>
+          <option value="4" ${gutTendency == 4 ? 'selected' : ''}>Irá piorar a curto prazo</option>
+          <option value="5" ${gutTendency == 5 ? 'selected' : ''}>Irá piorar rapidamente</option>
+        </select>
             `,
             confirmButtonText: 'Salvar',
             preConfirm: () => {
+                const newGutGravity = Swal.getPopup().querySelector('#edit-gut-gravity').value;
+                const newGutUrgency = Swal.getPopup().querySelector('#edit-gut-urgency').value;
+                const newGutTendency = Swal.getPopup().querySelector('#edit-gut-tendency').value;
                 const newTitle = Swal.getPopup().querySelector('#edit-task-title').value;
                 const newDescription = Swal.getPopup().querySelector('#edit-task-description').value;
                 const updatedSubtasks = Array.from(Swal.getPopup().querySelectorAll('#edit-subtasks-list li')).map(li => ({
@@ -386,13 +420,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     completed: li.querySelector('input[type="checkbox"]').checked,
                 }));
 
-                return { newTitle, newDescription, updatedSubtasks };
+                return { gutGravity, gutUrgency, gutTendency, newTitle, newDescription, updatedSubtasks, newGutUrgency, newGutGravity, newGutTendency };
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                const { newTitle, newDescription, updatedSubtasks } = result.value;
+                const { newTitle, newDescription, updatedSubtasks, newGutGravity, newGutTendency, newGutUrgency } = result.value;
                 task.querySelector('.task__tag').textContent = newTitle;
                 task.querySelector('p').textContent = newDescription;
+                task.setAttribute('data-gut-gravity', newGutGravity);
+                task.setAttribute('data-gut-urgency', newGutUrgency);
+                task.setAttribute('data-gut-tendency', newGutTendency);
                 editaTarefa(empresa[i].id, newDescription, newTitle);//|Função AXIOS
                 const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
                 if (!subtasksContainer.classList.contains('subtasks-container')) {
@@ -430,6 +467,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('complete-task').addEventListener('click', () => {
+        const doneColumn = document.querySelector('.done-column');
+        doneColumn.appendChild(task);
+        
         saveTasks();
         Swal.close();
     });
@@ -457,7 +497,9 @@ document.addEventListener('DOMContentLoaded', function () {
     subtasks.forEach(subtask => {
       addSubtask(taskElement, subtask.text, subtask.completed);
     });
+    savePA(task);
     saveTasks();
+    updateProgress();
   }
 });
 

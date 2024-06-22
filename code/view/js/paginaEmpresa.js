@@ -61,6 +61,51 @@
         });
     }
 
+    // função para adicionar o participante para as tarefas da empresa:
+
+document.addEventListener('DOMContentLoaded', function () {
+    const adicionarParticipanteBtn = document.getElementById('adicionar-participante');
+  
+    adicionarParticipanteBtn.addEventListener('click', function () {
+      Swal.fire({
+        title: "Coloque o nome do usuário que deseja adicionar",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "Adicionar",
+        showLoaderOnConfirm: true,
+        preConfirm: async (login) => {
+          try {
+            const githubUrl = `https://api.github.com/users/${login}`;
+            const response = await fetch(githubUrl);
+            if (!response.ok) {
+              return Swal.showValidationMessage(`
+                ${JSON.stringify(await response.json())}
+              `);
+            }
+            return response.json();
+          } catch (error) {
+            Swal.showValidationMessage(`
+              Request failed: ${error}
+            `);
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `${result.value.login} foi adicionado para as atividades da empresa`,
+            imageUrl: result.value.avatar_url
+          });
+        }
+      });
+    });
+  });
+  
+  // ------------------------------------------------------------------------------------------------------------------------------------------------  
+
     // Função para exibir pop-up de Permissões
     // function showPermissions() {
     //     Swal.fire({
