@@ -32,15 +32,16 @@
             <div class="btn-list d-flex flex-column align-items-center">
                 <a class="btn-conf width-50" onclick="window.location.href='paginaAlteraEmpresa.html'">Informações da empresa</a>
                 <a class="btn-conf width-50" onclick="showParticipants()">Participantes</a>
-                <a class="btn-conf width-50" onclick="showPermissions()">Permissões</a>
-                <button type="button" class='project-activites__add' onclick="showAddActivityPopup()">Adicionar Atividades</button>
+                <button type="button" class='project-activites__add' onclick="showAddActivityPopup2()">Adicionar Atividades</button>
+                <button type="button" class='project-activites__add' onclick="showAddActivityPopup()">Adicionar Atividades com IA</button>
+
             </div>
             <div id="temporary-activities" style="display:none"></div>
         </form>
         <nav>
             <ul>
                 <li><a href="paginaEmpresa.html"><img src="img/pranchetas.png" alt="Icone de Tarefas" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
-                <li><a href="paginaInicia.html"><img src="img/casa.png" alt="Icone de Início" class="img-fluid usuario-imagem" style="max-width: 60px;"></a></li>
+                <li><a href="paginaInicial.html"><img src="img/casa.png" alt="Icone de Início" class="img-fluid usuario-imagem" style="max-width: 60px;"></a></li>
                 <li><a href="paginaUsuario.html"><img src="img/definicoes.png" alt="Icone de Configurações" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
             </ul>
         </nav>
@@ -67,6 +68,74 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     const activity = result.value;
+                    saveActivity(activity);
+                    Swal.fire(`Atividade adicionada: ${activity.title}`);
+                }
+            });
+        }
+
+        function showAddActivityPopup2() {
+            Swal.fire({
+                title: 'Adicionar Atividade com Matriz GUT',
+                html: `
+                    <input type="text" id="activity-title" class="swal2-input" placeholder="Título da Atividade">
+                    <textarea id="activity-description" class="swal2-textarea" placeholder="Descrição da Atividade"></textarea>
+                    <label for="question" class="swal2-label">Pergunta:</label>
+                    <select id="question" class="swal2-select">
+                        <option value="o-que">O quê</option>
+                        <option value="por-que">Por que</option>
+                        <option value="quem">Quem</option>
+                        <option value="quanto">Quanto</option>
+                        <option value="como">Como</option>
+                        <option value="quando">Quando</option>
+                        <option value="onde">Onde</option>
+                    </select>
+                    <label for="gut-gravity" class="swal2-label">Gravidade:</label>
+                    <select id="gut-gravity" class="swal2-select">
+                        <option value="1">Sem gravidade</option>
+                        <option value="2">Pouco grave</option>
+                        <option value="3">Grave</option>
+                        <option value="4">Muito grave</option>
+                        <option value="5">Extremamente grave</option>
+                    </select>
+                    <label for="gut-urgency" class="swal2-label">Urgência:</label>
+                    <select id="gut-urgency" class="swal2-select">
+                        <option value="1">Pode esperar</option>
+                        <option value="2">Pouco urgente</option>
+                        <option value="3">Urgente</option>
+                        <option value="4">Muito urgente</option>
+                        <option value="5">Imediatamente</option>
+                    </select>
+                    <label for="gut-tendency" class="swal2-label">Tendência:</label>
+                    <select id="gut-tendency" class="swal2-select">
+                        <option value="1">Não irá mudar</option>
+                        <option value="2">Irá piorar a longo prazo</option>
+                        <option value="3">Irá piorar a médio prazo</option>
+                        <option value="4">Irá piorar a curto prazo</option>
+                        <option value="5">Irá piorar rapidamente</option>
+                    </select>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Adicionar',
+                cancelButtonText: 'Cancelar',
+                preConfirm: () => {
+                    const title = Swal.getPopup().querySelector('#activity-title').value;
+                    const description = Swal.getPopup().querySelector('#activity-description').value;
+                    const question = Swal.getPopup().querySelector('#question').value;
+                    const gutGravity = parseInt(Swal.getPopup().querySelector('#gut-gravity').value);
+                    const gutUrgency = parseInt(Swal.getPopup().querySelector('#gut-urgency').value);
+                    const gutTendency = parseInt(Swal.getPopup().querySelector('#gut-tendency').value);
+
+                    if (!title || !description || !question || !gutGravity || !gutUrgency || !gutTendency) {
+                        Swal.showValidationMessage(`Por favor, preencha todos os campos.`);
+                    }
+
+                    return { title, description, question, gutGravity, gutUrgency, gutTendency };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { title, description, question, gutGravity, gutUrgency, gutTendency } = result.value;
+                    const activity = { title, description, question, gutGravity, gutUrgency, gutTendency };
                     saveActivity(activity);
                     Swal.fire(`Atividade adicionada: ${activity.title}`);
                 }

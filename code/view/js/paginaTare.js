@@ -40,51 +40,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
  
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 
-// função para adicionar o participante para as tarefas da empresa:
-
-document.addEventListener('DOMContentLoaded', function () {
-  const adicionarParticipanteBtn = document.getElementById('adicionar-participante');
-
-  adicionarParticipanteBtn.addEventListener('click', function () {
-    Swal.fire({
-      title: "Coloque o nome do usuário que deseja adicionar",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off"
-      },
-      showCancelButton: true,
-      confirmButtonText: "Adicionar",
-      showLoaderOnConfirm: true,
-      preConfirm: async (login) => {
-        try {
-          const githubUrl = `https://api.github.com/users/${login}`;
-          const response = await fetch(githubUrl);
-          if (!response.ok) {
-            return Swal.showValidationMessage(`
-              ${JSON.stringify(await response.json())}
-            `);
-          }
-          return response.json();
-        } catch (error) {
-          Swal.showValidationMessage(`
-            Request failed: ${error}
-          `);
-        }
-      },
-      allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: `${result.value.login} foi adicionado para as atividades da empresa`,
-          imageUrl: result.value.avatar_url
-        });
-      }
-    });
-  });
-});
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-
 // conjunto para as funções de atividades e sub-tarefas:
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -271,23 +226,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   }
 
-  // Aqui começa as funções para os pop-ups das atividades
-
   function handleTaskClick(e) {
     const task = e.currentTarget;
     const title = task.querySelector('.task__tag').textContent;
     const description = task.querySelector('p').textContent;
+    const gutGravity = parseInt(task.getAttribute('data-gut-gravity'));
+    const gutUrgency = parseInt(task.getAttribute('data-gut-urgency'));
+    const gutTendency = parseInt(task.getAttribute('data-gut-tendency'));
     const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
       text: subtask.querySelector('span').textContent,
       completed: subtask.querySelector('input').checked,
     }));
-
+  
     if (e.target.type === 'checkbox') {
       return; // Impede que o pop-up seja exibido ao clicar no checkbox das subtarefas das atividades
     }
-
-    // Aqui tá o pop-up das atividades
-
+  
+    // Pop-up das atividades
     Swal.fire({
       title: title,
       html: `
@@ -305,6 +260,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <button id="add-subtask" class="swal2-confirm swal2-styled">
           <i class="fas fa-plus"></i>
         </button>
+
+        <div style="margin-top: 20px;"></div>
+        <h2 style="text-align: left; font-size: 1.5em;">Matriz GUT </h2>
+        <div style="margin-top: 5px;"></div>
+        <label for="gut-gravity">Gravidade:</label>
+        <select id="gut-gravity" class="swal2-select">
+          <option value="1" ${gutGravity === 1 ? 'selected' : ''}>Sem gravidade</option>
+          <option value="2" ${gutGravity === 2 ? 'selected' : ''}>Pouco grave</option>
+          <option value="3" ${gutGravity === 3 ? 'selected' : ''}>Grave</option>
+          <option value="4" ${gutGravity === 4 ? 'selected' : ''}>Muito grave</option>
+          <option value="5" ${gutGravity === 5 ? 'selected' : ''}>Extremamente grave</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="gut-urgency">Urgência:</label>
+        <select id="gut-urgency" class="swal2-select">
+          <option value="1" ${gutUrgency === 1 ? 'selected' : ''}>Pode esperar</option>
+          <option value="2" ${gutUrgency === 2 ? 'selected' : ''}>Pouco urgente</option>
+          <option value="3" ${gutUrgency === 3 ? 'selected' : ''}>Urgente</option>
+          <option value="4" ${gutUrgency === 4 ? 'selected' : ''}>Muito urgente</option>
+          <option value="5" ${gutUrgency === 5 ? 'selected' : ''}>Imediatamente</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="gut-tendency">Tendência:</label>
+        <select id="gut-tendency" class="swal2-select">
+          <option value="1" ${gutTendency === 1 ? 'selected' : ''}>Não irá mudar</option>
+          <option value="2" ${gutTendency === 2 ? 'selected' : ''}>Irá piorar a longo prazo</option>
+          <option value="3" ${gutTendency === 3 ? 'selected' : ''}>Irá piorar a médio prazo</option>
+          <option value="4" ${gutTendency === 4 ? 'selected' : ''}>Irá piorar a curto prazo</option>
+          <option value="5" ${gutTendency === 5 ? 'selected' : ''}>Irá piorar rapidamente</option>
+        </select>
+        <div style="margin-top: 20px;"></div>
+        <label style="text-align: left; font-weight: bold;">Resultado da Matriz GUT:</label>
+        <span id="multiplication-result">${gutGravity * gutUrgency * gutTendency}</span>
         <div style="margin-top: 20px;"></div>
         <div class="button-group">
           <button id="delete-task" class="swal2-confirm swal2-styled">
@@ -316,16 +304,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <button id="complete-task" class="swal2-confirm swal2-styled">
             <i class="fas fa-check"></i>
           </button>
-          
         </div>
       `,
-        showConfirmButton: true,
-        ConfirmButtonText: 'Salvar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          savePA(task);
-        }
+      showConfirmButton: true,
+      confirmButtonText: 'Salvar', // Correção aqui
+      preConfirm: () => {
+        const gutGravity = parseInt(Swal.getPopup().querySelector('#gut-gravity').value);
+        const gutUrgency = parseInt(Swal.getPopup().querySelector('#gut-urgency').value);
+        const gutTendency = parseInt(Swal.getPopup().querySelector('#gut-tendency').value);
+        const question = Swal.getPopup().querySelector('#question').value;
+  
+        const multiplicationResult = gutGravity * gutUrgency * gutTendency;
+        Swal.getPopup().querySelector('#multiplication-result').textContent = multiplicationResult;
+  
+        return { gutGravity, gutUrgency, gutTendency, question };
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const { gutGravity, gutUrgency, gutTendency, question } = result.value;
+        task.setAttribute('data-gut-gravity', gutGravity);
+        task.setAttribute('data-gut-urgency', gutUrgency);
+        task.setAttribute('data-gut-tendency', gutTendency);
+        task.setAttribute('data-question', question);
+        savePA(task);
+        saveTasks();
+        updateProgress();
+      }
     });
+  
 
     // Cuida de adicionar as sub-tarefas:
 
@@ -348,7 +354,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('subtasks-list').addEventListener('change', (event) => {
         if (event.target.type === 'checkbox') {
-            saveTasks(); 
+            saveTasks();
+            savePA(task);
+            updateProgress(); 
         }
     });
 
@@ -383,9 +391,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <div style="margin-top: 20px;"></div>
                 <input type="text" id="new-edit-subtask-text" placeholder="Nova Sub-tarefa">
                 <button id="add-edit-subtask" class="swal2-confirm swal2-styled">Adicionar Sub-tarefa</button>
+                <div style="margin-top: 5px;"></div>
+        <label for="edit-gut-gravity">Gravidade:</label>
+        <select id="edit-gut-gravity" class="swal2-select">
+          <option value="1" ${gutGravity == 1 ? 'selected' : ''}>Sem gravidade</option>
+          <option value="2" ${gutGravity == 2 ? 'selected' : ''}>Pouco grave</option>
+          <option value="3" ${gutGravity == 3 ? 'selected' : ''}>Grave</option>
+          <option value="4" ${gutGravity == 4 ? 'selected' : ''}>Muito grave</option>
+          <option value="5" ${gutGravity == 5 ? 'selected' : ''}>Extremamente grave</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="edit-gut-urgency">Urgência:</label>
+        <select id="edit-gut-urgency" class="swal2-select">
+          <option value="1" ${gutUrgency == 1 ? 'selected' : ''}>Pode esperar</option>
+          <option value="2" ${gutUrgency == 2 ? 'selected' : ''}>Pouco urgente</option>
+          <option value="3" ${gutUrgency == 3 ? 'selected' : ''}>Urgente</option>
+          <option value="4" ${gutUrgency == 4 ? 'selected' : ''}>Muito urgente</option>
+          <option value="5" ${gutUrgency == 5 ? 'selected' : ''}>Imediatamente</option>
+        </select>
+        <div style="margin-top: 2px;"></div>
+        <label for="edit-gut-tendency">Tendência:</label>
+        <select id="edit-gut-tendency" class="swal2-select">
+          <option value="1" ${gutTendency == 1 ? 'selected' : ''}>Não irá mudar</option>
+          <option value="2" ${gutTendency == 2 ? 'selected' : ''}>Irá piorar a longo prazo</option>
+          <option value="3" ${gutTendency == 3 ? 'selected' : ''}>Irá piorar a médio prazo</option>
+          <option value="4" ${gutTendency == 4 ? 'selected' : ''}>Irá piorar a curto prazo</option>
+          <option value="5" ${gutTendency == 5 ? 'selected' : ''}>Irá piorar rapidamente</option>
+        </select>
             `,
             confirmButtonText: 'Salvar',
             preConfirm: () => {
+                const newGutGravity = Swal.getPopup().querySelector('#edit-gut-gravity').value;
+                const newGutUrgency = Swal.getPopup().querySelector('#edit-gut-urgency').value;
+                const newGutTendency = Swal.getPopup().querySelector('#edit-gut-tendency').value;
                 const newTitle = Swal.getPopup().querySelector('#edit-task-title').value;
                 const newDescription = Swal.getPopup().querySelector('#edit-task-description').value;
                 const updatedSubtasks = Array.from(Swal.getPopup().querySelectorAll('#edit-subtasks-list li')).map(li => ({
@@ -393,13 +431,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     completed: li.querySelector('input[type="checkbox"]').checked,
                 }));
 
-                return { newTitle, newDescription, updatedSubtasks };
+                return { gutGravity, gutUrgency, gutTendency, newTitle, newDescription, updatedSubtasks, newGutUrgency, newGutGravity, newGutTendency };
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                const { newTitle, newDescription, updatedSubtasks } = result.value;
+                const { newTitle, newDescription, updatedSubtasks, newGutGravity, newGutTendency, newGutUrgency } = result.value;
                 task.querySelector('.task__tag').textContent = newTitle;
                 task.querySelector('p').textContent = newDescription;
+                task.setAttribute('data-gut-gravity', newGutGravity);
+                task.setAttribute('data-gut-urgency', newGutUrgency);
+                task.setAttribute('data-gut-tendency', newGutTendency);
 
                 const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
                 if (!subtasksContainer.classList.contains('subtasks-container')) {
@@ -439,14 +480,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('complete-task').addEventListener('click', () => {
         const doneColumn = document.querySelector('.done-column');
         doneColumn.appendChild(task);
+        
         saveTasks();
         saveDoneTasks();
         updateProgress();
         Swal.close();
     });
 }
-
-
 
   // Função para adicionar subtarefas ao elemento da atividade:
 
@@ -500,7 +540,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     subtasks.forEach(subtask => {
       addSubtask(taskElement, subtask.text, subtask.completed);
     });
+    savePA(task);
     saveTasks();
+    updateProgress();
   }
 
 
@@ -523,7 +565,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       const progressBar = document.createElement('div');
       progressBar.classList.add('progress-bar');
-      progressBar.innerHTML = `
+      progressBar.innerHTML =
+      `
         <span>${title}</span>
         <div class="progress">
           <div class="progress__bar--green" style="width: ${progressPercentage}%;"></div>

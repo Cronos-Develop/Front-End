@@ -1,39 +1,131 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
-        <script src="js/sweetalert.js"></script>
-        <script src="./js/mudaCor.js" defer></script>
-        <script src="./js/jquery.js"></script>
-        <script src="../controller/modelController.js"></script> 
-        <script src="../model/Axios.js"></script>
-        <script src="./js/paginaInicial.js" defer></script>
-        <title>Tarefas Concluídas - Cronos</title>
-    </head>
-
-    <body>
-        <script src="./js/header.js"></script>
-
-       <section class="sbody3">
-        <div id="tar">
-            <div class="todo-container">
-                <header class="header-tarefa">
-                    <h1 class="cortxt">Tarefas Concluídas</h1>
-                </header>
-                <div id="todo-list"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/paginaTare.js" defer></script>
+    <script src="./js/mudaCor.js" defer></script>
+    <script src="./js/jquery.js"></script>
+    <script src="../controller/modelController.js"></script>
+    <script src="../model/Axios.js"></script>
+    <title>Atividades - Cronos</title>
+</head>
+<body>
+    <script src="./js/header.js"></script>
+<section class="sbody-4">
+    <div class='app'>
+        <main class='project'>
+            <div class='project-info'>
+                <h1>Atividades da Empresa</h1>
+                <div class='project-participants'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <button class='project-activites__add' style="display: none;">Adicionar Atividades</button>
+                    <button class='project-participants__add' id="adicionar-participante" style="display: none;">Adicionar Participantes</button>
+                </div>
+                <div class='search-filter'>
+                    <input type='text' id='search-bar' placeholder='Buscar atividades...'>
+                    <select id='status-filter'>
+                        <option value='all'>Todas</option>
+                        <option value='in-progress'>Em Progresso</option>
+                        <option value='done'>Concluídas</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <nav>
-            <ul>
-              <li><a href="paginaTarefas.html"><img src="img/pranchetas.png" alt="Icone de Tarefas" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
-              <li><a href="paginaInicial.html"><img src="img/casa.png" alt="Icone de Início" class="img-fluid usuario-imagem" style="max-width: 60px;"></a></li>
-              <li><a href="paginaUsuario.html"><img src="img/definicoes.png" alt="Icone de Configurações" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
-            </ul>
-        </nav>
-       </section>
-    </body>
+            <div class='project-tasks'>
+                <div class='project-column in-progress-column'>
+                    <h2 class="column-title">Em Progresso</h2>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--design'>Definição dos horários de venda</span></div>
+                        <p>Análise dos críterios para os melhores horários para o ínicio e fim das vendas</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--illustration'>Marketing da marca</span></div>
+                        <p>Definição de como será a publicidade da marca.</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--copyright'>Entrega dos componentes eletrônicos</span></div>
+                        <p>Definição da data e o encarregado da entrega dos componentes eletrônicos</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--illustration'>Local físico</span></div>
+                        <p>Achar o local físico da empresa que cumpra os requisitos.</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                </div>
+                <div class='project-column done-column'>
+                    <h2 class="column-title">Atividades Concluídas</h2>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--design'>Pesquisa de Mercado</span></div>
+                        <p>Analisar o mercado de tecnologia para identificar oportunidades e tendências, Definir o público-alvo da empresa, Pesquisar os concorrentes e seus produtos ou serviços.</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--illustration'>Definição do Modelo de Negócio</span></div>
+                        <p> Definir o tipo de empresa que será aberta (LTDA, MEI, etc.), escolher o nicho de mercado em que a empresa irá atuar, definir os produtos ou serviços que serão oferecidos.</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--copyright'>Planejamento Estratégico</span></div>
+                        <p>Criar um plano de negócios detalhado, incluindo projeções financeiras.</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                    <div class='task' draggable='true'>
+                        <div class='task__tags'><span class='task__tag task__tag--illustration'>Captação de Recursos</span></div>
+                        <p>Buscar investimento para a empresa através de bancos, fundos de investimento ou crowdfunding.</p>
+                        <div class='task__stats'><span class='task__owner'></span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <aside class='task-details'>
+            <h2>Progresso das Atividades</h2>
+            <div class='tag-progress'>
+                <div class='progress-container'></div>
+            </div>
+        </aside>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="paginaEmpresa.html"><img src="img/pranchetas.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
+            <li><a href="paginaInicial.html"><img src="img/casa.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 60px;"></a></li>
+            <li><a href="paginaUsuario.html"><img src="img/definicoes.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
+        </ul>
+    </nav>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadActivities();
+    });
+
+    function loadActivities() {
+        let activities = JSON.parse(localStorage.getItem('activities')) || [];
+        const inProgressColumn = document.querySelector('.in-progress-column');
+        const doneColumn = document.querySelector('.done-column');
+
+        activities.forEach(activity => {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'task';
+            taskElement.draggable = true;
+            taskElement.innerHTML = `
+                <div class='task__tags'><span class='task__tag'>${activity.title}</span></div>
+                <p>${activity.description}</p>
+                <div class='task__stats'><span class='task__owner'></span></div>
+            `;
+
+            // Aqui você pode decidir onde colocar a atividade (em progresso ou concluída)
+            // Por agora, vamos adicionar todas em "Em Progresso"
+            inProgressColumn.appendChild(taskElement);
+        });
+    }
+</script>
+</body>
 </html>
