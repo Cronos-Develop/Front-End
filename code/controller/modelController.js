@@ -4,6 +4,7 @@ function Controllogin(login, password){
     const url = URL+'/api/users/';
     const data = login + ':' + password + '/userHash';
     var response = apiGET(url, data);
+    console.log(response);
     if(response != null){
         localStorage.setItem("myHash", response);
         return true;
@@ -71,9 +72,14 @@ function ControlCadaster(email, telefone, pass, nameU, end, complemento=null, ba
     return 0;
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function ControlEnterpriseCadaster(ident, pass, empresa, nicho=null, resumo=null){
     Controllogin(ident, pass)
     hash = localStorage.getItem("myHash");
+    console.log("Seu login é:" + hash)
     const url = URL + '/api/empresas/'+hash;
 
     const data = {
@@ -146,5 +152,228 @@ function ControlTasks(specify=0){
         }else{
             return false;
         }
+    }
+}
+
+function alteraCadastroEmpresa(nome, descricao, nicho, specify){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/'+ specify + '/' + hash;
+
+    const data = {
+        "usuario_id": hash,
+	    "nome_da_empresa": nome,
+	    "nicho": nicho,
+        "resumo": descricao
+    }
+
+    var response = apiPUT(url, data);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function getPartiners(specify){
+    var hash = localStorage.getItem("myHash");
+    const url = URL+'/api/users/partners/'+specify+'/'+hash;
+    console.log(url)
+    var response = apiGET(url);
+    if(response != null){
+        return response;
+    }else{
+        return false;
+    }
+}
+
+function deletaPartner(specify, id){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/partner/'+specify+'/'+ hash +"/"+id;
+    var response = apiDELETE(url);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function adicionaAtividade(id, tarefa, descricao=null, g=0, u=0, t=0, p = [null, null, null, null, null, null, null]){
+    hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/t5w2h/'+id+'/'+hash;
+    const data = {
+        "tarefa": tarefa,
+        "gut": {
+            "gravidade": g,
+            "urgencia": u,
+            "tendencia": t
+        },
+        "respostas": [
+            {
+                "pergunta_id": 1,
+                "resposta": p[0]
+            },
+            {
+                "pergunta_id": 2,
+                "resposta": p[1]
+            },
+            {
+                "pergunta_id": 3,
+                "resposta": p[2]
+            },
+            {
+                "pergunta_id": 4,
+                "resposta": p[3]
+            },
+            {
+                "pergunta_id": 5,
+                "resposta": p[4]
+            },
+            {
+                "pergunta_id": 6,
+                "resposta": p[5]
+            },
+            {
+                "pergunta_id": 7,
+                "resposta": p[6]
+            }
+        ]
+    }
+
+    console.log(data);
+    var response = apiPOST(url, data);
+    if(response == 1){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function apagaTarefa(specify){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/t5w2h/'+specify+'/'+ hash;
+    var response = apiDELETE(url);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function editaTarefa(specify, id, title, g=1, u=1, t=1, p = [null, null,null,null,null,null,null]){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/t5w2h/'+ specify + '/' + hash;
+
+    const data = {
+        "tarefa_id": id,
+        "tarefa": title,
+        "gut": {
+            "gravidade": g,
+            "urgencia": u,
+            "tendencia": t
+        },
+        "respostas": [
+            {
+                "pergunta_id": 1,
+                "resposta": p[0]
+            },
+            {
+                "pergunta_id": 2,
+                "resposta": p[1]
+            },
+            {
+                "pergunta_id": 3,
+                "resposta": p[2]
+            },
+            {
+                "pergunta_id": 4,
+                "resposta": p[3]
+            },
+            {
+                "pergunta_id": 5,
+                "resposta": p[4]
+            },
+            {
+                "pergunta_id": 6,
+                "resposta": p[5]
+            },
+            {
+                "pergunta_id": 7,
+                "resposta": p[6]
+            }
+        ]
+    }
+
+    var response = apiPUT(url, data);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+//api/empresas/subtarefas/{tarefa}/{hash}
+function addSubtarefa(id, tarefas= []){
+    hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/subtarefas/'+id+'/'+hash;
+    const data = {
+        tarefas
+    }
+
+    console.log(data);
+    var response = apiPOST(url, data);
+    if(response == 1){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function apagaSubtarefa(specify){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/subtarefas/'+specify+'/'+ hash;
+    var response = apiDELETE(url);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+// +++++++++++++++++++++++++++++++++++++++++++++
+function alteraEstado(specify, flag=0){
+    var hash = localStorage.getItem("myHash");
+    var url = URL
+    if(flag==0){
+        url += '/api/empresas/tarefas/'+specify+'/'+ hash;
+    }else{
+        url += '/api/empresas/subtarefas/'+specify+'/'+ hash;
+    }
+    var response = apiPATCH(url);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+function editaSubtarefa(){
+
+}
+
+function alteraSenha(codigo, senha){
+    var hash = localStorage.getItem("myHash");
+    const url = URL + '/api/empresas/'+ specify + '/' + hash;//
+
+    const data = {
+        "usuario_id": hash,
+	    "nome_da_empresa": nome,
+	    "nicho": nicho,
+        "resumo": descricao
+    }
+
+    var response = apiPUT(url, data);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
     }
 }

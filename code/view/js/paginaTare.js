@@ -1,43 +1,33 @@
-// função para a barra de busca e o filtro de pesquisa:
-
-document.addEventListener('DOMContentLoaded', (event) => {
-
-  const searchBar = document.getElementById('search-bar');
-  const statusFilter = document.getElementById('status-filter');
-
-  searchBar.addEventListener('input', filterTasks);
-  statusFilter.addEventListener('change', filterTasks);
-
-  function filterTasks() {
-    const searchText = searchBar.value.toLowerCase();
-    const filterStatus = statusFilter.value;
-
-    const allTasks = document.querySelectorAll('.task');
-    allTasks.forEach(task => {
-      const title = task.querySelector('.task__tag').textContent.toLowerCase();
-      const description = task.querySelector('p').textContent.toLowerCase();
-      const isInProgress = task.closest('.in-progress-column') !== null;
-      const isDone = task.closest('.done-column') !== null;
-
-      let matchesSearch = title.includes(searchText) || description.includes(searchText);
-      let matchesStatus = (filterStatus === 'all') ||
-                          (filterStatus === 'in-progress' && isInProgress) ||
-                          (filterStatus === 'done' && isDone);
-
-      if (matchesSearch && matchesStatus) {
-        task.style.display = '';
-      } else {
-        task.style.display = 'none';
-      }
+// conjunto para as funções de atividades e sub-tarefas:
+function deletaTarefa(id){
+  if(apagaTarefa(id)==1){
+    Swal.fire({
+      title: "Tarefa apagada com sucesso",
+      icon: "success",
+        showConfirmButton: true,
+        ConfirmButtonText: 'Salvar',
+        showCancelButton: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          task.remove();
+          Swal.close();
+          saveTasks();
+        }
     });
   }
+}
 
-  loadTasks();
-  const doneTasks = JSON.parse(localStorage.getItem('doneTasks')) || [];
-  doneTasks.forEach(task => addActivity(task.title, task.description, task.subtasks, false));
-  filterTasks();
-});
- 
+function addSub(id, tarefa){
+  if(tarefa) addSubtarefa(id, tarefa);
+}
+
+function deleteSubtask(id){
+  apagaSubtarefa(id);
+}
+
+function alterState(id, type){
+  alteraEstado(id, type);
+}
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 
 // conjunto para as funções de atividades e sub-tarefas:
@@ -134,6 +124,49 @@ document.addEventListener('DOMContentLoaded', (event) => {
     item.addEventListener('click', handleTaskClick, false);
   });
 
+// função para adicionar o participante para as tarefas da empresa:
+
+document.addEventListener('DOMContentLoaded', function () {
+  const adicionarParticipanteBtn = document.getElementById('adicionar-participante');
+
+  adicionarParticipanteBtn.addEventListener('click', function () {
+    Swal.fire({
+      title: "Coloque o nome do usuário que deseja adicionar",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+      },
+      showCancelButton: true,
+      confirmButtonText: "Adicionar",
+      showLoaderOnConfirm: true,
+      preConfirm: async (login) => {
+        try {
+          const githubUrl = `https://api.github.com/users/${login}`;
+          const response = await fetch(githubUrl);
+          if (!response.ok) {
+            return Swal.showValidationMessage(`
+              ${JSON.stringify(await response.json())}
+            `);
+          }
+          return response.json();
+        } catch (error) {
+          Swal.showValidationMessage(`
+            Request failed: ${error}
+          `);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `${result.value.login} foi adicionado para as atividades da empresa`,
+          imageUrl: result.value.avatar_url
+        });
+      }
+    });
+  });
+});
+
   // Aqui está o pop - up de adicionar uma atividade a lista, é direcionado automaticamente para "Em progresso"
 
   document.querySelector('.project-activites__add').addEventListener('click', () => {
@@ -156,47 +189,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }).then((result) => {
       if (result.isConfirmed) {
         const activity = result.value;
+        adicionaAtividade(empresa[i].id, activity.title, activity.description)
         addActivity(activity.title, activity.description);
         saveTasks();
-        updateProgress();
       }
     });
   });
-
-  function addActivity(title, description, subtasks = [], save = true) {
-    const newTask = document.createElement('div');
-    newTask.classList.add('task');
-    newTask.setAttribute('draggable', 'true');
-    newTask.innerHTML = `
-      <div class='task__tags'>
-        <span class='task__tag task__tag--design'>${title}</span>
-      </div>
-      <p>${description}</p>
-      <div class='task__stats'>
-        <span class='task__owner'></span>
-      </div>
-    `;
-
-    const inProgressColumn = document.querySelector('.in-progress-column');
-    inProgressColumn.appendChild(newTask);
-
-    newTask.addEventListener('dragstart', handleDragStart, false);
-    newTask.addEventListener('dragenter', handleDragEnter, false);
-    newTask.addEventListener('dragover', handleDragOver, false);
-    newTask.addEventListener('dragleave', handleDragLeave, false);
-    newTask.addEventListener('drop', handleDrop, false);
-    newTask.addEventListener('dragend', handleDragEnd, false);
-    newTask.addEventListener('click', handleTaskClick, false);
-
-    if (save) {
-      saveTasks();
-    }
-    updateProgress();
-  }
-
   //  Aqui para adicionar a lista de sub-tarefas na atividade da empresa
 
-  function addSubtask(taskElement, text, completed = false) {
+  function addSubtask(taskElement, text, id, completed = false) {
     const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
     if (!subtasksContainer.classList.contains('subtasks-container')) {
       subtasksContainer.classList.add('subtasks-container');
@@ -209,11 +210,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       subtask.classList.add('completed');
     }
     subtask.innerHTML = `
-      <input type="checkbox" ${completed ? 'checked' : ''}>
+      <input type="checkbox" onchange="alterState(${id}, 1)" ${completed ? 'checked' : ''}>
       <span>${text}</span>
+      <div style="display:none">${id}</div>
     `;
     subtasksContainer.appendChild(subtask);
-
     subtask.querySelector('input').addEventListener('change', (e) => {
       e.stopPropagation();
       if (subtask.querySelector('input').checked) {
@@ -222,7 +223,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         subtask.classList.remove('completed');
       }
       saveTasks();
-      updateProgress();
     });
   }
 
@@ -331,7 +331,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         updateProgress();
       }
     });
-  
 
     // Cuida de adicionar as sub-tarefas:
 
@@ -354,37 +353,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('subtasks-list').addEventListener('change', (event) => {
         if (event.target.type === 'checkbox') {
-            saveTasks();
-            savePA(task);
-            updateProgress(); 
+            saveTasks(); 
         }
-    });
-
-    document.getElementById('delete-task').addEventListener('click', () => {
-        task.remove();
-        Swal.close();
-        saveTasks();
-        saveDoneTasks();
-        updateProgress();
     });
 
     document.getElementById('edit-task').addEventListener('click', () => {
         const currentSubtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
             text: subtask.querySelector('span').textContent,
             completed: subtask.querySelector('input').checked,
+            id: subtask.querySelector('div').textContent
         }));
-
         Swal.fire({
             title: 'Editar Tarefa',
             html: `
                 <input type="text" id="edit-task-title" class="swal2-input" value="${title}">
-                <textarea id="edit-task-description" class="swal2-textarea">${description}</textarea>
+                <textarea id="edit-task-description" class="swal2-textarea" readonly>${description}</textarea>
                 <ul id="edit-subtasks-list">
                     ${currentSubtasks.map(subtask => `
                         <li>
                             <input type="checkbox" ${subtask.completed ? 'checked' : ''}>
                             <input type="text" class="edit-subtask-text" value="${subtask.text}">
-                            <button class="delete-subtask">Excluir</button>
+                            <button class="delete-subtask" onclick="deleteSubtask(${subtask.id})">Excluir</button>
                         </li>
                     `).join('')}
                 </ul>
@@ -441,7 +430,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 task.setAttribute('data-gut-gravity', newGutGravity);
                 task.setAttribute('data-gut-urgency', newGutUrgency);
                 task.setAttribute('data-gut-tendency', newGutTendency);
-
+                editaTarefa(empresa[i].id, newDescription, newTitle);//|Função AXIOS
                 const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
                 if (!subtasksContainer.classList.contains('subtasks-container')) {
                     subtasksContainer.classList.add('subtasks-container');
@@ -450,9 +439,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 subtasksContainer.innerHTML = '';
                 updatedSubtasks.forEach(subtask => {
                     addSubtask(task, subtask.text, subtask.completed);
+                    editaSubtarefa()//////
                 });
                 saveTasks();
-                saveDoneTasks();
             }
         });
 
@@ -482,43 +471,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         doneColumn.appendChild(task);
         
         saveTasks();
-        saveDoneTasks();
-        updateProgress();
         Swal.close();
     });
 }
 
   // Função para adicionar subtarefas ao elemento da atividade:
-
-  function addSubtask(taskElement, text, completed = false) {
-    const subtasksContainer = taskElement.querySelector('.subtasks-container') || document.createElement('div');
-    if (!subtasksContainer.classList.contains('subtasks-container')) {
-      subtasksContainer.classList.add('subtasks-container');
-      taskElement.appendChild(subtasksContainer);
-    }
-
-    const subtask = document.createElement('div');
-    subtask.classList.add('subtask');
-    if (completed) {
-      subtask.classList.add('completed');
-    }
-    subtask.innerHTML = `
-      <input type="checkbox" ${completed ? 'checked' : ''}>
-      <span>${text}</span>
-    `;
-    subtasksContainer.appendChild(subtask);
-
-    subtask.querySelector('input').addEventListener('change', () => {
-      if (subtask.querySelector('input').checked) {
-        subtask.classList.add('completed');
-      } else {
-        subtask.classList.remove('completed');
-      }
-      savePA(task);
-      saveTasks();
-      updateProgress();
-    });
-  }
 
   function savePA(taskElement) {
     const title = Swal.getPopup().querySelector('.swal2-title').textContent;
@@ -544,43 +501,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     saveTasks();
     updateProgress();
   }
-
-
-  // função que atualiza a area de "progresso das atividades"
-
-  function updateProgress() {
-
-    const inProgressTasks = document.querySelectorAll('.in-progress-column .task');
-    const progressContainer = document.querySelector('.progress-container');
-    progressContainer.innerHTML = '';
-
-    inProgressTasks.forEach(task => {
-
-      const title = task.querySelector('.task__tag').textContent;
-      const subtasks = task.querySelectorAll('.subtask');
-      const completedSubtasks = task.querySelectorAll('.subtask input:checked');
-      const totalSubtasks = subtasks.length;
-      const completedCount = completedSubtasks.length;
-      const progressPercentage = totalSubtasks === 0 ? 0 : (completedCount / totalSubtasks) * 100;
-
-      const progressBar = document.createElement('div');
-      progressBar.classList.add('progress-bar');
-      progressBar.innerHTML =
-      `
-        <span>${title}</span>
-        <div class="progress">
-          <div class="progress__bar--green" style="width: ${progressPercentage}%;"></div>
-          <div class="progress__bar--gray" style="width: ${100 - progressPercentage}%;"></div>
-        </div>
-      `;
-      progressContainer.appendChild(progressBar);
-    });
-  }
-
-  loadTasks();
-  const doneTasks = JSON.parse(localStorage.getItem('doneTasks')) || [];
-  doneTasks.forEach(task => addActivity(task.title, task.description, task.subtasks, false));
-  updateProgress();
 });
 
 // -------------------------------------------------------------------------------------------------------------------------------------------
