@@ -259,7 +259,7 @@ function apagaTarefa(specify){
     }
 }
 
-function editaTarefa(specify, id, title, g=0, u=0, t=0, p = [null, null,null,null,null,null,null]){
+function editaTarefa(specify, id, title, g=1, u=1, t=1, p = [null, null,null,null,null,null,null]){
     var hash = localStorage.getItem("myHash");
     const url = URL + '/api/empresas/t5w2h/'+ specify + '/' + hash;
 
@@ -341,7 +341,7 @@ function apagaSubtarefa(specify){
 // +++++++++++++++++++++++++++++++++++++++++++++
 function alteraEstado(specify, flag=0){
     var hash = localStorage.getItem("myHash");
-    const url = URL
+    var url = URL
     if(flag==0){
         url += '/api/empresas/tarefas/'+specify+'/'+ hash;
     }else{

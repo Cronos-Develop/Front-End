@@ -25,6 +25,10 @@ function deleteSubtask(id){
   apagaSubtarefa(id);
 }
 
+function alterState(id, type){
+  alteraEstado(id, type);
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
 
@@ -258,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
       subtask.classList.add('completed');
     }
     subtask.innerHTML = `
-      <input type="checkbox" ${completed ? 'checked' : ''}>
+      <input type="checkbox" onchange="alterState(${id}, 1)" ${completed ? 'checked' : ''}>
       <span>${text}</span>
       <div style="display:none">${id}</div>
     `;
