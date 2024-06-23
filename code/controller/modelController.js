@@ -197,7 +197,7 @@ function deletaPartner(specify, id){
     }
 }
 
-function adicionaAtividade(id, tarefa, descricao=null, g=1, u=1, t=1, p = [null, null, null, null, null, null, null]){
+function adicionaAtividade(id, tarefa, descricao=null, g=0, u=0, t=0, p = [null, null, null, null, null, null, null]){
     hash = localStorage.getItem("myHash");
     const url = URL + '/api/empresas/t5w2h/'+id+'/'+hash;
     const data = {
@@ -355,7 +355,6 @@ function alteraEstado(specify, flag=0){
     }
 }
 
-
 function getAPI(tarefa){
     hash = localStorage.getItem("myHash");
     const url = URL + '/api/IA/'+hash;
@@ -387,7 +386,6 @@ function editaSubtarefa(subtarefa, specify){
     }else{
         return 0;
     }
-}
 
 function alteraSenha(codigo, senha){
     const url = URL + '/api/users/trocarsenha/';
