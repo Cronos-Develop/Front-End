@@ -22,17 +22,56 @@ function addSub(id, tarefa){
 }
 
 function deleteSubtask(id){
+  console.log("Deletando: "+id)
   apagaSubtarefa(id);
 }
 
 function alterState(id, type){
   alteraEstado(id, type);
 }
+function addActivity(title, id, subtasks = [{}], save = true) {
+  const newTask = document.createElement('div');
+  newTask.classList.add('task');
+  newTask.setAttribute('draggable', 'true');
+  newTask.innerHTML = `
+    <div class='task__tags'>
+      <span class='task__tag task__tag--design'>${title}</span>
+    </div>
+    <p style="display:none">${id}</p>
+    <div class='task__stats'>
+      <span class='task__owner'></span>
+    </div>
+  `;
+  for(k=0; k<subtasks.length; k++){
+    addSubtask(newTask, subtasks[k].subtarefa, subtasks[k].id, false);
+  }
+
+  const inProgressColumn = document.querySelector('.in-progress-column');
+  inProgressColumn.appendChild(newTask);
+
+  newTask.addEventListener('dragstart', handleDragStart, false);
+  newTask.addEventListener('dragenter', handleDragEnter, false);
+  newTask.addEventListener('dragover', handleDragOver, false);
+  newTask.addEventListener('dragleave', handleDragLeave, false);
+  newTask.addEventListener('drop', handleDrop, false);
+  newTask.addEventListener('dragend', handleDragEnd, false);
+  newTask.addEventListener('click', handleTaskClick, false);
+
+  if (save) {
+    saveTasks();
+  }
+}
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 
 // conjunto para as funções de atividades e sub-tarefas:
 
-document.addEventListener('DOMContentLoaded', (event) => {
+var response = ControlTasks(empresa[i].id);
+let tarefas = JSON.parse(response);
+for(j=0; j<tarefas.length; j++){
+  if(tarefas[j]){
+    addActivity(tarefas[j].tarefa, tarefas[j].id, tarefas[j].subtarefas);
+  }
+}
   var dragSrcEl = null;
 
   function handleDragStart(e) {
@@ -93,6 +132,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
         text: subtask.querySelector('span').textContent,
         completed: subtask.querySelector('input').checked,
+        id: subtask.querySelector('div').textContent,
       }));
       tasks.push({ title, description, subtasks });
     });
@@ -107,6 +147,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
         text: subtask.querySelector('span').textContent,
         completed: subtask.querySelector('input').checked,
+        id: subtask.querySelector('div').textContent,
       }));
       doneTasks.push({ title, description, subtasks });
     });
@@ -212,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
     subtask.innerHTML = `
       <input type="checkbox" onchange="alterState(${id}, 1)" ${completed ? 'checked' : ''}>
       <span>${text}</span>
-      <div style="display:none">${id}</div>
+      <div style="display:none" id="id">${id}</div>
     `;
     subtasksContainer.appendChild(subtask);
     subtask.querySelector('input').addEventListener('change', (e) => {
@@ -236,6 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const subtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
       text: subtask.querySelector('span').textContent,
       completed: subtask.querySelector('input').checked,
+      id: subtask.querySelector('div').textContent,
     }));
   
     if (e.target.type === 'checkbox') {
@@ -252,6 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <li class="subtask">
               <input type="checkbox" ${subtask.completed ? 'checked' : ''}>
               <span>${subtask.text}</span>
+              <div style="display:none" id="id">${subtask.id}</div>
             </li>
           `).join('')}
         </ul>
@@ -260,39 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <button id="add-subtask" class="swal2-confirm swal2-styled">
           <i class="fas fa-plus"></i>
         </button>
-
         <div style="margin-top: 20px;"></div>
-        <h2 style="text-align: left; font-size: 1.5em;">Matriz GUT </h2>
-        <div style="margin-top: 5px;"></div>
-        <label for="gut-gravity">Gravidade:</label>
-        <select id="gut-gravity" class="swal2-select">
-          <option value="1" ${gutGravity === 1 ? 'selected' : ''}>Sem gravidade</option>
-          <option value="2" ${gutGravity === 2 ? 'selected' : ''}>Pouco grave</option>
-          <option value="3" ${gutGravity === 3 ? 'selected' : ''}>Grave</option>
-          <option value="4" ${gutGravity === 4 ? 'selected' : ''}>Muito grave</option>
-          <option value="5" ${gutGravity === 5 ? 'selected' : ''}>Extremamente grave</option>
-        </select>
-        <div style="margin-top: 2px;"></div>
-        <label for="gut-urgency">Urgência:</label>
-        <select id="gut-urgency" class="swal2-select">
-          <option value="1" ${gutUrgency === 1 ? 'selected' : ''}>Pode esperar</option>
-          <option value="2" ${gutUrgency === 2 ? 'selected' : ''}>Pouco urgente</option>
-          <option value="3" ${gutUrgency === 3 ? 'selected' : ''}>Urgente</option>
-          <option value="4" ${gutUrgency === 4 ? 'selected' : ''}>Muito urgente</option>
-          <option value="5" ${gutUrgency === 5 ? 'selected' : ''}>Imediatamente</option>
-        </select>
-        <div style="margin-top: 2px;"></div>
-        <label for="gut-tendency">Tendência:</label>
-        <select id="gut-tendency" class="swal2-select">
-          <option value="1" ${gutTendency === 1 ? 'selected' : ''}>Não irá mudar</option>
-          <option value="2" ${gutTendency === 2 ? 'selected' : ''}>Irá piorar a longo prazo</option>
-          <option value="3" ${gutTendency === 3 ? 'selected' : ''}>Irá piorar a médio prazo</option>
-          <option value="4" ${gutTendency === 4 ? 'selected' : ''}>Irá piorar a curto prazo</option>
-          <option value="5" ${gutTendency === 5 ? 'selected' : ''}>Irá piorar rapidamente</option>
-        </select>
-        <div style="margin-top: 20px;"></div>
-        <label style="text-align: left; font-weight: bold;">Resultado da Matriz GUT:</label>
-        <span id="multiplication-result">${gutGravity * gutUrgency * gutTendency}</span>
         <div style="margin-top: 20px;"></div>
         <div class="button-group">
           <button id="delete-task" class="swal2-confirm swal2-styled">
@@ -300,9 +311,6 @@ document.addEventListener('DOMContentLoaded', function () {
           </button>
           <button id="edit-task" class="swal2-confirm swal2-styled">
             <i class="fas fa-edit"></i>
-          </button>
-          <button id="complete-task" class="swal2-confirm swal2-styled">
-            <i class="fas fa-check"></i>
           </button>
         </div>
       `,
@@ -361,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentSubtasks = Array.from(task.querySelectorAll('.subtask')).map(subtask => ({
             text: subtask.querySelector('span').textContent,
             completed: subtask.querySelector('input').checked,
-            id: subtask.querySelector('div').textContent
+            id: subtask.querySelector('div').textContent,
         }));
         Swal.fire({
             title: 'Editar Tarefa',
@@ -373,13 +381,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         <li>
                             <input type="checkbox" ${subtask.completed ? 'checked' : ''}>
                             <input type="text" class="edit-subtask-text" value="${subtask.text}">
+                            <input style="display:none" class="id" value="${subtask.id}">
                             <button class="delete-subtask" onclick="deleteSubtask(${subtask.id})">Excluir</button>
                         </li>
                     `).join('')}
                 </ul>
-                <div style="margin-top: 20px;"></div>
-                <input type="text" id="new-edit-subtask-text" placeholder="Nova Sub-tarefa">
-                <button id="add-edit-subtask" class="swal2-confirm swal2-styled">Adicionar Sub-tarefa</button>
                 <div style="margin-top: 5px;"></div>
         <label for="edit-gut-gravity">Gravidade:</label>
         <select id="edit-gut-gravity" class="swal2-select">
@@ -418,6 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const updatedSubtasks = Array.from(Swal.getPopup().querySelectorAll('#edit-subtasks-list li')).map(li => ({
                     text: li.querySelector('.edit-subtask-text').value,
                     completed: li.querySelector('input[type="checkbox"]').checked,
+                    id: li.querySelector('.id').value,
                 }));
 
                 return { gutGravity, gutUrgency, gutTendency, newTitle, newDescription, updatedSubtasks, newGutUrgency, newGutGravity, newGutTendency };
@@ -430,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 task.setAttribute('data-gut-gravity', newGutGravity);
                 task.setAttribute('data-gut-urgency', newGutUrgency);
                 task.setAttribute('data-gut-tendency', newGutTendency);
-                editaTarefa(empresa[i].id, newDescription, newTitle);//|Função AXIOS
+                editaTarefa(empresa[i].id, newDescription, newTitle, newGutGravity, newGutTendency, newGutUrgency);//|Função AXIOS
                 const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
                 if (!subtasksContainer.classList.contains('subtasks-container')) {
                     subtasksContainer.classList.add('subtasks-container');
@@ -438,8 +445,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 subtasksContainer.innerHTML = '';
                 updatedSubtasks.forEach(subtask => {
-                    addSubtask(task, subtask.text, subtask.completed);
-                    editaSubtarefa()//////
+                    addSubtask(task, subtask.text, subtask.id, subtask.completed);
+                    console.log(subtask)
+                    editaSubtarefa(subtask.text, subtask.id);
                 });
                 saveTasks();
             }
@@ -483,6 +491,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const subtasks = Array.from(Swal.getPopup().querySelectorAll('#subtasks-list .subtask')).map(subtask => ({
       text: subtask.querySelector('span').textContent,
       completed: subtask.querySelector('input').checked,
+      id: subtask.querySelector('div').textContent,
     }));
 
     taskElement.querySelector('.task__tag').textContent = title;
@@ -495,12 +504,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     subtasksContainer.innerHTML = '';
     subtasks.forEach(subtask => {
-      addSubtask(taskElement, subtask.text, subtask.completed);
+      addSubtask(taskElement, subtask.text, subtask.id, subtask.completed);
     });
     savePA(task);
     saveTasks();
     updateProgress();
   }
-});
-
 // -------------------------------------------------------------------------------------------------------------------------------------------

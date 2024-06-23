@@ -338,7 +338,7 @@ function apagaSubtarefa(specify){
         return 0;
     }
 }
-// +++++++++++++++++++++++++++++++++++++++++++++
+
 function alteraEstado(specify, flag=0){
     var hash = localStorage.getItem("myHash");
     var url = URL
@@ -355,22 +355,47 @@ function alteraEstado(specify, flag=0){
     }
 }
 
-function editaSubtarefa(){
+function getAPI(tarefa){
+    hash = localStorage.getItem("myHash");
+    const url = URL + '/api/IA/'+hash;
+    const data = {
+        "tarefa": tarefa
+    }
 
+    console.log(data);
+    var response = apiPOST(url, data);
+    if(response){
+        return response;
+    }else{
+        return 0;
+    }
 }
 
-function alteraSenha(codigo, senha){
+////Editar para baixo
+function editaSubtarefa(subtarefa, specify){
     var hash = localStorage.getItem("myHash");
-    const url = URL + '/api/empresas/'+ specify + '/' + hash;//
+    const url = URL + '/api/empresas/subtarefas/'+ specify + '/' + hash;
 
     const data = {
-        "usuario_id": hash,
-	    "nome_da_empresa": nome,
-	    "nicho": nicho,
-        "resumo": descricao
+        "subtarefa": subtarefa
     }
 
     var response = apiPUT(url, data);
+    if(response == true){
+        return 1;
+    }else{
+        return 0;
+    }
+
+function alteraSenha(codigo, senha){
+    const url = URL + '/api/users/trocarsenha/';
+
+    const data = {
+        "nova_senha": senha,
+        "codigo_confitmacao": codigo
+    }
+
+    var response = apiPOST(url, data);
     if(response == true){
         return 1;
     }else{

@@ -49,7 +49,7 @@ function alteraCad() {
                 confirmButtonText: "Voltar à página inicial"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = './paginaInicia.html';
+                    window.location.href = './paginaInicial.html';
                 }
             });
         } else {

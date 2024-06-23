@@ -280,7 +280,7 @@ gpupdate /force  [Enter]
 - [Acessar Local Host com Celular](https://www.youtube.com/watch?v=L6pn7S699zQ)
   
 ## Recomendações de Estudo:
-
+- Aqui constam as playlists recomendadas para que se assista e se entenda o projeto.
 ### HTML:
 - Este é o curso de HTML da CFB cursos que recomendamos, ele é bem rápido, mas o foco é profissional.
 - [Playlist HTML](https://www.youtube.com/watch?v=BUpk68lggtY&list=PLx4x_zx8csUiVHRDO_7qhOaeNrrQ5uU8c)

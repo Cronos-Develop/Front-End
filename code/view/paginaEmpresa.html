@@ -12,6 +12,7 @@
     <script src="./js/jquery.js"></script>
     <script src="js/sweetalert.js"></script>
     <script src="../model/Axios.js"></script>
+    <script src="./js/atividadesEmpresa.js"></script>
     <script src="./js/paginaEmpresa.js" defer></script>
     <title>Empresa - Cronos</title>
 </head>
@@ -45,108 +46,5 @@
             </ul>
         </nav>
     </section>
-    <script>
-        function showAddActivityPopup() {
-            Swal.fire({
-                title: 'Adicionar Atividade',
-                html: `
-                    <input type="text" id="activity-title" class="swal2-input" placeholder="Título da Atividade">
-                    <textarea id="activity-description" class="swal2-textarea" placeholder="Descrição da Atividade"></textarea>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Adicionar',
-                cancelButtonText: 'Cancelar',
-                preConfirm: () => {
-                    const title = Swal.getPopup().querySelector('#activity-title').value;
-                    const description = Swal.getPopup().querySelector('#activity-description').value;
-                    if (!title || !description) {
-                        Swal.showValidationMessage(`Por favor, preencha ambos os campos.`);
-                    }
-                    return { title: title, description: description };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const activity = result.value;
-                    saveActivity(activity);
-                    Swal.fire(`Atividade adicionada: ${activity.title}`);
-                }
-            });
-        }
-
-        function showAddActivityPopup2() {
-            Swal.fire({
-                title: 'Adicionar Atividade com Matriz GUT',
-                html: `
-                    <input type="text" id="activity-title" class="swal2-input" placeholder="Título da Atividade">
-                    <textarea id="activity-description" class="swal2-textarea" placeholder="Descrição da Atividade"></textarea>
-                    <label for="question" class="swal2-label">Pergunta:</label>
-                    <select id="question" class="swal2-select">
-                        <option value="o-que">O quê</option>
-                        <option value="por-que">Por que</option>
-                        <option value="quem">Quem</option>
-                        <option value="quanto">Quanto</option>
-                        <option value="como">Como</option>
-                        <option value="quando">Quando</option>
-                        <option value="onde">Onde</option>
-                    </select>
-                    <label for="gut-gravity" class="swal2-label">Gravidade:</label>
-                    <select id="gut-gravity" class="swal2-select">
-                        <option value="1">Sem gravidade</option>
-                        <option value="2">Pouco grave</option>
-                        <option value="3">Grave</option>
-                        <option value="4">Muito grave</option>
-                        <option value="5">Extremamente grave</option>
-                    </select>
-                    <label for="gut-urgency" class="swal2-label">Urgência:</label>
-                    <select id="gut-urgency" class="swal2-select">
-                        <option value="1">Pode esperar</option>
-                        <option value="2">Pouco urgente</option>
-                        <option value="3">Urgente</option>
-                        <option value="4">Muito urgente</option>
-                        <option value="5">Imediatamente</option>
-                    </select>
-                    <label for="gut-tendency" class="swal2-label">Tendência:</label>
-                    <select id="gut-tendency" class="swal2-select">
-                        <option value="1">Não irá mudar</option>
-                        <option value="2">Irá piorar a longo prazo</option>
-                        <option value="3">Irá piorar a médio prazo</option>
-                        <option value="4">Irá piorar a curto prazo</option>
-                        <option value="5">Irá piorar rapidamente</option>
-                    </select>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Adicionar',
-                cancelButtonText: 'Cancelar',
-                preConfirm: () => {
-                    const title = Swal.getPopup().querySelector('#activity-title').value;
-                    const description = Swal.getPopup().querySelector('#activity-description').value;
-                    const question = Swal.getPopup().querySelector('#question').value;
-                    const gutGravity = parseInt(Swal.getPopup().querySelector('#gut-gravity').value);
-                    const gutUrgency = parseInt(Swal.getPopup().querySelector('#gut-urgency').value);
-                    const gutTendency = parseInt(Swal.getPopup().querySelector('#gut-tendency').value);
-
-                    if (!title || !description || !question || !gutGravity || !gutUrgency || !gutTendency) {
-                        Swal.showValidationMessage(`Por favor, preencha todos os campos.`);
-                    }
-
-                    return { title, description, question, gutGravity, gutUrgency, gutTendency };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const { title, description, question, gutGravity, gutUrgency, gutTendency } = result.value;
-                    const activity = { title, description, question, gutGravity, gutUrgency, gutTendency };
-                    saveActivity(activity);
-                    Swal.fire(`Atividade adicionada: ${activity.title}`);
-                }
-            });
-        }
-
-        function saveActivity(activity) {
-            let activities = JSON.parse(localStorage.getItem('activities')) || [];
-            activities.push(activity);
-            adicionaAtividade(empresa[i].id, activity.title, activity.description);
-            localStorage.setItem('activities', JSON.stringify(activities));
-        }
-    </script>
 </body>
 </html>
