@@ -9,57 +9,69 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="./js/paginaInicial.js" defer></script>
         <script src="./js/mudaCor.js" defer></script>
-
+        <script src="./js/jquery.js"></script>
+        <script src="js/sweetalert.js"></script>
+        <script src="../controller/modelController.js"></script>
+        <script src="../model/Axios.js"></script>
         <title>Usuário - Cronos</title>
     </head>
     <body>
-        <header class="header-geral"> 
-            <div class="header-content">
-                <div class="company-info">
-                    <h2>Nome da Empresa</h2>
-                    <p>CNPJ: 00.000.000/0001-00</p>
-                </div>
-            </div>
-        </header>
-
+        <script src="./js/header.js"></script>
         <section class="sbody2">
             <form action="#" class="form">
                 <div class="form-step form-step-active">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="text-left no-wrap h2-user">Nome do Usuário</h2>
-                            <p class="p-user">CNPJ: 00.000.000/0001-00</p>
+                            <h2 class="text-left no-wrap h2-user" id="nameUser"></h2>
+                            <p class="p-user" id="CNPJUser"></p>
                         </div>
-                        <div class="col text-end">
+                        <div class="col text-end" style="display:none">
                             <img src="img/pngegg.png" alt="Foto do Usuário" class="img-fluid" style="max-width: 90px;">
                         </div>
                     </div>
 
-                    <div class="btn-list d-flex flex-column align-items-center">
-                        <a class="btn-conf width-50" onclick="mostrarDadosUsuario()">Informações da conta</a>
-                        <a class="btn-conf width-50" onclick="mostrarConfiguracoes()">Configurações</a>
-                        <a class="btn-conf width-50" onclick="sucesso()">Suporte e Ajuda</a> 
-                        <a class="btn-conf width-50" onclick="confirmarSair()">Sair</a>
-                        <button class="btn-link2" id="btn-link2">Mais sobre nós</button>
-                    </div>
+                <div class="btn-list d-flex flex-column align-items-center">
+                    <a class="btn-conf width-50" onclick="mostrarDadosUsuario()">Informações da conta</a>
+                    <a class="btn-conf width-50" onclick="mostrarConfiguracoes()" style="display: none;">Configurações</a>
+                    <a class="btn-conf width-50" onclick="sucesso()">Suporte e Ajuda</a> 
+                    <a class="btn-conf width-50" onclick="confirmarSair()">Sair</a>
+                    <button class="btn-link2" id="btn-link2"><a href="https://github.com/Cronos-Develop">Mais sobre nós</a></button>
+                </div>
 
-                    <div class="row mt-2 text-center">
-                        <div class="col">
-                            <div class="container-imagem-direita">
-                                <img src="img/ED.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 60px; cursor: pointer;">
-                            </div>
+                <div class="row mt-2 text-center">
+                    <div class="col">
+                        <div class="container-imagem-direita">
+                            <img src="img/ED.png" alt="Icone de mudar modo: Claro ou Escuro" class="img-fluid usuario-imagem" style="max-width: 60px; cursor: pointer;">
                         </div>
                     </div>
                 </div>
+
             </form>
             <nav>
                 <ul>
-                    <li><a href="paginaTarefas.html"><img src="img/pranchetas.png" alt="Icone de Tarefas" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
+                    <li><a href="paginaEmpresa.html"><img src="img/pranchetas.png" alt="Icone de Tarefas" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
                     <li><a href="paginaInicial.html"><img src="img/casa.png" alt="Icone de Início" class="img-fluid usuario-imagem" style="max-width: 60px;"></a></li>
                     <li><a href="paginaUsuario.html"><img src="img/definicoes.png" alt="Icone de Configurações" class="img-fluid usuario-imagem" style="max-width: 50px;"></a></li>
                 </ul>
             </nav>
         </section>
         <script src="./js/paginaUsuario.js"></script>
+        <script>
+            var response2 = ControlUsers();
+            let Nusuario = JSON.parse(response2);
+            console.log(Nusuario);
+            const Name = document.querySelector("#nameUser");
+            var vetor = Nusuario[0].name.split(" ");
+            var cont = 0;
+            vetor.forEach(imprimeNome);
+            function imprimeNome(nome){
+                if(cont <= 3){
+                    Name.innerText += " " + nome;
+                }
+                cont++;
+            }
+            const CNPJ = document.querySelector("#CNPJUser");
+            CNPJ.innerText = "CPF/CNPJ: "+Nusuario[0].cpf_cnpj;
+        </script>
     </body>
 </html>
