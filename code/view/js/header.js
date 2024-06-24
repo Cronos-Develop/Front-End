@@ -1,19 +1,28 @@
 const template = document.createElement('template');
-localStorage.setItem("myHash", "A5147b5359A5195b472a4831A5181"); //Para testes
+//localStorage.setItem("myHash", "A5147b5359A5195b472a4831A5181"); //Para testes
 console.log(localStorage.getItem("myHash"));
 var response = ControlEnterprises();
 let empresa = JSON.parse(response);
+if(empresa.length==0){
+    var Nmpresa = localStorage.getItem('nomeEmpresa');
+    if(Nmpresa){
+        console.log(Nmpresa);
+    }else{
+        Nmpresa = "Empresa - Placeholder";
+    }
+    ControlEnterpriseCadaster(null, null, empresa, "Placeholder", "Placeholder");
+}
+console.log(empresa);
 var response2 = ControlUsers();
 let usuario = JSON.parse(response2);
 userCNPJ = usuario[0].cpf_cnpj;
 
 var t = localStorage.getItem("myEnterprise");
-let i;
+let i = 0;
 if(t){
     i = t;
-}else{
-    i = 0;
 }
+
 let nomeEmpresa = empresa[i].nome_da_empresa;
     template.innerHTML = `
     <header class="header-geral"> 

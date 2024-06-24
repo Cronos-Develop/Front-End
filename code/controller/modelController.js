@@ -1,12 +1,12 @@
-const URL = 'http://localhost:8000'
+const URL = 'http://44.201.50.109'
 
 function Controllogin(login, password){
-    const url = URL+'/api/users/';
-    const data = login + ':' + password + '/userHash';
-    var response = apiGET(url, data);
+    const url = URL+'/api/users/' + login + ':' + password;
+    var response = apiGET(url);
     console.log(response);
     if(response != null){
-        localStorage.setItem("myHash", response);
+        response = JSON.parse(response)
+        localStorage.setItem("myHash", response.id);
         return true;
     }else{
         return false;
@@ -18,7 +18,7 @@ function ControlEnterprises(specify=null){
     var hash = localStorage.getItem("myHash");
     if(hash){
         if(specify == null) {
-            url = url+'/api/empresas/'+hash;
+            url = url+'/api/empresas/user/'+hash;
         }else{
             url = url+'/api/empresas/'+specify+'/'+hash;
         }
@@ -36,7 +36,7 @@ function ControlUsers(){
     var url = URL;
     var hash = localStorage.getItem("myHash");
     if(hash){
-        url = url+'/api/users/'+hash;
+        url = url+'/api/users/hash'+hash;
         console.log(url);
         var response = apiGET(url);
         if(response!=null){
@@ -68,6 +68,7 @@ function ControlCadaster(email, telefone, pass, nameU, end, complemento=null, ba
         if(ControlEnterpriseCadaster(ident, pass, empresa)==1){
             return 1;
         }
+        return 1;
     }
     return 0;
 }
@@ -76,8 +77,10 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function ControlEnterpriseCadaster(ident, pass, empresa, nicho=null, resumo=null){
-    Controllogin(ident, pass)
+function ControlEnterpriseCadaster(ident=null, pass=null, empresa, nicho=null, resumo=null){
+    if(ident==null && pass==null){
+        Controllogin(ident, pass)
+    }
     hash = localStorage.getItem("myHash");
     console.log("Seu login é:" + hash)
     const url = URL + '/api/empresas/'+hash;
