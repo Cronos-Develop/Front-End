@@ -151,6 +151,16 @@
     .estilo-customizado {
         width: 90%;
     }
+    nav {
+        width: 90%; /* Ajusta a largura para telas menores */
+    }
+    nav ul {
+        flex-direction: row; /* Certifica-se de que a direção é horizontal */
+    }
+
+    nav ul li {
+        margin: 0 5px; /* Ajusta o espaçamento entre os itens */
+    }
 }
 
 /* --------------------------------------------------------------- Pagina de Cadastro --------------------------------------------------------- */
@@ -702,11 +712,15 @@ nav {
 nav ul {
     list-style-type: none;
     padding: 0;
+    display: flex; /* Adicionado */
+    justify-content: center; /* Adicionado */
+    align-items: center; /* Adicionado */
+    
 }
 
 nav ul li { 
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 5px;
 }
 
 nav ul li a {
