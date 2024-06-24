@@ -389,6 +389,7 @@ function editaSubtarefa(subtarefa, specify){
     }else{
         return 0;
     }
+}
 
 function alteraSenha(codigo, senha){
     const url = URL + '/api/users/trocarsenha/';
