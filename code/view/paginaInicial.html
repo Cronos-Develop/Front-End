@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style2.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/all.min.css" rel="stylesheet">    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/paginaTare.js" defer></script>
     <script src="./js/mudaCor.js" defer></script>
     <script src="./js/jquery.js"></script>
@@ -25,7 +25,7 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    <button class='project-activites__add'>Adicionar Atividades</button>
+                    <button class='project-activites__add' style="display: none;">Adicionar Atividades</button>
                     <button class='project-participants__add' id="adicionar-participante" style="display: none;">Adicionar Participantes</button>
             <div class='project-tasks'>
                 <div class='project-column in-progress-column'>
@@ -63,6 +63,7 @@
 
             // Aqui você pode decidir onde colocar a atividade (em progresso ou concluída)
             // Por agora, vamos adicionar todas em "Em Progresso"
+            
             inProgressColumn.appendChild(taskElement);
         });
     }
