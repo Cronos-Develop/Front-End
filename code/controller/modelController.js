@@ -1,4 +1,4 @@
-const URL = 'http://44.201.50.109'
+const URL = 'https://plum-tiger-983990.hostingersite.com'
 
 function Controllogin(login, password){
     const url = URL+'/api/users/' + login + ':' + password;
@@ -36,7 +36,7 @@ function ControlUsers(){
     var url = URL;
     var hash = localStorage.getItem("myHash");
     if(hash){
-        url = url+'/api/users/hash'+hash;
+        url = url+'/api/users/hash/'+hash;
         console.log(url);
         var response = apiGET(url);
         if(response!=null){
@@ -213,31 +213,11 @@ function adicionaAtividade(id, tarefa, descricao=null, g=0, u=0, t=0, p = [null,
         "respostas": [
             {
                 "pergunta_id": 1,
-                "resposta": p[0]
+                "resposta": "Ser uma pessoa melhor"
             },
             {
                 "pergunta_id": 2,
-                "resposta": p[1]
-            },
-            {
-                "pergunta_id": 3,
-                "resposta": p[2]
-            },
-            {
-                "pergunta_id": 4,
-                "resposta": p[3]
-            },
-            {
-                "pergunta_id": 5,
-                "resposta": p[4]
-            },
-            {
-                "pergunta_id": 6,
-                "resposta": p[5]
-            },
-            {
-                "pergunta_id": 7,
-                "resposta": p[6]
+                "resposta": "Por que a vida é curta"
             }
         ]
     }
@@ -277,31 +257,11 @@ function editaTarefa(specify, id, title, g=1, u=1, t=1, p = [null, null,null,nul
         "respostas": [
             {
                 "pergunta_id": 1,
-                "resposta": p[0]
+                "resposta": "Ser uma pessoa melhor"
             },
             {
                 "pergunta_id": 2,
-                "resposta": p[1]
-            },
-            {
-                "pergunta_id": 3,
-                "resposta": p[2]
-            },
-            {
-                "pergunta_id": 4,
-                "resposta": p[3]
-            },
-            {
-                "pergunta_id": 5,
-                "resposta": p[4]
-            },
-            {
-                "pergunta_id": 6,
-                "resposta": p[5]
-            },
-            {
-                "pergunta_id": 7,
-                "resposta": p[6]
+                "resposta": "Por que a vida é curta"
             }
         ]
     }
@@ -324,6 +284,7 @@ function addSubtarefa(id, tarefas= []){
 
     console.log(data);
     var response = apiPOST(url, data);
+    console.log(response)
     if(response == 1){
         return 1;
     }else{
@@ -360,9 +321,9 @@ function alteraEstado(specify, flag=0){
 
 function getAPI(tarefa){
     hash = localStorage.getItem("myHash");
-    const url = URL + '/api/IA/'+hash;
+    const url = URL + '/api/IA/tarefas/'+hash;
     const data = {
-        "tarefa": tarefa
+        "tarefa": "Por favor, retorne uma sequência de passos pela qual eu posso realizar da forma mais fácil e rápida o possivel a seguinte tarefa"+tarefa
     }
 
     console.log(data);

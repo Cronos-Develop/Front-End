@@ -15,13 +15,16 @@ function AddEmpresa(){
             const participantName = document.getElementById('participantName').value;
             const descr = document.getElementById('descr').value;
             const nicho = document.getElementById('nicho').value;
-            NomeEmpr = participantName.value;
-            descrEmpr = descr.value;
-            nichoEmpr = nicho.value;
+            NomeEmpr = participantName;
+            descrEmpr = descr;
+            nichoEmpr = nicho;
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            if (ControlEnterpriseCadaster(null, null, NomeEMpr, descrEmpr, nichoEmpr)==1) Swal.fire('Sucesso!', 'Participante adicionado com sucesso!', 'success');
+            if (ControlEnterpriseCadaster(null, null, NomeEmpr, descrEmpr, nichoEmpr)==1) {
+                Swal.fire('Sucesso!', 'Participante adicionado com sucesso!', 'success');
+                location.reload();
+            }
             else {
                 Swal.fire({
                     icon: "error",
@@ -52,19 +55,21 @@ if(empresa.length==0){
     }else{
         Nmpresa = "Empresa - Placeholder";
     }
-    ControlEnterpriseCadaster(null, null, empresa, "Placeholder", "Placeholder");
+    ControlEnterpriseCadaster(null, null, Nmpresa, "Placeholder", "Placeholder");
 }
 console.log(empresa);
 var response2 = ControlUsers();
 let usuario = JSON.parse(response2);
-userCNPJ = usuario[0].cpf_cnpj;
+userCNPJ = usuario.success.cpf_cnpj;
 
 var t = localStorage.getItem("myEnterprise");
 let i = 0;
 if(t){
     i = t;
+}else{
+    localStorage.setItem("myEnterprise", 0);
 }
-
+console.log(i);
 let nomeEmpresa = empresa[i].nome_da_empresa;
     template.innerHTML = `
     <header class="header-geral"> 

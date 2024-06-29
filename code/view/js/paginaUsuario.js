@@ -99,10 +99,10 @@ function mostrarDadosUsuario() {
   Swal.fire({
       title: 'Informações da Conta',
       html: `
-          <p><strong>Nome do Usuário:</strong> ${Nusuario[0].name}</p>
-          <p><strong>CNPJ:</strong> ${Nusuario[0].cpf_cnpj}</p>
-          <p><strong>Email:</strong> ${Nusuario[0].email}</p>
-          <p><strong>Telefone:</strong> ${Nusuario[0].telefone}</p>
+          <p><strong>Nome do Usuário:</strong> ${Nusuario.success.name}</p>
+          <p><strong>CNPJ:</strong> ${Nusuario.success.cpf_cnpj}</p>
+          <p><strong>Email:</strong> ${Nusuario.success.email}</p>
+          <p><strong>Telefone:</strong> ${Nusuario.success.telefone}</p>
       `,
       icon: 'info',
       showCancelButton: true,

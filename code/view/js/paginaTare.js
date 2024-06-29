@@ -18,17 +18,26 @@ function deletaTarefa(id){
 }
 
 function addSub(id, tarefa){
+  console.log(tarefa)
   if(tarefa) addSubtarefa(id, tarefa);
+  location.reload();
 }
 
 function deleteSubtask(id){
   console.log("Deletando: "+id)
   apagaSubtarefa(id);
+  location.reload();
 }
 
+function deleteTask(id){
+  apagaTarefa(id);
+  location.reload();
+}
 function alterState(id, type){
   alteraEstado(id, type);
+  location.reload();
 }
+
 function addActivity(title, id, subtasks = [{}], save = true) {
   const newTask = document.createElement('div');
   newTask.classList.add('task');
@@ -67,9 +76,10 @@ function addActivity(title, id, subtasks = [{}], save = true) {
 
 var response = ControlTasks(empresa[i].id);
 let tarefas = JSON.parse(response);
+console.log(tarefas)
 for(j=0; j<tarefas.length; j++){
   if(tarefas[j]){
-    addActivity(tarefas[j].tarefa, tarefas[j].id, tarefas[j].subtarefas);
+    addActivity(tarefas[j].descrição, tarefas[j].id, tarefas[j].subtarefas);
   }
 }
   var dragSrcEl = null;
@@ -300,13 +310,13 @@ document.addEventListener('DOMContentLoaded', function () {
         </ul>
         <div style="margin-top: 20px;"></div>
         <input type="text" id="new-subtask-text" placeholder="Nova Sub-tarefa">
-        <button id="add-subtask" class="swal2-confirm swal2-styled">
+        <button id="add-subtask" class="swal2-confirm swal2-styled" onclick="addSub(${description}, document.getElementById('new-subtask-text').value)">
           <i class="fas fa-plus"></i>
         </button>
         <div style="margin-top: 20px;"></div>
         <div style="margin-top: 20px;"></div>
         <div class="button-group">
-          <button id="delete-task" class="swal2-confirm swal2-styled">
+          <button id="delete-task" class="swal2-confirm swal2-styled" onclick="deleteTask(${description})">
             <i class="fas fa-trash"></i>
           </button>
           <button id="edit-task" class="swal2-confirm swal2-styled">
@@ -316,24 +326,8 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       showConfirmButton: true,
       confirmButtonText: 'Salvar', // Correção aqui
-      preConfirm: () => {
-        const gutGravity = parseInt(Swal.getPopup().querySelector('#gut-gravity').value);
-        const gutUrgency = parseInt(Swal.getPopup().querySelector('#gut-urgency').value);
-        const gutTendency = parseInt(Swal.getPopup().querySelector('#gut-tendency').value);
-        const question = Swal.getPopup().querySelector('#question').value;
-  
-        const multiplicationResult = gutGravity * gutUrgency * gutTendency;
-        Swal.getPopup().querySelector('#multiplication-result').textContent = multiplicationResult;
-  
-        return { gutGravity, gutUrgency, gutTendency, question };
-      }
     }).then((result) => {
       if (result.isConfirmed) {
-        const { gutGravity, gutUrgency, gutTendency, question } = result.value;
-        task.setAttribute('data-gut-gravity', gutGravity);
-        task.setAttribute('data-gut-urgency', gutUrgency);
-        task.setAttribute('data-gut-tendency', gutTendency);
-        task.setAttribute('data-question', question);
         savePA(task);
         saveTasks();
         updateProgress();
@@ -387,38 +381,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     `).join('')}
                 </ul>
                 <div style="margin-top: 5px;"></div>
-        <label for="edit-gut-gravity">Gravidade:</label>
-        <select id="edit-gut-gravity" class="swal2-select">
-          <option value="1" ${gutGravity == 1 ? 'selected' : ''}>Sem gravidade</option>
-          <option value="2" ${gutGravity == 2 ? 'selected' : ''}>Pouco grave</option>
-          <option value="3" ${gutGravity == 3 ? 'selected' : ''}>Grave</option>
-          <option value="4" ${gutGravity == 4 ? 'selected' : ''}>Muito grave</option>
-          <option value="5" ${gutGravity == 5 ? 'selected' : ''}>Extremamente grave</option>
-        </select>
-        <div style="margin-top: 2px;"></div>
-        <label for="edit-gut-urgency">Urgência:</label>
-        <select id="edit-gut-urgency" class="swal2-select">
-          <option value="1" ${gutUrgency == 1 ? 'selected' : ''}>Pode esperar</option>
-          <option value="2" ${gutUrgency == 2 ? 'selected' : ''}>Pouco urgente</option>
-          <option value="3" ${gutUrgency == 3 ? 'selected' : ''}>Urgente</option>
-          <option value="4" ${gutUrgency == 4 ? 'selected' : ''}>Muito urgente</option>
-          <option value="5" ${gutUrgency == 5 ? 'selected' : ''}>Imediatamente</option>
-        </select>
-        <div style="margin-top: 2px;"></div>
-        <label for="edit-gut-tendency">Tendência:</label>
-        <select id="edit-gut-tendency" class="swal2-select">
-          <option value="1" ${gutTendency == 1 ? 'selected' : ''}>Não irá mudar</option>
-          <option value="2" ${gutTendency == 2 ? 'selected' : ''}>Irá piorar a longo prazo</option>
-          <option value="3" ${gutTendency == 3 ? 'selected' : ''}>Irá piorar a médio prazo</option>
-          <option value="4" ${gutTendency == 4 ? 'selected' : ''}>Irá piorar a curto prazo</option>
-          <option value="5" ${gutTendency == 5 ? 'selected' : ''}>Irá piorar rapidamente</option>
-        </select>
             `,
             confirmButtonText: 'Salvar',
             preConfirm: () => {
-                const newGutGravity = Swal.getPopup().querySelector('#edit-gut-gravity').value;
-                const newGutUrgency = Swal.getPopup().querySelector('#edit-gut-urgency').value;
-                const newGutTendency = Swal.getPopup().querySelector('#edit-gut-tendency').value;
                 const newTitle = Swal.getPopup().querySelector('#edit-task-title').value;
                 const newDescription = Swal.getPopup().querySelector('#edit-task-description').value;
                 const updatedSubtasks = Array.from(Swal.getPopup().querySelectorAll('#edit-subtasks-list li')).map(li => ({
@@ -427,17 +392,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: li.querySelector('.id').value,
                 }));
 
-                return { gutGravity, gutUrgency, gutTendency, newTitle, newDescription, updatedSubtasks, newGutUrgency, newGutGravity, newGutTendency };
+                return { newTitle, newDescription, updatedSubtasks };
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                const { newTitle, newDescription, updatedSubtasks, newGutGravity, newGutTendency, newGutUrgency } = result.value;
+                const { newTitle, newDescription, updatedSubtasks} = result.value;
                 task.querySelector('.task__tag').textContent = newTitle;
                 task.querySelector('p').textContent = newDescription;
-                task.setAttribute('data-gut-gravity', newGutGravity);
-                task.setAttribute('data-gut-urgency', newGutUrgency);
-                task.setAttribute('data-gut-tendency', newGutTendency);
-                editaTarefa(empresa[i].id, newDescription, newTitle, newGutGravity, newGutTendency, newGutUrgency);//|Função AXIOS
+                editaTarefa(empresa[i].id, newDescription, newTitle);//|Função AXIOS
                 const subtasksContainer = task.querySelector('.subtasks-container') || document.createElement('div');
                 if (!subtasksContainer.classList.contains('subtasks-container')) {
                     subtasksContainer.classList.add('subtasks-container');
