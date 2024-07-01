@@ -23,9 +23,8 @@ function carregarDadosEmpresa() {
 function validarCampos() {
     let nomeValido = verifyName(document.querySelector('#nomeE').value);
     let descricaoValida = document.querySelector('#descricaoE').value !== "";
-    let nichoValido = document.querySelector('#identifierE').value;
 
-    if (nomeValido && descricaoValida && nichoValido){
+    if (nomeValido && descricaoValida){
         return true;
     }
     return false;
@@ -99,19 +98,6 @@ document.querySelector('#descricaoE').addEventListener("change", function() {
         this.style.borderColor = 'red';
         label.style.color = 'red';
         label.innerHTML = "Descrição inválida";
-    } else {
-        this.style.borderColor = "#C6C6C6";
-        label.innerHTML = "";
-        label.style.color = 'black';
-    }
-});
-
-document.querySelector('#identifierE').addEventListener("change", function() {
-    const label = document.querySelector('#fix-data-ident');
-    if (!verifyCNPJ(this.value)) {
-        this.style.borderColor = 'red';
-        label.style.color = 'red';
-        label.innerHTML = "CNPJ inválido";
     } else {
         this.style.borderColor = "#C6C6C6";
         label.innerHTML = "";

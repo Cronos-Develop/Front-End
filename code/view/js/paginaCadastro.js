@@ -251,7 +251,36 @@ if(!verifyNumber(number.value)){
 const empresa = document.querySelector('#nome-empresa');
 //Enviando Formulario
 function cadastro(){
-    if(ControlCadaster(email.value, telefone.value, pass.value, nameU.value, end.value, complemento.value, bairro.value, nasc.value,number.value, ident.value,cep.value, city.value, empresa.value) == 1){
+    var Nident = '';
+    if(ident.value.length == 11){
+        for(i=0; i<11; i++){
+            Nident += ident.value[i];
+            if (i==2 || i==5){
+                Nident += '.';
+            }
+            if(i==8){
+                Nident += '-';
+            }
+        }
+    }else{
+        if(ident.value.length == 14){
+            for(i=0; i<14; i++){
+                Nident += ident.value[i];
+                if (i==1 || i==4){
+                    Nident += '.';
+                }
+                if(i==7){
+                    Nident += '/';
+                }
+                if(i==11){
+                    Nident += '-';
+                }
+            }
+        }
+    }
+    console.log(Nident);
+    if(ControlCadaster(email.value, telefone.value, pass.value, nameU.value, end.value, complemento.value, bairro.value, nasc.value,number.value, Nident, cep.value, city.value, empresa.value) == 1){
+        localStorage.setItem('nomeEmpresa', empresa.value);
         Swal.fire({
             icon: "success",
             title: "Cadastro feito com sucesso!",

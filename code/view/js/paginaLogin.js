@@ -40,13 +40,42 @@ function direct(page){
 
 function login(){
     if(ident.value && pass.value){
-        if(Controllogin(ident.value, pass.value)){
+        var Nident = '';
+        if(ident.value.length == 11){
+            for(i=0; i<11; i++){
+                Nident += ident.value[i];
+                if (i==2 || i==5){
+                    Nident += '.';
+                }
+                if(i==8){
+                    Nident += '-';
+                }
+            }
+        }else{
+            if(ident.value.length == 14){
+                for(i=0; i<14; i++){
+                    Nident += ident.value[i];
+                    if (i==1 || i==4){
+                        Nident += '.';
+                    }
+                    if(i==7){
+                        Nident += '/';
+                    }
+                    if(i==11){
+                        Nident += '-';
+                    }
+                }
+            }
+        }
+        console.log(Nident);
+        
+        if(Controllogin(Nident, pass.value)){
             Swal.fire({
                 title: "Login feito",
                 text: "Usuário e senha corretos",
                 icon: "success"
               });
-              window.location.href = "./paginaInicia.html";
+              window.location.href = "./paginaInicial.html";
         }else{
             Swal.fire({
                 icon: "error",

@@ -1,4 +1,4 @@
-    // Função para exibir pop-up de Participantes
+// Função para exibir pop-up de Participantes
     function addParticipants(){
         let CPF;
         Swal.fire({

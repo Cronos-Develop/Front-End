@@ -1,12 +1,12 @@
-const URL = 'http://localhost:8000'
+const URL = 'https://plum-tiger-983990.hostingersite.com'
 
 function Controllogin(login, password){
-    const url = URL+'/api/users/';
-    const data = login + ':' + password + '/userHash';
-    var response = apiGET(url, data);
+    const url = URL+'/api/users/' + login + ':' + password;
+    var response = apiGET(url);
     console.log(response);
     if(response != null){
-        localStorage.setItem("myHash", response);
+        response = JSON.parse(response)
+        localStorage.setItem("myHash", response.id);
         return true;
     }else{
         return false;
@@ -18,7 +18,7 @@ function ControlEnterprises(specify=null){
     var hash = localStorage.getItem("myHash");
     if(hash){
         if(specify == null) {
-            url = url+'/api/empresas/'+hash;
+            url = url+'/api/empresas/user/'+hash;
         }else{
             url = url+'/api/empresas/'+specify+'/'+hash;
         }
@@ -36,7 +36,7 @@ function ControlUsers(){
     var url = URL;
     var hash = localStorage.getItem("myHash");
     if(hash){
-        url = url+'/api/users/'+hash;
+        url = url+'/api/users/hash/'+hash;
         console.log(url);
         var response = apiGET(url);
         if(response!=null){
@@ -68,6 +68,7 @@ function ControlCadaster(email, telefone, pass, nameU, end, complemento=null, ba
         if(ControlEnterpriseCadaster(ident, pass, empresa)==1){
             return 1;
         }
+        return 1;
     }
     return 0;
 }
@@ -76,8 +77,10 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function ControlEnterpriseCadaster(ident, pass, empresa, nicho=null, resumo=null){
-    Controllogin(ident, pass)
+function ControlEnterpriseCadaster(ident=null, pass=null, empresa, nicho=null, resumo=null){
+    if(ident==null && pass==null){
+        Controllogin(ident, pass)
+    }
     hash = localStorage.getItem("myHash");
     console.log("Seu login é:" + hash)
     const url = URL + '/api/empresas/'+hash;
@@ -210,31 +213,11 @@ function adicionaAtividade(id, tarefa, descricao=null, g=0, u=0, t=0, p = [null,
         "respostas": [
             {
                 "pergunta_id": 1,
-                "resposta": p[0]
+                "resposta": "Ser uma pessoa melhor"
             },
             {
                 "pergunta_id": 2,
-                "resposta": p[1]
-            },
-            {
-                "pergunta_id": 3,
-                "resposta": p[2]
-            },
-            {
-                "pergunta_id": 4,
-                "resposta": p[3]
-            },
-            {
-                "pergunta_id": 5,
-                "resposta": p[4]
-            },
-            {
-                "pergunta_id": 6,
-                "resposta": p[5]
-            },
-            {
-                "pergunta_id": 7,
-                "resposta": p[6]
+                "resposta": "Por que a vida é curta"
             }
         ]
     }
@@ -274,31 +257,11 @@ function editaTarefa(specify, id, title, g=1, u=1, t=1, p = [null, null,null,nul
         "respostas": [
             {
                 "pergunta_id": 1,
-                "resposta": p[0]
+                "resposta": "Ser uma pessoa melhor"
             },
             {
                 "pergunta_id": 2,
-                "resposta": p[1]
-            },
-            {
-                "pergunta_id": 3,
-                "resposta": p[2]
-            },
-            {
-                "pergunta_id": 4,
-                "resposta": p[3]
-            },
-            {
-                "pergunta_id": 5,
-                "resposta": p[4]
-            },
-            {
-                "pergunta_id": 6,
-                "resposta": p[5]
-            },
-            {
-                "pergunta_id": 7,
-                "resposta": p[6]
+                "resposta": "Por que a vida é curta"
             }
         ]
     }
@@ -321,6 +284,7 @@ function addSubtarefa(id, tarefas= []){
 
     console.log(data);
     var response = apiPOST(url, data);
+    console.log(response)
     if(response == 1){
         return 1;
     }else{
@@ -357,9 +321,9 @@ function alteraEstado(specify, flag=0){
 
 function getAPI(tarefa){
     hash = localStorage.getItem("myHash");
-    const url = URL + '/api/IA/'+hash;
+    const url = URL + '/api/IA/tarefas/'+hash;
     const data = {
-        "tarefa": tarefa
+        "tarefa": "Por favor, retorne uma sequência de passos pela qual eu posso realizar da forma mais fácil e rápida o possivel a seguinte tarefa"+tarefa
     }
 
     console.log(data);
@@ -386,6 +350,7 @@ function editaSubtarefa(subtarefa, specify){
     }else{
         return 0;
     }
+}
 
 function alteraSenha(codigo, senha){
     const url = URL + '/api/users/trocarsenha/';

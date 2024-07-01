@@ -36,6 +36,7 @@ function showAddActivityPopup() {
             saveActivity(activity);
             var resp = getAPI(activity.title);
             resp = JSON.parse(resp);
+            console.log(resp);
             var codigo = `<table><tr><th>Tarefa retornada</th><th>Sim</th><th>Não</th></tr>`
             for(k=0; k<resp.length; k++){
                 codigo += `<tr><td>${resp[k]}</td><td><input type="checkbox" id="yes" value="Sim" onchange="constroiVet(${k}"/></td><td><input type="checkbox" id="not" value="Não" onchange="constroiVet(${k}, 1)"/></td></tr>`
@@ -87,16 +88,6 @@ function showAddActivityPopup2() {
         html: `
             <input type="text" id="activity-title" class="swal2-input" placeholder="Título da Atividade">
             <textarea id="activity-description" class="swal2-textarea" placeholder="Descrição da Atividade"></textarea>
-            <label for="question" class="swal2-label">Pergunta:</label>
-            <select id="question" class="swal2-select">
-                <option value="o-que">O quê</option>
-                <option value="por-que">Por que</option>
-                <option value="quem">Quem</option>
-                <option value="quanto">Quanto</option>
-                <option value="como">Como</option>
-                <option value="quando">Quando</option>
-                <option value="onde">Onde</option>
-            </select>
             <label for="gut-gravity" class="swal2-label">Gravidade:</label>
             <select id="gut-gravity" class="swal2-select">
                 <option value="1">Sem gravidade</option>
@@ -128,21 +119,20 @@ function showAddActivityPopup2() {
         preConfirm: () => {
             const title = Swal.getPopup().querySelector('#activity-title').value;
             const description = Swal.getPopup().querySelector('#activity-description').value;
-            const question = Swal.getPopup().querySelector('#question').value;
             const gutGravity = parseInt(Swal.getPopup().querySelector('#gut-gravity').value);
             const gutUrgency = parseInt(Swal.getPopup().querySelector('#gut-urgency').value);
             const gutTendency = parseInt(Swal.getPopup().querySelector('#gut-tendency').value);
 
-            if (!title || !description || !question || !gutGravity || !gutUrgency || !gutTendency) {
+            if (!title || !description || !gutGravity || !gutUrgency || !gutTendency) {
                 Swal.showValidationMessage(`Por favor, preencha todos os campos.`);
             }
 
-            return { title, description, question, gutGravity, gutUrgency, gutTendency };
+            return { title, description, gutGravity, gutUrgency, gutTendency };
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            const { title, description, question, gutGravity, gutUrgency, gutTendency } = result.value;
-            const activity = { title, description, question, gutGravity, gutUrgency, gutTendency };
+            const { title, description, gutGravity, gutUrgency, gutTendency } = result.value;
+            const activity = { title, description, gutGravity, gutUrgency, gutTendency };
             saveActivity(activity);
             Swal.fire(`Atividade adicionada: ${activity.title}`);
         }
@@ -153,5 +143,4 @@ function saveActivity(activity) {
     let activities = JSON.parse(localStorage.getItem('activities')) || [];
     activities.push(activity);
     adicionaAtividade(empresa[i].id, activity.title, activity.description, activity.gutGravity, activity.gutUrgency, activity.gutTendency );
-    localStorage.setItem('activities', JSON.stringify(activities));
 }

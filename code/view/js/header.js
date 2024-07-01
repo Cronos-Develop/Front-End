@@ -1,19 +1,75 @@
+function AddEmpresa(){
+    Swal.fire({
+        title: 'Participantes',
+        html: `
+            <p>Aqui você pode visualizar e gerenciar os participantes da empresa.</p>
+            <label for="participantName">Nome da empresa:</label>
+            <input type="text" id="participantName" class="swal2-input" placeholder="Digite o nome da empresa">
+            <label for="participantName">Descrição da empresa:</label>
+            <input type="text" id="descr" class="swal2-input" placeholder="Digite a descrição da empresa">
+            <label for="participantName">Nicho da empresa:</label>
+            <input type="text" id="nicho" class="swal2-input" placeholder="Digite o nicho da empresa">
+        `,
+        confirmButtonText: 'Adicionar',
+        preConfirm: () => {
+            const participantName = document.getElementById('participantName').value;
+            const descr = document.getElementById('descr').value;
+            const nicho = document.getElementById('nicho').value;
+            NomeEmpr = participantName;
+            descrEmpr = descr;
+            nichoEmpr = nicho;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (ControlEnterpriseCadaster(null, null, NomeEmpr, descrEmpr, nichoEmpr)==1) {
+                Swal.fire('Sucesso!', 'Participante adicionado com sucesso!', 'success');
+                location.reload();
+            }
+            else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Algo deu errado!",
+                    text: "Tente novamente mais tarde.",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Tentar novamente!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        ControlEnterpriseCadaster(null, null, NomeEMpr, descrEmpr, nichoEmpr);
+                    }});
+            }
+        }
+    });
+}
+
 const template = document.createElement('template');
 //localStorage.setItem("myHash", "A5147b5359A5195b472a4831A5181"); //Para testes
 console.log(localStorage.getItem("myHash"));
 var response = ControlEnterprises();
 let empresa = JSON.parse(response);
+if(empresa.length==0){
+    var Nmpresa = localStorage.getItem('nomeEmpresa');
+    if(Nmpresa){
+        console.log(Nmpresa);
+    }else{
+        Nmpresa = "Empresa - Placeholder";
+    }
+    ControlEnterpriseCadaster(null, null, Nmpresa, "Placeholder", "Placeholder");
+}
+console.log(empresa);
 var response2 = ControlUsers();
 let usuario = JSON.parse(response2);
-userCNPJ = usuario[0].cpf_cnpj;
+userCNPJ = usuario.success.cpf_cnpj;
 
 var t = localStorage.getItem("myEnterprise");
-let i;
+let i = 0;
 if(t){
     i = t;
 }else{
-    i = 0;
+    localStorage.setItem("myEnterprise", 0);
 }
+console.log(i);
 let nomeEmpresa = empresa[i].nome_da_empresa;
     template.innerHTML = `
     <header class="header-geral"> 
@@ -43,7 +99,7 @@ function geraEmmpresas(){
     for(j = 0; j<empresa.length; j++){
         code += `<button class="btn-conf width-50" onclick="Ftemplate(${j})"><strong>${empresa[j].nome_da_empresa}</strong></button>`;
     }
-    code += `</div>`
+    code += `</div><div><button class="btn-conf width-50" onclick="AddEmpresa()">Adicionar Empresa</button></div>`
 
     Swal.fire({
         title: 'Escolha a empresa',

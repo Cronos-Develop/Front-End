@@ -23,8 +23,11 @@ function apiPOST(url, data){
     $.ajax({
         url: url,
         type: 'POST',
-        data: data,
-        dataType: 'html',
+        dataType: 'json',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        data: JSON.stringify(data),
         async: false,
         success: function(data){
             console.log(data);

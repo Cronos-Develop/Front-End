@@ -20,21 +20,18 @@ const number = document.querySelector('#number');
 
 const compl = document.querySelector('#compl');
 
-Nome.value = Nusuario[0].name;
-email.value = Nusuario[0].email;
-telefone.value = Nusuario[0].telefone;
-cep.value = Nusuario[0].cep;
+Nome.value = Nusuario.success.name;
+email.value = Nusuario.success.email;
+telefone.value = Nusuario.success.telefone;
+cep.value = Nusuario.success.cep;
 
-let vetor = Nusuario[0].endereco.split(",")
-endereco.value = vetor[1];
-bairro.value = vetor[0];
-
-vetor = vetor[2].split(".")
-number.value = vetor[0];
-
-vetor = vetor[1].split('\n');
-cidade.value = vetor[1];
-compl.value = vetor[0];
+let vetor = Nusuario.success.endereco.split(",")
+console.log(vetor);
+endereco.value = vetor[2];
+bairro.value = vetor[1];
+number.value = vetor[3].replace("Número:", "");
+cidade.value = vetor[0];
+compl.value = vetor[4];
 
 Nome.addEventListener("change", function(){
     const label = document.querySelector('#fix-data-name');
