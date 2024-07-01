@@ -1,14 +1,28 @@
+# Projeto de Sistemas-2024.1 _ Universidade Federal do Tocantins - Palmas, 2024 _ Desenvolvimento do aplicativo Cronos
+#### Curso: Bacharelado em Ciência da Computação
+#### Professor: Edeilson Milhomem da Silva.
+#### Alunos:
+- #### Luiz Filipe de Souza Alves
+- #### Patryck Henryck Moreira Silva
+- #### Antônio Cássio de Oliveira Neto
+- #### Luis Felipe Krause de Castro
+- #### João Victor Ribeiro Santos
+---
+
 # Índice:
 - [Front-End](#front-end)
   - [Apresentação](#apresentação)
   - [Desenvolvedores](#desenvolvedores)
   - [Deploy](#deploy)
+    - [Site]()
+    - [Aplicativo]()
+    - [Formularios]()
+      - [Formulário de avaliação do app]()
+      - [Formulário de inscrição de Beta Testers]()
   - [Design](#design)
     - [Desktop](#desktop)
     - [Mobile](#mobile)
   - [User Flow](#user-flow)
-  - [Referências](#referências)
-  - [Recomendações de Estudo](#recomendações-de-estudo)
 - [Documentação](#documentação)
   - [Introdução](#introdução)
   - [Pré-requisitos](#pré-requisitos)
@@ -24,14 +38,14 @@
   - [Referências](#referências-1)
     - [Desabilitar UAC](#desabilitar-uac)
     - [Acessar LocalHost pela rede Local (Windows)](#acessar-localhost-pela-rede-local-windows)
-  - [Recomendações de Estudo](#recomendações-de-estudo-1)
+  - [Recomendações de Estudo](#recomendações-de-estudo)
     - [HTML](#html)
     - [CSS](#css)
     - [JavaScript](#javascript)
 - [Créditos](#créditos)
     
 # Front-End:
-
+- Repositório de Front End
 ## Apresentação:
 Este é o repositório que armazena o front-end do app Cronos.
 
@@ -41,9 +55,23 @@ Este é o repositório que armazena o front-end do app Cronos.
 - [Luiz Filipe de Souza Alves](https://github.com/LuFi-1227)
 
 ## Deploy:
+### Site:
+- O cronos pode ser encontrado em:
+  - [https://cronosapi.infinityfreeapp.com/?i=1](https://cronosapi.infinityfreeapp.com/?i=1)
 
+### Aplicativo:
+- O cronos pode ser baixado em:
+  - [Link](https://www.mediafire.com/file/xdzdngowehdnqbt/cronos.apk/file)
+
+### Formulários:
+#### Formulário de avaliação:
+- [Form](https://docs.google.com/forms/d/e/1FAIpQLScuD2w-aGhy0X5oiEMzDWHRWlBF7m0LPbG9KEPVaOFiMCRb4w/viewform?usp=send_form)
+
+#### Formulário para inscrição de beta testers:
+- [form]()
+  
 ## Design:
-
+- O design do Cronos está logo abaixo:
 ### Desktop:
 ![image](https://github.com/Cronos-Develop/Front-End/assets/107047839/f61efd4f-fc90-496f-9b30-d8bfd029cd1b)
 ![image](https://github.com/Cronos-Develop/Front-End/assets/107047839/d485a7af-b086-4c26-b4cd-0883e38455aa)
@@ -54,10 +82,6 @@ Este é o repositório que armazena o front-end do app Cronos.
 
 ## User Flow:
 ![image](https://github.com/Cronos-Develop/Front-End/assets/107047839/aff7da77-80bc-43fd-aefa-26c1598d033f)
-
-## Referências:
-
-## Recomendações de Estudo:
 
 # Documentação:
 Nesta seção você verá a documentação de como ajustar o ambiente de desenvolvimento para rodar o front-end do aplicativo na sua máquina local, e também no seu celular.
