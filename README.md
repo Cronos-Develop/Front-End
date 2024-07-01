@@ -14,6 +14,7 @@
   - [Apresentação](#apresentação)
   - [Desenvolvedores](#desenvolvedores)
   - [Deploy](#deploy)
+    - [Landing Page](#landing-page)
     - [Site](#site)
     - [Aplicativo](#aplicativo)
     - [Formularios](#formulários)
@@ -55,6 +56,9 @@ Este é o repositório que armazena o front-end do app Cronos.
 - [Luiz Filipe de Souza Alves](https://github.com/LuFi-1227)
 
 ## Deploy:
+### Landing Page:
+- Pode ser acessada por:
+  - [Page](https://cronoslandpage.my.canva.site/)
 ### Site:
 - O cronos pode ser encontrado em:
   - [https://cronosapi.infinityfreeapp.com/?i=1](https://cronosapi.infinityfreeapp.com/?i=1)
@@ -68,7 +72,7 @@ Este é o repositório que armazena o front-end do app Cronos.
 - [Form](https://docs.google.com/forms/d/e/1FAIpQLScuD2w-aGhy0X5oiEMzDWHRWlBF7m0LPbG9KEPVaOFiMCRb4w/viewform?usp=send_form)
 
 #### Formulário para inscrição de beta testers:
-- [form]()
+- [form](https://forms.gle/mhhM5He7mf1Kq2wd8)
   
 ## Design:
 - O design do Cronos está logo abaixo:
