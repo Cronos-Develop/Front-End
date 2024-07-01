@@ -14,6 +14,10 @@ function definirModoCor(modo) {
         document.documentElement.style.setProperty('--cor-botão', '#07194F');
         document.documentElement.style.setProperty('--cor-nav', '#3565A9');
         document.documentElement.style.setProperty('--cor-link2', '#2A8353');
+        document.documentElement.style.setProperty('--cor-title', '#2A4F83');
+        document.documentElement.style.setProperty('--cor-fundoC', '#1A1818');
+        document.documentElement.style.setProperty('--cor-botaoT', '#');
+        document.documentElement.style.setProperty('--cor-confE', '#');
     } else {
         // Mudar para o modo claro (padrão)
         document.documentElement.setAttribute('data-modo', 'claro');
@@ -28,6 +32,10 @@ function definirModoCor(modo) {
         document.documentElement.style.setProperty('--cor-botão', '#fff');
         document.documentElement.style.setProperty('--cor-nav', '#92E5FF');
         document.documentElement.style.setProperty('--cor-link2', '#32F474');
+        document.documentElement.style.setProperty('--cor-title', '#fff');
+        document.documentElement.style.setProperty('--cor-fundoC', '#32C6F4');
+        document.documentElement.style.setProperty('--cor-botaoT', '#32C6F4');
+        document.documentElement.style.setProperty('--cor-confE', '#');
     }
 }
 

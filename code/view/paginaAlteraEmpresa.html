@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/style.css">
+        <script src="js/mudaCor.js"></script>
+         <script src="./js/jquery.js"></script>
+        <script src="../model/Axios.js"></script>
+        <script src="../controller/validateController.js"></script>
+        <script src="js/sweetalert.js"></script>
+        <script src="../controller/modelController.js"></script>
+        <script src="./js/paginaAlteraEmpresa.js" defer></script>
+        
+        <title>Alterar Dados da Empresa - Cronos</title>
+    </head>
+    <body> 
+        <section class="sbody1">
+
+        <form action="#" class="form">
+
+            <!-- Etapas do cadastro-->
+            <div class="form-step form-step-active">
+
+                <h1 class="text-left">Dados da Empresa</h1>
+
+                <div class="input-group">
+                    <label for="nomeEmpresa">Nome da Empresa*</label>
+                    <input class="input-confE" type="text" id="nomeE" name="nomeEmpresa" placeholder="Digite o nome da empresa" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="descricaoEmpresa">Descrição da Empresa*</label>
+                    <input class="input-confE" type="text" name="descricaoEmpresa" id="descricaoE" placeholder="Digite a descrição da empresa" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="cnpjE">Nicho da Empresa</label>
+                    <input class="input-confE" type="text" id="identifierE" name="identifierEmpresa" placeholder="Digite o nicho da empresa" maxlength="14" minlength="11" required>
+                    <label for="identifierE" class="fix" id="fix-data-ident"></label>
+                </div>
+
+                <div class="btns-group">
+
+                    <a class="btn-cadastro btn-prev  ml-auto" onclick="window.location.href='paginaEmpresa.html'">Cancelar Alteração</a>
+                    <a class="btn-cadastro btn-next  ml-auto" onclick="alteraCad()">Alterar Dados</a>
+                    
+                </div>
+            </div>
+        </form>
+    </section>
+    <script src="js/bootstrap.bundle.min.js"></script>    
+</body>
+</html>

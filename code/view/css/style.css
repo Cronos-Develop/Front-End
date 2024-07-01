@@ -13,6 +13,9 @@
     --cor-botão: #fff;
     --cor-nav: #92E5FF;
     --cor-link2: #2A8353;
+    --cor-title: #fff;
+    --cor-fundoC: #32C6F4;
+    --cor-botaoT: #fff;
 
     /*Para o modo escuro*/
 
@@ -23,15 +26,48 @@
     --cor-linkE: #fff;
     --cor-navE: #3565A9;
     --cor-link2E: #32F474;
+    --cor-title: #2A4F83;
 
 }
 
 /* ---------------------------------------------------------------- Pagina Coberta ---------------------------------------------------------- */
 
-#titulo {
-    font-family: 'Inter'; 
-    font-size: 2.5em; 
-    color: var(--cor-fundo) 
+.sbody-3 {
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--cor-fundoC);
+    font-family: Arial, sans-serif;
+}
+
+.container-C {
+    text-align: center;
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+.logo-C {
+    width: 150px;
+    height: auto;
+}
+
+.title-C {
+    font-size: 2em;
+    color: var(--cor-title);
+    margin-top: 20px;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0;
 }
 
 /* ---------------------------------------------------------------- Pagina Login -------------------------------------------------------------- */
@@ -41,6 +77,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: var(--cor-fundo);
 }
 
 .fix{
@@ -97,6 +134,10 @@
     text-align: right;
 }
 
+.form-label{
+    color: var(--cor-text)
+}
+
 @media (max-width: 500px){
     #login{
         width: 75%;
@@ -109,6 +150,16 @@
     }
     .estilo-customizado {
         width: 90%;
+    }
+    nav {
+        width: 90%; /* Ajusta a largura para telas menores */
+    }
+    nav ul {
+        flex-direction: row; /* Certifica-se de que a direção é horizontal */
+    }
+
+    nav ul li {
+        margin: 0 5px; /* Ajusta o espaçamento entre os itens */
     }
 }
 
@@ -127,7 +178,7 @@
     display: grid;
     place-items: center;
     min-height: 100vh;
-    
+    background-color: var(--cor-fundo);
 }
 
 /* Estilos Globais da tela de cadastro */
@@ -364,6 +415,7 @@ label {
     cursor: pointer;
     transition: 0.3s;
     margin-bottom: 1.0rem;
+    
 }
 
 .btn-link2 {
@@ -380,7 +432,8 @@ label {
 }
 
 .btn-conf:hover{
-    background-color: var(--cor-secundaria);
+    background-color: #fff; /* Cor do botão ao passar o mouse */
+    color: var(--cor-primaria); /* Cor do texto ao passar o mouse */
     box-shadow: 0 0 0 3px var(--cor-fundo), 0 0 0 2px var(--cor-fundo);
 }
 
@@ -402,10 +455,6 @@ label {
 
 /* --------------------------------------------------------- Pagina de Tarefas -------------------------------------------------------------- */
 
-.cortxt {
-    color: var(--cor-text);
-}
-
 .sbody3 {
     background-color: var(--cor-fundo);
     font-family: Montserrat, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -416,10 +465,39 @@ label {
     
 }
 
+.cortxt {
+    color: var(--cor-text);
+}
+
+
 .header-tarefa {
     display: flex;
     justify-content: center; /* Centraliza horizontalmente */
     align-items: center; /* Centraliza verticalmente */
+}
+
+.project-activites__add,
+.project-participants__add {
+    padding: 0.75rem 1.5rem;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: var(--cor-botão);
+    color: var(--cor-text);
+    text-align: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    border: 2px solid transparent;
+}
+
+.project-activites__add:hover,
+.project-participants__add:hover {
+    background-color: #fff; 
+    color: var(--cor-primaria); 
+    
 }
 
 .button-tarefa {
@@ -569,6 +647,18 @@ label {
     font-style: italic;
 }
 
+/* formulario das configurações de empresa */
+
+.pE{
+    color: var(--cor-text);
+    text-decoration: solid, underline;
+    margin-top: 2rem;
+}
+
+.labelE{
+    color: var(--cor-text);
+}
+
 /* --------------------------------------------------------- Pagina Inicial ----------------------------------------------------------------- */
 
 /* Estilo para o cabeçalho */
@@ -622,11 +712,15 @@ nav {
 nav ul {
     list-style-type: none;
     padding: 0;
+    display: flex; /* Adicionado */
+    justify-content: center; /* Adicionado */
+    align-items: center; /* Adicionado */
+    
 }
 
-nav ul li {
+nav ul li { 
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 5px;
 }
 
 nav ul li a {
@@ -644,7 +738,7 @@ nav ul li:hover {
 }
 
 .container-imagem-direita {
-    text-align: right; /* Para alinhar a imagem à direita */
+    text-align: right;
 }
 
 .inicio-container {
@@ -652,7 +746,7 @@ nav ul li:hover {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Adiciona espaço abaixo de cada container */
+    margin-bottom: 20px;
     text-align: center;
     position: relative; 
     z-index: 2;
@@ -683,4 +777,14 @@ nav ul li:hover {
     background-color: var(--cor-link);
     transform: scale(1.05); 
     transition: transform 0.3s ease; 
+}
+
+/* --------------------------------------------------------- Pagina de Alterar Empresa ----------------------------------------------------------------- */
+
+.input-confE {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
 }
